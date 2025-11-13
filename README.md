@@ -1,7 +1,7 @@
 🐦 Пеликан Алаколь - Веб-сайт базы отдыха
 StatusVersionLicense
-Репозиторий: https://github.com/Andreyhiitola/pelikan-alakol-site_V2
-URL сайта: https://andreyhiitola.github.io/pelikan-alakol-site_V2
+Репозиторий: https://github.com/Andreyhiitola/pelikan-alakol-site_v2
+URL сайта: https://andreyhiitola.github.io/pelikan-alakol-site_v2
 Современный адаптивный сайт для базы отдыха "Пеликан" на озере Алаколь с полной поддержкой JSON-контента.
 
 🎯 Возможности

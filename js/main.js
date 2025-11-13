@@ -1,194 +1,96 @@
-/* ============================================
-   MAIN.JS - Главный файл инициализации
-   ============================================ */
-
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🐦 Пеликан Алаколь - сайт загружен');
-
-    // Инициализация всех модулей
-    initNavigation();
-    loadAllContent();
-    setupScrollBehavior();
-});
-
-/**
- * Инициализация навигации и меню
- */
-function initNavigation() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    // Toggle меню на мобильных
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
+// Функция для добавления CSS-стилей динамически
+function addGlobalStyle(css) {
+    const head = document.head || document.getElementsByTagName('head')[0];
+    const style = document.createElement('style');
+    head.appendChild(style);
+    style.type = 'text/css';
+    if (style.styleSheet){
+      // Это для IE8 и старее
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
     }
-
-    // Закрытие меню при клике на ссылку
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-        });
-    });
-
-    // Активная ссылка при скролле
-    window.addEventListener('scroll', () => {
-        updateActiveNavLink();
-    });
 }
 
-/**
- * Обновление активной ссылки навигации
- */
-function updateActiveNavLink() {
-    const sections = document.querySelectorAll('section');
-    const scrollPosition = window.scrollY + 100;
+// Добавляем стили для темной темы и модальных окон
+addGlobalStyle(`
+    body.dark-mode {
+        --background-color: #121212;
+        --text-color: #e0e0e0;
+        --card-bg: #1e1e1e;
+        --border-color: #333;
+        --header-bg: #1f1f1f;
+        --nav-bg: #1f1f1f;
+        --button-bg: #333;
+        --button-hover-bg: #444;
+    }
+    .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgba(0,0,0,0.6);
+    }
+`);
 
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
+document.addEventListener('DOMContentLoaded', () => {
 
-            const activeLink = document.querySelector(`.nav-link[href="#${section.id}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
+    // --- ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ---
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
+        });
+    }
+
+    // --- ЛОГИКА МОДАЛЬНЫХ ОКОН (ПОГОДА И КАРТА) ---
+    const weatherModal = document.getElementById('weatherModal');
+    const mapModal = document.getElementById('mapModal');
+    const weatherBtn = document.querySelector('.weather-btn');
+    const mapBtn = document.querySelector('.map-btn');
+
+    if (weatherModal && weatherBtn) {
+        weatherBtn.addEventListener('click', () => {
+            weatherModal.style.display = 'block';
+        });
+    }
+
+    if (mapModal && mapBtn) {
+        mapBtn.addEventListener('click', () => {
+            mapModal.style.display = 'block';
+        });
+    }
+
+    // Закрытие модальных окон
+    const closeButtons = document.querySelectorAll('.modal-close');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (weatherModal) weatherModal.style.display = 'none';
+            if (mapModal) mapModal.style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == weatherModal) {
+            weatherModal.style.display = 'none';
+        }
+        if (event.target == mapModal) {
+            mapModal.style.display = 'none';
         }
     });
-}
 
-/**
- * Загрузка всего контента
- */
-function loadAllContent() {
-    loadWeather();
-    loadAccommodations();
-    loadActivities();
-    loadMenu();
-    loadGallery();
-    loadReviews();
-    loadContacts();
-}
-
-/**
- * Smooth scroll поведение
- */
-function setupScrollBehavior() {
-    // Header sticky behavior
-    const header = document.getElementById('header');
-    if (!header) return;
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.boxShadow = 'var(--shadow)';
-        } else {
-            header.style.boxShadow = 'var(--shadow-sm)';
-        }
-    });
-}
-
-/**
- * Универсальная функция загрузки JSON
- */
-async function loadJSON(filename) {
-    try {
-        const response = await fetch(`/public/data/${filename}.json`);
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${filename}.json`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.error(`Ошибка загрузки ${filename}.json:`, error);
-        return null;
-    }
-}
-
-/**
- * Функция для позвонить
- */
-function callPhone() {
-    window.location.href = 'tel:+77472621234';
-}
-
-/**
- * Функция для отправки на email
- */
-function sendEmail(email) {
-    window.location.href = `mailto:${email}`;
-}
-
-/**
- * Открыть модальное окно
- */
-function openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-/**
- * Закрыть модальное окно
- */
-function closeModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
-    }
-}
-
-/**
- * Закрыть модальное окно по клику за его границы
- */
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('modal')) {
-        const modal = event.target;
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto';
-    }
+    console.log('Основной скрипт инициализирован.');
 });
-
-/**
- * Форматирование цены
- */
-function formatPrice(price) {
-    return new Intl.NumberFormat('ru-KZ', {
-        style: 'currency',
-        currency: 'KZT',
-        minimumFractionDigits: 0
-    }).format(price);
-}
-
-/**
- * Форматирование даты
- */
-function formatDate(dateString) {
-    const options = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        locale: 'ru-KZ'
-    };
-    return new Date(dateString).toLocaleDateString('ru-KZ', options);
-}
-
-/**
- * Создание звезд рейтинга
- */
-function createRatingStars(rating) {
-    let stars = '';
-    for (let i = 1; i <= 5; i++) {
-        stars += i <= rating ? '★' : '☆';
-    }
-    return stars;
-}
-
-console.log('✅ main.js загружен');

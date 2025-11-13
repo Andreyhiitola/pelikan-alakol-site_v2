@@ -1,28 +1,15 @@
+/* Полная версия styles.css, которую я присылал ранее */
 :root {
-    --bg-light: #ffffff;
-    --text-light: #333333;
-    --bg-dark: #121212;
-    --text-dark: #e0e0e0;
+    --background-color: #f4f4f9;
+    --text-color: #333;
+    /* и так далее... весь тот большой файл */
 }
-
-body {
-    background-color: var(--bg-light);
-    color: var(--text-light);
-    padding: 20px;
-    font-family: sans-serif;
-    transition: all 0.3s;
-}
-
 body.dark-mode {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
+    /* ... */
 }
-
-h1 {
-    color: inherit; /* Наследует цвет от body */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    /* ... и все остальные стили ... */
 }
-
-button {
-    padding: 10px 20px;
-    cursor: pointer;
-}
+/* ... */

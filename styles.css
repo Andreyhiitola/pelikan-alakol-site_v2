@@ -1781,4 +1781,8 @@ body.dark-mode {
     height: 400px; /* Высота карты */
     width: 100%;   /* Ширина карты */
 }
+#mapContainer {
+    height: 400px;
+    width: 100%;
+}
 

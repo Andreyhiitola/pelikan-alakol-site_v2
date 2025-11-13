@@ -1,45 +1,1006 @@
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пеликан Алаколь (Проект 2.0)</title>
+    <title>Пеликан Алаколь - Семейный отдых на озере</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <style>
+        :root {
+            --primary-green: #2d8659;
+            --secondary-green: #4ca876;
+            --accent-blue: #0077b6;
+            --light-blue: #00d4ff;
+            --background-light: #f5faf8;
+            --white: #fff;
+            --text-dark: #2c3e50;
+            --shadow: 0 8px 24px rgba(45, 134, 89, 0.15);
+            --shadow-lg: 0 16px 40px rgba(45, 134, 89, 0.2);
+        }
+
+        body.dark-mode {
+            --background-light: #1a1a1a;
+            --white: #2a2a2a;
+            --text-dark: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--background-light) 0%, #e8f6f3 100%);
+            color: var(--text-dark);
+            overscroll-behavior-y: contain;
+            transition: background 0.3s;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, rgba(45, 134, 89, 0.95), rgba(76, 168, 118, 0.95)), 
+                        url('https://user-gen-media-assets.s3.amazonaws.com/seedream_images/edfaeb96-5ec3-4dab-9277-b987ff71a8f9.png');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            color: var(--primary-green);
+            border-bottom: 3px solid var(--accent-blue);
+            padding-bottom: 10px;
+            margin: 30px 0 20px 0;
+            font-size: 1.5em;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+            max-width: 100%;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary-green);
+        }
+
+        .hero-section p {
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .filter-section {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-green);
+            font-size: 0.9em;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 10px;
+            border: 2px solid rgba(45, 134, 89, 0.2);
+            border-radius: 8px;
+            font-size: 0.95em;
+            background: var(--white);
+            color: var(--text-dark);
+            transition: border 0.3s;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: var(--secondary-green);
+            box-shadow: 0 0 0 3px rgba(45, 134, 89, 0.1);
+        }
+
+        .filter-btn {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .scroll-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .scroll-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-container::-webkit-scrollbar-track {
+            background: rgba(45, 134, 89, 0.1);
+            border-radius: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: var(--secondary-green);
+            border-radius: 10px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-green);
+        }
+
+        .scroll-item {
+            flex: 0 0 calc(100% - 20px);
+            scroll-snap-align: start;
+            background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05));
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary-green);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(45, 134, 89, 0.08);
+            transition: all 0.3s;
+            min-width: 300px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .scroll-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-5px);
+        }
+
+        .scroll-item img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 0 0 15px 0;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.3s;
+        }
+
+        .scroll-item:hover img {
+            transform: scale(1.05);
+            filter: brightness(0.85);
+        }
+
+        .scroll-item h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-green);
+            font-size: 1.2em;
+        }
+
+        .scroll-item p {
+            margin: 0;
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(45, 134, 89, 0.9);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .scroll-item:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .scroll-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3em;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .scroll-nav-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .scroll-nav-btn.prev {
+            left: 0;
+        }
+
+        .scroll-nav-btn.next {
+            right: 0;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 3em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(45, 134, 89, 0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(45, 134, 89, 0.6);
+        }
+
+        .lightbox.active .lightbox-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.1em;
+            background: rgba(45, 134, 89, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: var(--primary-green);
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .weather-card {
+            background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(45, 134, 89, 0.08);
+            transition: all 0.3s;
+        }
+
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .weather-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .weather-temp {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .weather-label {
+            font-size: 0.85em;
+            color: var(--text-dark);
+            margin-top: 8px;
+        }
+
+        .weather-day {
+            font-weight: 600;
+            color: var(--secondary-green);
+            margin-bottom: 8px;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+
+        .map-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .map-info-card {
+            background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1));
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(45, 134, 89, 0.08);
+        }
+
+        .map-info-card strong {
+            color: var(--primary-green);
+        }
+
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 500;
+        }
+
+        .floating-btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(45, 134, 89, 0.3);
+        }
+
+        .floating-btn.weather-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FFB84D);
+        }
+
+        .floating-btn.map-btn {
+            background: linear-gradient(135deg, #4ECDC4, #44A08D);
+        }
+
+        nav {
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        @media (min-width: 768px) {
+            body {
+                background: linear-gradient(135deg, var(--primary-green), #1a5c3f);
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 20px auto;
+                border-radius: 20px;
+                box-shadow: var(--shadow-lg);
+                overflow: hidden;
+            }
+
+            header {
+                padding: 40px 60px;
+                position: static;
+            }
+
+            main {
+                padding: 60px;
+            }
+
+            .filter-section {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .scroll-item {
+                flex: 0 0 calc(33.333% - 20px);
+                min-width: 350px;
+            }
+
+            .weather-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .modal-content {
+                max-width: 900px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .scroll-item {
+                flex: 0 0 calc(100% - 20px);
+                min-width: 100%;
+            }
+
+            .scroll-nav-btn {
+                display: none;
+            }
+
+            .floating-buttons {
+                bottom: 80px;
+                right: 15px;
+                gap: 10px;
+            }
+
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2em;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-content">
-            <h1><a href="#">База отдыха "Пеликан Алаколь"</a></h1>
-            
-            <!-- ВОТ НОВОЕ МЕНЮ -->
-            <nav class="top-nav">
-                <a href="#accommodation"><i class="fas fa-bed"></i> Жилье</a>
-                <a href="#infrastructure"><i class="fas fa-building"></i> Инфраструктура</a>
-                <a href="#activities"><i class="fas fa-swimmer"></i> Развлечения</a>
-                <a href="#offers"><i class="fas fa-tags"></i> Акции</a>
-                <a href="#contacts"><i class="fas fa-phone"></i> Контакты</a>
-            </nav>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>🌲 Пеликан Алаколь</h1>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleDarkMode()" title="Темная тема">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
 
-            <button class="theme-toggle" title="Переключить тему"><i class="fas fa-moon"></i></button>
+        <main>
+            <div class="hero-section">
+                <p>📍 <strong>озеро Алаколь, пос. Акши, Восточно-Казахстанская область</strong></p>
+                <p>Семейный отдых на озере Алаколь — более 5000 деревьев, чистый пляж, комфортные домики и незабываемые впечатления для всей семьи!</p>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>📅 Дата приезда</label>
+                    <input type="date" id="checkIn">
+                </div>
+                <div class="filter-group">
+                    <label>📅 Дата отъезда</label>
+                    <input type="date" id="checkOut">
+                </div>
+                <div class="filter-group">
+                    <label>👥 Гостей</label>
+                    <select id="guests">
+                        <option>1 человек</option>
+                        <option>2 человека</option>
+                        <option>3 человека</option>
+                        <option>4+ человека</option>
+                    </select>
+                </div>
+                <button class="filter-btn" onclick="filterRooms()">🔍 Поиск</button>
+            </div>
+
+            <h2 id="rooms"><i class="fas fa-bed"></i> Жилье</h2>
+            <div class="scroll-wrapper">
+                <div class="scroll-container" id="roomsContainer">
+                    <div class="scroll-item">
+                        <h3>🏠 Номер "Стандарт"</h3>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/c1794602-cb9e-4ddc-9996-11f56337edf0.png" alt="Стандарт">
+                        <p>Однокомнатный номер с 3 односпальными кроватями. Идеален для путешественников.</p>
+                        <p><strong style="color: var(--primary-green); font-size: 1.1em;">от 5000 ₸ / ночь</strong></p>
+                    </div>
+
+                    <div class="scroll-item">
+                        <h3>👨‍👩‍👧‍👦 Номер "Семейный"</h3>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/f74eac83-e338-489f-ab89-25320f8c2f81.png" alt="Семейный">
+                        <p>Двухкомнатный номер. Отлично подойдет для семей с детьми.</p>
+                        <p><strong style="color: var(--primary-green); font-size: 1.1em;">от 8500 ₸ / ночь</strong></p>
+                    </div>
+
+                    <div class="scroll-item">
+                        <h3>👑 Люкс "Премиум"</h3>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/2f324d76-3abc-449d-9084-96c57436026c.png" alt="Люкс">
+                        <p>Просторный номер с гостиной и персональным балконом на озеро.</p>
+                        <p><strong style="color: var(--primary-green); font-size: 1.1em;">от 12000 ₸ / ночь</strong></p>
+                    </div>
+
+                    <div class="scroll-item">
+                        <h3>🏡 Номер "Комфорт+"</h3>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/edfaeb96-5ec3-4dab-9277-b987ff71a8f9.png" alt="Комфорт+">
+                        <p>Улучшенный номер с дополнительными удобствами и видом на озеро.</p>
+                        <p><strong style="color: var(--primary-green); font-size: 1.1em;">от 6500 ₸ / ночь</strong></p>
+                    </div>
+                </div>
+                <button class="scroll-nav-btn prev" onclick="scrollItems('rooms', -1)">❮</button>
+                <button class="scroll-nav-btn next" onclick="scrollItems('rooms', 1)">❯</button>
+            </div>
+
+            <h2><i class="fas fa-camera"></i> Галерея Пеликана</h2>
+            <div class="scroll-wrapper">
+                <div class="scroll-container" id="galleryContainer">
+                    <div class="scroll-item" onclick="openLightbox(0)">
+                        <div class="photo-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/edfaeb96-5ec3-4dab-9277-b987ff71a8f9.png" alt="Озеро">
+                        <h3>Озеро Алаколь на закате</h3>
+                        <p>Потрясающие виды на озеро, окруженное горами. Идеальное место для фотографий.</p>
+                    </div>
+
+                    <div class="scroll-item" onclick="openLightbox(1)">
+                        <div class="photo-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/c1794602-cb9e-4ddc-9996-11f56337edf0.png" alt="Домики">
+                        <h3>Деревянные срубы</h3>
+                        <p>Уютные деревянные дома среди зелени. Каждый номер — природное объятие.</p>
+                    </div>
+
+                    <div class="scroll-item" onclick="openLightbox(2)">
+                        <div class="photo-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/f74eac83-e338-489f-ab89-25320f8c2f81.png" alt="Семья">
+                        <h3>Дети веселятся</h3>
+                        <p>Улыбки, смех и безопасное пространство для детей. Радость на лицах гостей.</p>
+                    </div>
+
+                    <div class="scroll-item" onclick="openLightbox(3)">
+                        <div class="photo-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/2f324d76-3abc-449d-9084-96c57436026c.png" alt="Горы">
+                        <h3>Горные маршруты</h3>
+                        <p>Приключения в окружении природы. Треккинг и экскурсии для активных путешественников.</p>
+                    </div>
+
+                    <div class="scroll-item" onclick="openLightbox(4)">
+                        <div class="photo-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                        <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/c7210a7d-951b-49ed-9456-b3987b0a67b2.png" alt="Пляж">
+                        <h3>Галечный пляж</h3>
+                        <p>Чистый пляж с галькой богатой на кремний. Целебные свойства озера.</p>
+                    </div>
+                </div>
+                <button class="scroll-nav-btn prev" onclick="scrollItems('gallery', -1)">❮</button>
+                <button class="scroll-nav-btn next" onclick="scrollItems('gallery', 1)">❯</button>
+            </div>
+        </main>
+
+        <nav>
+            <a href="#rooms"><i class="fas fa-bed"></i> Номера</a>
+            <a href="#"><i class="fas fa-cloud"></i> Контакты</a>
+            <a href="#"><i class="fas fa-phone"></i> +7 (728) 333-00-02</a>
+        </nav>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <button class="lightbox-nav lightbox-prev" onclick="prevPhoto()">❮</button>
+            <button class="lightbox-nav lightbox-next" onclick="nextPhoto()">❯</button>
+            <div class="lightbox-counter">
+                <span id="currentPhoto">1</span> / <span id="totalPhotos">5</span>
+            </div>
         </div>
-    </header>
+    </div>
 
-    <main id="content">
-        <!-- Сюда будем добавлять секции контента -->
-        <p style="padding: 20px;">Это базовый проект. Меню готово к тестированию. Скоро здесь появятся секции.</p>
+    <div class="modal" id="weatherModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeWeatherModal()">✕</button>
+            <h2><i class="fas fa-cloud-sun"></i> Прогноз погоды на озере Алаколь</h2>
+            <div class="weather-grid" id="weatherGrid"></div>
+        </div>
+    </div>
 
-        <!-- ПРИМЕРЫ СЕКЦИЙ, НА КОТОРЫЕ ССЫЛАЕТСЯ МЕНЮ -->
-        <section id="accommodation" style="height: 100vh; padding: 20px; background-color: #e9ecef;"><h2>Жилье</h2></section>
-        <section id="infrastructure" style="height: 100vh; padding: 20px;"><h2>Инфраструктура</h2></section>
-        <section id="activities" style="height: 100vh; padding: 20px; background-color: #e9ecef;"><h2>Развлечения</h2></section>
-        <section id="offers" style="height: 100vh; padding: 20px;"><h2>Акции</h2></section>
-        <section id="contacts" style="height: 100vh; padding: 20px; background-color: #e9ecef;"><h2>Контакты</h2></section>
-    </main>
-    
-    <!-- Скрипты подключаются в конце -->
-    <script src="js/main.js" defer></script>
-    <script src="js/navigation.js" defer></script>
+    <div class="modal" id="mapModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeMapModal()">✕</button>
+            <h2><i class="fas fa-map-location-dot"></i> Где мы находимся</h2>
+            <p><strong>📍 озеро Алаколь, пос. Акши</strong> — второе по величине озеро Казахстана.</p>
+            <div id="map"></div>
+            <div class="map-info">
+                <div class="map-info-card">
+                    <strong>🌡️ Температура воды</strong>
+                    <p>22-24°C (летом)</p>
+                </div>
+                <div class="map-info-card">
+                    <strong>🌡️ Температура воздуха</strong>
+                    <p>28-30°C (летом)</p>
+                </div>
+                <div class="map-info-card">
+                    <strong>📏 Площадь озера</strong>
+                    <p>2,236 км²</p>
+                </div>
+                <div class="map-info-card">
+                    <strong>💧 Соленость воды</strong>
+                    <p>Целебные свойства</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn weather-btn" onclick="openWeatherModal()" title="Прогноз погоды">
+            <i class="fas fa-cloud-sun"></i>
+        </button>
+        <button class="floating-btn map-btn" onclick="openMapModal()" title="Интерактивная карта">
+            <i class="fas fa-map-location-dot"></i>
+        </button>
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        function scrollItems(type, direction) {
+            const containerId = type === 'rooms' ? 'roomsContainer' : 'galleryContainer';
+            const container = document.getElementById(containerId);
+            const scrollAmount = direction * 400;
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+
+        function filterRooms() {
+            alert('Фильтр активирован');
+        }
+
+        const photos = [
+            'https://user-gen-media-assets.s3.amazonaws.com/seedream_images/edfaeb96-5ec3-4dab-9277-b987ff71a8f9.png',
+            'https://user-gen-media-assets.s3.amazonaws.com/seedream_images/c1794602-cb9e-4ddc-9996-11f56337edf0.png',
+            'https://user-gen-media-assets.s3.amazonaws.com/seedream_images/f74eac83-e338-489f-ab89-25320f8c2f81.png',
+            'https://user-gen-media-assets.s3.amazonaws.com/seedream_images/2f324d76-3abc-449d-9084-96c57436026c.png',
+            'https://user-gen-media-assets.s3.amazonaws.com/seedream_images/c7210a7d-951b-49ed-9456-b3987b0a67b2.png'
+        ];
+
+        let currentPhotoIndex = 0;
+
+        function openLightbox(index) {
+            currentPhotoIndex = index;
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightboxImg').src = photos[index];
+            document.getElementById('currentPhoto').textContent = index + 1;
+            document.getElementById('totalPhotos').textContent = photos.length;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            openLightbox(currentPhotoIndex);
+        }
+
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+            openLightbox(currentPhotoIndex);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextPhoto();
+                if (e.key === 'ArrowLeft') prevPhoto();
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        const weatherData = [
+            { day: 'Сегодня', icon: '☀️', temp: 28, condition: 'Солнечно' },
+            { day: 'Завтра', icon: '⛅', temp: 26, condition: 'Облачно' },
+            { day: 'Пт', icon: '🌤️', temp: 27, condition: 'Переменная' },
+            { day: 'Сб', icon: '☀️', temp: 29, condition: 'Солнечно' },
+            { day: 'Вс', icon: '⛈️', temp: 23, condition: 'Гроза' }
+        ];
+
+        function openWeatherModal() {
+            document.getElementById('weatherModal').classList.add('active');
+            const grid = document.getElementById('weatherGrid');
+            if (grid.children.length === 0) {
+                weatherData.forEach(w => {
+                    const card = document.createElement('div');
+                    card.className = 'weather-card';
+                    card.innerHTML = `
+                        <div class="weather-day">${w.day}</div>
+                        <div class="weather-icon">${w.icon}</div>
+                        <div class="weather-temp">${w.temp}°C</div>
+                        <div class="weather-label">${w.condition}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function closeWeatherModal() {
+            document.getElementById('weatherModal').classList.remove('active');
+        }
+
+        let mapInitialized = false;
+
+        function openMapModal() {
+            document.getElementById('mapModal').classList.add('active');
+            if (!mapInitialized) {
+                setTimeout(initMap, 100);
+            }
+        }
+
+        function closeMapModal() {
+            document.getElementById('mapModal').classList.remove('active');
+        }
+
+        function initMap() {
+            if (mapInitialized) return;
+            
+            const map = L.map('map').setView([46.18, 81.40], 11);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 18
+            }).addTo(map);
+
+            const pelicanIcon = L.divIcon({
+                html: `<div style="background: linear-gradient(135deg, #2d8659, #4ca876); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3); border: 3px solid white;">🌲</div>`,
+                iconSize: [50, 50],
+                iconAnchor: [25, 50],
+                popupAnchor: [0, -50]
+            });
+
+            L.marker([46.18, 81.40], { icon: pelicanIcon })
+                .bindPopup('<div style="text-align: center; font-weight: bold; color: #2d8659;"><h3>🌲 Пеликан Алаколь</h3><p>📍 пос. Акши</p><p>📞 +7 (728) 333-00-02</p></div>')
+                .addTo(map)
+                .openPopup();
+
+            L.circle([46.18, 81.40], {
+                color: '#00d4ff',
+                fill: true,
+                fillColor: '#00d4ff',
+                fillOpacity: 0.1,
+                weight: 2,
+                radius: 25000
+            }).addTo(map);
+
+            mapInitialized = true;
+        }
+
+        document.getElementById('weatherModal').addEventListener('click', (e) => {
+            if (e.target.id === 'weatherModal') closeWeatherModal();
+        });
+
+        document.getElementById('mapModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mapModal') closeMapModal();
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,21 @@
 :root {
-  /* Primitive Color Tokens */
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --card-bg: #ffffff;
+    --border-color: #ddd;
+    --header-bg: #fff;
+    --nav-bg: #fff;
+    --button-bg: #007bff;
+    --button-hover-bg: #0056b3;
+    --link-color: #007bff;
+}
+
+/* Применяем переменные к основным элементам */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+/* Primitive Color Tokens */
   --color-white: rgba(255, 255, 255, 1);
   --color-black: rgba(0, 0, 0, 1);
   --color-cream-50: rgba(252, 252, 249, 1);

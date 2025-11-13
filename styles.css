@@ -1785,4 +1785,21 @@ body.dark-mode {
     height: 400px;
     width: 100%;
 }
+/* --- Стили для контактов и карты --- */
+.contact-section { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+.contact-section:last-child { border-bottom: none; }
+.contact-section h3 { margin: 0 0 0.75rem; font-size: 1.1rem; color: var(--link-color); } /* Используем общую переменную */
+.contact-link { color: var(--link-color); text-decoration: none; font-weight: 500; }
+.contact-link:hover { text-decoration: underline; }
+.social-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.social-link { display: inline-block; padding: 0.5rem 1rem; background: var(--background-color); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; font-weight: 500; }
+.social-link:hover { background: var(--link-color); color: white; }
+
+#mapContainer {
+    height: 400px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2rem;
+}
 

@@ -1,96 +1,92 @@
-// Функция для добавления CSS-стилей динамически
-function addGlobalStyle(css) {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const style = document.createElement('style');
-    head.appendChild(style);
-    style.type = 'text/css';
-    if (style.styleSheet){
-      // Это для IE8 и старее
-      style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
-    }
-}
-
-// Добавляем стили для темной темы и модальных окон
-addGlobalStyle(`
-    body.dark-mode {
-        --background-color: #121212;
-        --text-color: #e0e0e0;
-        --card-bg: #1e1e1e;
-        --border-color: #333;
-        --header-bg: #1f1f1f;
-        --nav-bg: #1f1f1f;
-        --button-bg: #333;
-        --button-hover-bg: #444;
-    }
-    .modal {
-        display: none; 
-        position: fixed; 
-        z-index: 1000; 
-        left: 0;
-        top: 0;
-        width: 100%; 
-        height: 100%; 
-        overflow: auto; 
-        background-color: rgba(0,0,0,0.6);
-    }
-`);
-
-
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM загружен. Главный скрипт инициализируется...');
 
-    // --- ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ---
+    // ===========================================
+    // --- 1. ЛОГИКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ---
+    // ===========================================
     const themeToggle = document.querySelector('.theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const icon = themeToggle.querySelector('i');
-            if (document.body.classList.contains('dark-mode')) {
+    const body = document.body;
+
+    // Функция для применения темы
+    const applyTheme = (theme) => {
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+            if (icon) {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
-            } else {
+            }
+        } else {
+            body.classList.remove('dark-mode');
+            if (icon) {
                 icon.classList.remove('fa-sun');
                 icon.classList.add('fa-moon');
             }
+        }
+    };
+
+    // При загрузке страницы проверяем сохраненную тему
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    // Обработчик клика по кнопке темы
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme); // Сохраняем выбор
+            applyTheme(newTheme);
         });
     }
 
-    // --- ЛОГИКА МОДАЛЬНЫХ ОКОН (ПОГОДА И КАРТА) ---
+    // ===========================================
+    // --- 2. ЛОГИКА МОДАЛЬНЫХ ОКОН ---
+    // ===========================================
     const weatherModal = document.getElementById('weatherModal');
     const mapModal = document.getElementById('mapModal');
-    const weatherBtn = document.querySelector('.weather-btn');
-    const mapBtn = document.querySelector('.map-btn');
 
-    if (weatherModal && weatherBtn) {
-        weatherBtn.addEventListener('click', () => {
-            weatherModal.style.display = 'block';
-        });
-    }
+    const openModal = (modal) => {
+        if (modal) modal.style.display = 'block';
+    };
 
-    if (mapModal && mapBtn) {
-        mapBtn.addEventListener('click', () => {
-            mapModal.style.display = 'block';
-        });
-    }
+    const closeModal = () => {
+        if (weatherModal) weatherModal.style.display = 'none';
+        if (mapModal) mapModal.style.display = 'none';
+    };
 
-    // Закрытие модальных окон
-    const closeButtons = document.querySelectorAll('.modal-close');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            if (weatherModal) weatherModal.style.display = 'none';
-            if (mapModal) mapModal.style.display = 'none';
-        });
+    // Кнопка "Погода"
+    document.querySelector('.weather-btn')?.addEventListener('click', () => {
+        openModal(weatherModal);
+        // Если функция fetchWeather определена в weather.js, она будет вызвана там же
+        // Если нет, можно вызвать ее отсюда: if (typeof fetchWeather === 'function') fetchWeather();
     });
 
+    // Кнопка "Карта"
+    document.querySelector('.map-btn')?.addEventListener('click', () => {
+        openModal(mapModal);
+        // Вызываем initMap только если она существует (определена в contacts.js)
+        if (typeof initMap === 'function') {
+            initMap();
+        } else {
+            console.error('Функция initMap() не найдена. Убедитесь, что contacts.js подключен.');
+        }
+    });
+
+    // Кнопки закрытия "крестик"
+    document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', closeModal));
+
+    // Закрытие по клику на фон
     window.addEventListener('click', (event) => {
-        if (event.target == weatherModal) {
-            weatherModal.style.display = 'none';
-        }
-        if (event.target == mapModal) {
-            mapModal.style.display = 'none';
+        if (event.target === weatherModal || event.target === mapModal) {
+            closeModal();
         }
     });
 
-    console.log('Основной скрипт инициализирован.');
+    // Закрытие по клавише Esc
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    console.log('Основной скрипт успешно инициализирован.');
 });

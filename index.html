@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пеликан Алаколь - Семейный отдых на озере</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+<!-- ВЕРХНЕЕ МЕНЮ НАВИГАЦИИ -->
+<nav class="top-nav">
+<div class="nav-container">
+<a href="#rooms" class="nav-brand"><i class="fas fa-leaf"></i> Пеликан</a>
+<div class="nav-links">
+<a href="#rooms"><i class="fas fa-bed"></i> Номера</a>
+<a href="#infrastructure"><i class="fas fa-building"></i> Инфра</a>
+<a href="#offers"><i class="fas fa-star"></i> Скидки</a>
+<a href="#activities"><i class="fas fa-football"></i> Активы</a>
+<a href="#gallery"><i class="fas fa-camera"></i> Фото</a>
+<a href="#faq"><i class="fas fa-question"></i> FAQ</a>
+<a href="#contacts"><i class="fas fa-phone"></i> Контакты</a>
+</div>
+<button class="theme-toggle" onclick="toggleDarkMode()" title="Темная тема">
+<i class="fas fa-moon"></i>
+</button>
+</div>
+</nav>
+
+<!-- HEADER -->
+<header>
+<div class="header-left">
+<h1>🌲 Пеликан Алаколь</h1>
+</div>
+<div class="header-right">
+<a href="tel:+77472621234" class="header-phone">
+<i class="fas fa-phone"></i> +7 (747) 262-12-34
+</a>
+</div>
+</header>
+
+<main>
+<div class="hero-section">
+<p>📍 <strong>озеро Алаколь, пос. Акши, Восточно-Казахстанская область</strong></p>
+<p>Семейный отдых на озере Алаколь — более 5000 деревьев, чистый пляж, комфортные домики и незабываемые впечатления для всей семьи!</p>
+</div>
+
+<div class="filter-section">
+<div class="filter-group">
+<label>📅 Дата приезда</label>
+<input type="date" id="checkIn">
+</div>
+<div class="filter-group">
+<label>📅 Дата отъезда</label>
+<input type="date" id="checkOut">
+</div>
+<div class="filter-group">
+<label>👥 Гостей</label>
+<select id="guests">
+<option>1 человек</option>
+<option>2 человека</option>
+<option>3 человека</option>
+<option>4+ человека</option>
+</select>
+</div>
+<button class="filter-btn" onclick="filterRooms()">🔍 Поиск</button>
+</div>
+
+<h2 id="infrastructure"><i class="fas fa-building"></i> Инфраструктура базы</h2>
+<div class="features-grid" id="infrastructureContainer">
+<div class="loading">Загрузка инфраструктуры...</div>
+</div>
+
+<h2 id="rooms"><i class="fas fa-bed"></i> Жилье</h2>
+<div class="scroll-wrapper">
+<div class="scroll-container" id="roomsContainer">
+<div class="loading">Загрузка номеров...</div>
+</div>
+<button class="scroll-nav-btn prev" onclick="scrollItems('rooms', -1)">❮</button>
+<button class="scroll-nav-btn next" onclick="scrollItems('rooms', 1)">❯</button>
+</div>
+
+<h2 id="offers"><i class="fas fa-star"></i> Спецпредложения</h2>
+<div class="features-grid" id="offersContainer">
+<div class="loading">Загрузка предложений...</div>
+</div>
+
+<h2 id="activities"><i class="fas fa-football"></i> Активности и мероприятия</h2>
+<div class="features-grid" id="activitiesContainer">
+<div class="loading">Загрузка активностей...</div>
+</div>
+
+<h2 id="gallery"><i class="fas fa-camera"></i> Галерея Пеликана</h2>
+<div class="scroll-wrapper">
+<div class="scroll-container" id="galleryContainer">
+<div class="loading">Загрузка галереи...</div>
+</div>
+<button class="scroll-nav-btn prev" onclick="scrollItems('gallery', -1)">❮</button>
+<button class="scroll-nav-btn next" onclick="scrollItems('gallery', 1)">❯</button>
+</div>
+
+<h2 id="reviews"><i class="fas fa-star"></i> Отзывы гостей</h2>
+<div class="features-grid" id="reviewsContainer">
+<div class="loading">Загрузка отзывов...</div>
+</div>
+
+<h2 id="faq"><i class="fas fa-question-circle"></i> Часто задаваемые вопросы</h2>
+<div class="faq-container" id="faqContainer">
+<div class="loading">Загрузка FAQ...</div>
+</div>
+
+<h2 id="contacts"><i class="fas fa-map-marker"></i> Контакты</h2>
+<div class="contact-info" id="contactsContainer">
+<div class="loading">Загрузка контактов...</div>
+</div>
+</main>
+
+<!-- НИЖНЕЕ МЕНЮ НАВИГАЦИИ -->
+<nav class="bottom-nav">
+<a href="#rooms"><i class="fas fa-bed"></i> Номера</a>
+<a href="#infrastructure"><i class="fas fa-building"></i> Инфраструктура</a>
+<a href="#offers"><i class="fas fa-star"></i> Предложения</a>
+<a href="#activities"><i class="fas fa-football"></i> Активности</a>
+<a href="#gallery"><i class="fas fa-camera"></i> Галерея</a>
+<a href="#reviews"><i class="fas fa-comment"></i> Отзывы</a>
+<a href="#faq"><i class="fas fa-question"></i> FAQ</a>
+<a href="#contacts"><i class="fas fa-map-marker"></i> Контакты</a>
+<a href="tel:+77472621234"><i class="fas fa-phone"></i> Звонок</a>
+</nav>
+</div>
+
+<div class="lightbox" id="lightbox">
+<div class="lightbox-content">
+<img class="lightbox-img" id="lightboxImg" src="" alt="">
+<button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+</div>
+</div>
+
+<div class="modal" id="weatherModal">
+<div class="modal-content">
+<button class="modal-close" onclick="closeWeatherModal()">✕</button>
+<h2><i class="fas fa-cloud-sun"></i> Прогноз погоды</h2>
+<div class="weather-grid" id="weatherGrid"></div>
+</div>
+</div>
+
+<div class="modal" id="mapModal">
+<div class="modal-content">
+<button class="modal-close" onclick="closeMapModal()">✕</button>
+<h2><i class="fas fa-map-location-dot"></i> Где мы находимся</h2>
+<div id="map"></div>
+</div>
+</div>
+
+<div class="floating-buttons">
+<button class="floating-btn weather-btn" onclick="openWeatherModal()" title="Прогноз погоды">
+<i class="fas fa-cloud-sun"></i>
+</button>
+<button class="floating-btn map-btn" onclick="openMapModal()" title="Интерактивная карта">
+<i class="fas fa-map-location-dot"></i>
+</button>
+</div>
+
+<script src="content.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+{
+  "contacts": {
+    "phone": [
+      {
+        "label": "Офис Алматы",
+        "number": "+77272927899",
+        "display": "+7 (727) 292-78-99"
+      },
+      {
+        "label": "Офис Алматы",
+        "number": "+77272501170",
+        "display": "+7 (727) 250-11-70"
+      },
+      {
+        "label": "Мобильный",
+        "number": "+77017714733",
+        "display": "+7 701 771 47 33"
+      },
+      {
+        "label": "Мобильный",
+        "number": "+77058067833",
+        "display": "+7 705 806 78 33"
+      },
+      {
+        "label": "Мобильный",
+        "number": "+77058067833",
+        "display": "+7 705 80 67 833"
+      },
+      {
+        "label": "База",
+        "number": "+77283330002",
+        "display": "+7 (72833) 30002"
+      }
+    ],
+    "telegram": {
+      "username": "pelikan_alakol",
+      "url": "https://t.me/pelikan_alakol",
+      "description": "Оперативная связь, отправьте сообщение в Telegram"
+    },
+    "whatsapp": {
+      "number": "+77017714733",
+      "url": "https://wa.me/77017714733",
+      "description": "Быстрая поддержка 24/7"
+    },
+    "email": {
+      "address": "pelikan-08@mail.ru",
+      "url": "mailto:pelikan-08@mail.ru",
+      "description": "Письменные запросы"
+    },
+    "instagram": {
+      "username": "@pelican_alacol",
+      "url": "https://instagram.com/pelican_alacol",
+      "description": "Следите за новостями и акциями"
+    },
+    "website": {
+      "url": "http://pelican-alacol.ru",
+      "domain": "pelican-alacol.ru",
+      "description": "Полная информация и онлайн-бронирование"
+    }
+  }
+}

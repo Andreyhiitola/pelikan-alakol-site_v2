@@ -50,7 +50,7 @@ header {
 position: sticky;
 top: 0;
 z-index: 100;
-background: linear-gradient(135deg, rgba(45, 134, 89, 0.85), rgba(76, 168, 118, 0.85));
+background: linear-gradient(135deg, rgba(45, 134, 89, 0.95), rgba(76, 168, 118, 0.95));
 color: var(--white);
 padding: 15px 20px;
 box-shadow: var(--shadow);
@@ -59,8 +59,6 @@ justify-content: space-between;
 align-items: center;
 flex-wrap: wrap;
 gap: 15px;
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
 }
 .header-left h1 {
 margin: 0;
@@ -133,7 +131,7 @@ font-size: 1.5em;
 }
 main {
 flex-grow: 1;
-padding: 0px 20px 20px 20px;
+padding: 20px;
 max-width: 100%;
 }
 .hero-section {
@@ -1013,15 +1011,41 @@ width: 100%;
 }
 }
 
-/* Smooth scrolling and scroll margin */
+/* ===== BLUR ЭФФЕКТ ДЛЯ HEADER ===== */
+header {
+    background: linear-gradient(135deg, rgba(45, 134, 89, 0.85), rgba(76, 168, 118, 0.85)) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+body {
+    overscroll-behavior-y: auto !important;
+}
+
+main {
+    padding-top: 0 !important;
+}
+
 html {
     scroll-behavior: smooth;
+    overflow-y: scroll;
 }
 
 h2 {
     scroll-margin-top: 80px;
 }
 </style>
+<script>
+// ===== КОНФИГУРАЦИЯ ПУТЕЙ К ДАННЫМ =====
+const CONFIG = {
+    dataPath: './public/data',
+    getDataFile: function(filename) {
+        return this.dataPath + '/' + filename;
+    }
+};
+console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
+</script>
+
 </head>
 <body>
 <div class="container">

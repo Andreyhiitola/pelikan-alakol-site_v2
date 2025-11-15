@@ -4,13 +4,13 @@
 
 /**
  * Рендерит список номеров.
- * Возможны два формата данных:
+ * Поддерживает два формата данных:
  * 1) массив объектов: [{...}, {...}]
  * 2) объект: { accommodations: [{...}, {...}] }
- * В обоих случаях формируем одну общую коллекцию rooms.
  */
 function renderAccommodation(data) {
   const container = document.getElementById('roomsContainer');
+  
   if (!container) {
     console.error('❌ Контейнер roomsContainer не найден на странице');
     return;
@@ -34,8 +34,8 @@ function renderAccommodation(data) {
   // Очистить контейнер перед отрисовкой
   container.innerHTML = '';
 
-  // Рендеринг через создание элементов DOM (без опасного innerHTML-подстановки)
-  rooms.forEach(room => {
+  // Рендеринг через создание элементов DOM
+  rooms.forEach((room, index) => {
     // Безопасная обработка полей
     const name = room?.name ?? 'Номер';
     const icon = room?.icon ?? '🏠';
@@ -44,9 +44,15 @@ function renderAccommodation(data) {
     const price = room?.price ?? '';
     const amenities = Array.isArray(room?.amenities) ? room.amenities : [];
 
-    // Локальная карточка
+    // Создаем карточку
     const card = document.createElement('div');
     card.className = 'scroll-item';
+
+    // Добавляем photo-overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'photo-overlay';
+    overlay.innerHTML = '<i class="fas fa-expand"></i>';
+    card.appendChild(overlay);
 
     // Фото
     if (image) {
@@ -57,7 +63,7 @@ function renderAccommodation(data) {
       img.style.objectFit = 'cover';
       card.appendChild(img);
     } else {
-      // запасной placeholder, если фото нет
+      // Placeholder если фото нет
       const placeholder = document.createElement('div');
       placeholder.style.height = '250px';
       placeholder.style.display = 'flex';
@@ -107,7 +113,7 @@ function renderAccommodation(data) {
     container.appendChild(card);
   });
 
-  console.log('✅ Accommodation загружены и отрисованы');
+  console.log(`✅ Accommodation загружены и отрисованы (${rooms.length} номеров)`);
 }
 
 // Экспорт функции для использования в main.js

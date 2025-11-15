@@ -3,73 +3,57 @@
 // ========================================
 
 function renderAccommodation(data) {
-  console.log('📌 renderAccommodation вызвана с данными:', data);
-  
   const container = document.getElementById('roomsContainer');
   
+  // Шаг 1: Проверяем контейнер
   if (!container) {
     console.error('❌ Контейнер roomsContainer не найден');
     return;
   }
 
+  // Шаг 2: Проверяем данные
   if (!data) {
-    console.error('❌ data is null или undefined');
+    console.error('❌ Нет данных для accommodation');
     return;
   }
 
-  // Определяем где находится массив номеров
-  let accommodations = null;
+  // Шаг 3: Определяем формат данных
+  // Может быть: {accommodations: [...]} или просто [...]
+  let rooms;
   
   if (Array.isArray(data)) {
-    // Если сами данные это массив
-    accommodations = data;
+    rooms = data; // Если это уже массив
   } else if (data.accommodations && Array.isArray(data.accommodations)) {
-    // Если массив в свойстве accommodations
-    accommodations = data.accommodations;
+    rooms = data.accommodations; // Если это объект с массивом
   } else {
-    console.error('❌ Не удалось найти массив accommodations. Структура data:', Object.keys(data));
+    console.error('❌ Неверный формат данных accommodation');
     return;
   }
 
-  if (!accommodations || accommodations.length === 0) {
-    console.error('❌ Массив accommodations пуст');
+  // Шаг 4: Проверяем есть ли номера
+  if (rooms.length === 0) {
+    console.error('❌ Нет номеров в данных');
     return;
   }
 
-  // Очищаем контейнер
-  container.innerHTML = '';
-
-  // Рендеринг каждого номера
-  accommodations.forEach((room, index) => {
-    const roomCard = document.createElement('div');
-    roomCard.className = 'scroll-item';
-    
-    // Безопасное получение свойств
-    const icon = room.icon || '🏠';
-    const name = room.name || 'Номер';
-    const description = room.description || '';
-    const price = room.price || 'Уточняйте';
-    const image = room.image || '';
-    const amenities = room.amenities || [];
-
-    roomCard.innerHTML = `
+  // Шаг 5: Рендеринг
+  container.innerHTML = rooms.map(room => `
+    <div class="scroll-item">
       <div class="photo-overlay"><i class="fas fa-expand"></i></div>
-      ${image ? `<img src="${image}" alt="${name}" style="height: 250px; object-fit: cover;">` : '<img src="https://via.placeholder.com/400x250?text=Room&w=400&h=250" style="height: 250px; object-fit: cover;">'}
-      <h3>${icon} ${name}</h3>
-      <p>${description}</p>
-      ${amenities.length > 0 ? `
+      ${room.image ? `<img src="${room.image}" alt="${room.name}" style="height: 250px; object-fit: cover;">` : '<img src="https://via.placeholder.com/400x250?text=Room" style="height: 250px; object-fit: cover;">'}
+      <h3>${room.icon || '🏠'} ${room.name}</h3>
+      <p>${room.description}</p>
+      ${room.amenities && room.amenities.length > 0 ? `
         <ul class="infra-features">
-          ${amenities.map(a => `<li>✓ ${a}</li>`).join('')}
+          ${room.amenities.map(a => `<li>✓ ${a}</li>`).join('')}
         </ul>
       ` : ''}
-      <p><strong style="color: var(--primary-green); font-size: 1.1em;">от ${price} / ночь</strong></p>
-    `;
-    
-    container.appendChild(roomCard);
-  });
+      <p><strong style="color: var(--primary-green); font-size: 1.1em;">от ${room.price} / ночь</strong></p>
+    </div>
+  `).join('');
 
-  console.log(`✅ Accommodation: загружено ${accommodations.length} номеров`);
+  console.log(`✅ Accommodation загружены и отрисованы (${rooms.length} номеров)`);
 }
 
-// Экспорт функции
+// Экспорт функции для использования в main.js
 window.renderAccommodation = renderAccommodation;

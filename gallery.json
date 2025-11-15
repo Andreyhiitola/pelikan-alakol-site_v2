@@ -3,7 +3,7 @@
     "id": "lake-view",
     "title": "Вид на озеро",
     "description": "Панорамный вид на озеро Алаколь с чистой минеральной водой",
-    "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    "image": "./index/gallery/lake-view.jpg",
     "category": "nature",
     "tags": ["озеро", "вода", "панорама"],
     "uploaded": "2025-11-12"
@@ -12,7 +12,7 @@
     "id": "sunset",
     "title": "Закат на озере",
     "description": "Красивый закат над озером Алаколь в летнее время",
-    "url": "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80",
+    "image": "./index/gallery/sunset.jpg",
     "category": "nature",
     "tags": ["закат", "озеро", "природа"],
     "uploaded": "2025-11-12"
@@ -21,7 +21,7 @@
     "id": "wooden-house",
     "title": "Деревянный домик",
     "description": "Комфортный деревянный домик для проживания на базе",
-    "url": "https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&q=80",
+    "image": "./index/gallery/wooden-house.jpg",
     "category": "accommodation",
     "tags": ["домик", "дерево", "размещение"],
     "uploaded": "2025-11-12"
@@ -30,7 +30,7 @@
     "id": "cozy-interior",
     "title": "Уютный интерьер",
     "description": "Современный и уютный интерьер номера на базе",
-    "url": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80",
+    "image": "./index/gallery/cozy-interior.jpg",
     "category": "accommodation",
     "tags": ["интерьер", "номер", "уют"],
     "uploaded": "2025-11-12"
@@ -39,7 +39,7 @@
     "id": "outdoor-pool",
     "title": "Открытый бассейн",
     "description": "Чистый открытый бассейн с подогревом воды",
-    "url": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80",
+    "image": "./index/gallery/outdoor-pool.jpg",
     "category": "infrastructure",
     "tags": ["бассейн", "вода", "спорт"],
     "uploaded": "2025-11-12"
@@ -48,7 +48,7 @@
     "id": "summer-terrace",
     "title": "Летняя терраса",
     "description": "Уютная летняя терраса для отдыха и ужина с видом на озеро",
-    "url": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80",
+    "image": "./index/gallery/summer-terrace.jpg",
     "category": "infrastructure",
     "tags": ["терраса", "отдых", "вид"],
     "uploaded": "2025-11-12"
@@ -57,7 +57,7 @@
     "id": "magic-sunset",
     "title": "Волшебный закат",
     "description": "Магический закат с отражением в воде озера",
-    "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+    "image": "./index/gallery/magic-sunset.jpg",
     "category": "nature",
     "tags": ["закат", "вода", "волшебство"],
     "uploaded": "2025-11-12"
@@ -66,7 +66,7 @@
     "id": "mountain-view",
     "title": "Горный массив Мойынтау",
     "description": "Впечатляющий вид на горы Мойынтау с территории базы",
-    "url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    "image": "./index/gallery/mountain-view.jpg",
     "category": "nature",
     "tags": ["горы", "панорама", "пейзаж"],
     "uploaded": "2025-11-12"
@@ -75,7 +75,7 @@
     "id": "beach-day",
     "title": "День на пляже",
     "description": "Туристы на чистом галечном пляже озера Алаколь",
-    "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+    "image": "./index/gallery/beach-day.jpg",
     "category": "activities",
     "tags": ["пляж", "люди", "отдых"],
     "uploaded": "2025-11-12"
@@ -84,7 +84,7 @@
     "id": "swimming-pool-kids",
     "title": "Детский бассейн",
     "description": "Безопасный детский бассейн для малышей и родителей",
-    "url": "https://images.unsplash.com/photo-1576610616656-570582e797f1?w=800&q=80",
+    "image": "./index/gallery/swimming-pool-kids.jpg",
     "category": "accommodation",
     "tags": ["бассейн", "дети", "безопасность"],
     "uploaded": "2025-11-12"
@@ -93,7 +93,7 @@
     "id": "restaurant-dinner",
     "title": "Ресторан и ужин",
     "description": "Красивый ресторан с сервировкой стола для ужина",
-    "url": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
+    "image": "./index/gallery/restaurant-dinner.jpg",
     "category": "infrastructure",
     "tags": ["ресторан", "еда", "ужин"],
     "uploaded": "2025-11-12"
@@ -102,7 +102,7 @@
     "id": "morning-nature",
     "title": "Утро на природе",
     "description": "Спокойное утро с туманом на озере и пением птиц",
-    "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80",
+    "image": "./index/gallery/morning-nature.jpg",
     "category": "nature",
     "tags": ["утро", "природа", "туман"],
     "uploaded": "2025-11-12"
@@ -111,7 +111,7 @@
     "id": "bonfire-evening",
     "title": "Вечер у костра",
     "description": "Романтический вечер у костра с гостями",
-    "url": "https://images.unsplash.com/photo-1521575107034-e3fb11b08e77?w=800&q=80",
+    "image": "./index/gallery/bonfire-evening.jpg",
     "category": "activities",
     "tags": ["костер", "вечер", "романтика"],
     "uploaded": "2025-11-12"
@@ -120,7 +120,7 @@
     "id": "family-vacation",
     "title": "Семейный отдых",
     "description": "Счастливая семья на отдыхе на базе Пеликан",
-    "url": "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=80",
+    "image": "./index/gallery/family-vacation.jpg",
     "category": "activities",
     "tags": ["семья", "дети", "отдых"],
     "uploaded": "2025-11-12"
@@ -129,7 +129,7 @@
     "id": "bird-watching",
     "title": "Наблюдение за птицами",
     "description": "Редкие птицы озера Алаколь - основное богатство природы",
-    "url": "https://images.unsplash.com/photo-1444464666175-1642428541c7?w=800&q=80",
+    "image": "./index/gallery/bird-watching.jpg",
     "category": "nature",
     "tags": ["птицы", "природа", "фото"],
     "uploaded": "2025-11-12"
@@ -138,7 +138,7 @@
     "id": "night-sky",
     "title": "Ночное небо и звёзды",
     "description": "Чистое звёздное небо над озером Алаколь ночью",
-    "url": "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=800&q=80",
+    "image": "./index/gallery/night-sky.jpg",
     "category": "nature",
     "tags": ["ночь", "звёзды", "небо"],
     "uploaded": "2025-11-12"

@@ -1,47 +1,122 @@
-async function loadAccommodation() {
-  try {
-    const response = await fetch(
-      CONFIG.getDataFile('accommodation.json') + '?t=' + new Date().getTime()
-    );
-    if (!response.ok) {
-      throw new Error('Ошибка загрузки номеров: ' + response.status);
-    }
-    const data = await response.json();
-    const container = document.getElementById('roomsContainer');
-    
-    if (container && data.accommodation) {
-      container.innerHTML = data.accommodation.map(room => `
-        <div class="room-card">
-          <div class="room-icon">${room.icon}</div>
-          <h3>${room.title}</h3>
-          <p class="room-description">${room.description}</p>
-          
-          <div class="room-details">
-            <span class="detail-item">📐 ${room.area} м²</span>
-            <span class="detail-item">👥 ${room.capacity} чел</span>
-            <span class="detail-item">🚿 ${room.bathroom}</span>
-          </div>
-          
-          <div class="room-features">
-            ${room.features.map(f => `<span class="feature">${f}</span>`).join('')}
-          </div>
-          
-          ${room.info ? `<p class="room-info">✨ ${room.info}</p>` : ''}
-          
-          <p class="room-price">${room.price}</p>
-          
-          <button class="book-btn" onclick="alert('Забронировать ${room.title}')">
-            Забронировать
-          </button>
-        </div>
-      `).join('');
-    }
-  } catch (error) {
-    console.error('❌ Ошибка при загрузке номеров:', error);
-    document.getElementById('roomsContainer').innerHTML = 
-      '<p style="color: red;">Ошибка загрузки данных номеров</p>';
+
+accommodation-final.js
+// ========================================
+// РЕНДЕРИНГ ACCOMMODATION (НОМЕРА)
+// ========================================
+
+/**
+ * Рендерит список номеров.
+ * Поддерживает два формата данных:
+ * 1) массив объектов: [{...}, {...}]
+ * 2) объект: { accommodations: [{...}, {...}] }
+ */
+function renderAccommodation(data) {
+  const container = document.getElementById('roomsContainer');
+  
+  if (!container) {
+    console.error('❌ Контейнер roomsContainer не найден на странице');
+    return;
   }
+
+  // Поддержка двух форматов данных
+  let rooms = [];
+
+  if (Array.isArray(data)) {
+    rooms = data;
+  } else if (data && Array.isArray(data.accommodations)) {
+    rooms = data.accommodations;
+  }
+
+  if (!rooms.length) {
+    console.error('❌ Нет данных для accommodation или массив пуст');
+    container.innerHTML = '<p style="color: red;">Нет доступных номеров</p>';
+    return;
+  }
+
+  // Очистить контейнер перед отрисовкой
+  container.innerHTML = '';
+
+  // Рендеринг через создание элементов DOM
+  rooms.forEach((room, index) => {
+    // Безопасная обработка полей
+    const name = room?.name ?? 'Номер';
+    const icon = room?.icon ?? '🏠';
+    const image = room?.image ?? '';
+    const description = room?.description ?? '';
+    const price = room?.price ?? '';
+    const amenities = Array.isArray(room?.amenities) ? room.amenities : [];
+
+    // Создаем карточку
+    const card = document.createElement('div');
+    card.className = 'scroll-item';
+
+    // Добавляем photo-overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'photo-overlay';
+    overlay.innerHTML = '<i class="fas fa-expand"></i>';
+    card.appendChild(overlay);
+
+    // Фото
+    if (image) {
+      const img = document.createElement('img');
+      img.src = image;
+      img.alt = name;
+      img.style.height = '250px';
+      img.style.objectFit = 'cover';
+      card.appendChild(img);
+    } else {
+      // Placeholder если фото нет
+      const placeholder = document.createElement('div');
+      placeholder.style.height = '250px';
+      placeholder.style.display = 'flex';
+      placeholder.style.alignItems = 'center';
+      placeholder.style.justifyContent = 'center';
+      placeholder.style.background = '#eee';
+      placeholder.style.color = '#666';
+      placeholder.textContent = 'Нет изображения';
+      card.appendChild(placeholder);
+    }
+
+    // Заголовок
+    const h3 = document.createElement('h3');
+    h3.textContent = `${icon} ${name}`;
+    card.appendChild(h3);
+
+    // Описание
+    if (description) {
+      const pDesc = document.createElement('p');
+      pDesc.textContent = description;
+      card.appendChild(pDesc);
+    }
+
+    // Удобства
+    if (amenities.length > 0) {
+      const ul = document.createElement('ul');
+      ul.className = 'infra-features';
+      amenities.forEach(a => {
+        const li = document.createElement('li');
+        li.textContent = `✓ ${a}`;
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+    }
+
+    // Цена
+    if (price) {
+      const pPrice = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.style.color = 'var(--primary-green)';
+      strong.style.fontSize = '1.1em';
+      strong.textContent = `от ${price} / ночь`;
+      pPrice.appendChild(strong);
+      card.appendChild(pPrice);
+    }
+
+    container.appendChild(card);
+  });
+
+  console.log(`✅ Accommodation загружены и отрисованы (${rooms.length} номеров)`);
 }
 
-// Вызываем при загрузке страницы
-document.addEventListener('DOMContentLoaded', loadAccommodation);
+// Экспорт функции для использования в main.js
+window.renderAccommodation = renderAccommodation;

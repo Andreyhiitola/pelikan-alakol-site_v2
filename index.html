@@ -11,12 +11,17 @@ const CONFIG = {
 };
 console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 </script>
-
+<link rel="stylesheet" href="css/main.css" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Пеликан Алаколь - Семейный отдых на озере</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+
+ <!-- Иконки Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<bod
 <link rel="stylesheet" href="css/infrastructure.css">
 <link rel="stylesheet" href="css/contacts.css">  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -1302,15 +1307,14 @@ width: 100%;
 </main>
 
 <!-- Модальные окна -->
-<div class="modal" id="contactsModal">
+  
+<div id="contactsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="contactsModalTitle" style="display:none;">
 <div class="modal-content">
-<button class="modal-close" onclick="closeContactsModal()">✕</button>
-<h2><i class="fas fa-phone"></i> Свяжитесь с нами</h2>
-<p style="font-size: 1.05em; color: var(--text-dark); margin: 15px 0;">Выберите удобный способ связи. Мы всегда рады помочь вам!</p>
-<div class="contact-grid" id="contactGridModal">
-<div class="loading"><i class="fas fa-spinner fa-spin"></i> Загрузка контактов...</div>
-</div>
-</div>
+  <button class="close-btn" aria-label="Закрыть" type="button">&times;</button>
+  <h2 id="contactsModalTitle" class="visually-hidden">Контакты</h2>
+  <div id="contactsContainer"></div>
+    </div>
+  </div>
 </div>
 
 <div class="modal" id="weatherModal">
@@ -1469,23 +1473,12 @@ width: 100%;
 </nav>
 
 <!-- Плавающие кнопки -->
-<button id="contactButton" class="floating-btn contact-btn" aria-label="Контакты" type="button">
-<i class="fas fa-phone"></i>
-</button  
-<div class="floating-buttons">
-<button class="floating-btn weather-btn" onclick="openWeatherModal()" title="Прогноз погоды">
-<i class="fas fa-cloud-sun"></i>
-</button>
-<button class="floating-btn map-btn" onclick="openMapModal()" title="Интерактивная карта">
-<i class="fas fa-map-location-dot"></i>
-</button>
-<button class="floating-btn contact-btn" onclick="openContactsModal()" title="Контакты">
-<i class="fas fa-headset"></i>
-</button>
-<button class="floating-btn faq-btn" onclick="openFaqModal()" title="Часто задаваемые вопросы">
-<i class="fas fa-question-circle"></i>
-</button>
-</div>
+<button id="contactPhoneButton" class="floating-btn contact-btn phone-btn" aria-label="Позвонить" type="button">
+    <i class="fas fa-phone"></i>
+ </button>
+ <button id="contactTelegramButton" class="floating-btn contact-btn telegram-btn" aria-label="Telegram" type="button">
+    <i class="fab fa-telegram"></i>
+ </button>
 
 <!-- Галерея Лайтбокс -->
 <div class="lightbox" id="lightbox">

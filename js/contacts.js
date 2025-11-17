@@ -1,61 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const contactBtn = document.getElementById('contactButton');
+  const phoneBtn = document.getElementById('contactPhoneButton');
+  const telegramBtn = document.getElementById('contactTelegramButton');
   const modal = document.getElementById('contactsModal');
   const closeBtn = modal.querySelector('.close-btn');
   const container = document.getElementById('contactsContainer');
 
-  contactBtn.addEventListener('click', () => {
+  function openModal() {
     modal.style.display = 'block';
-  });
-
-  closeBtn.addEventListener('click', () => {
+  }
+  function closeModal() {
     modal.style.display = 'none';
+  }
+
+  phoneBtn.addEventListener('click', openModal);
+  telegramBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
   });
 
-  window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-
-  // Функция копирования в буфер (для кнопок копирования номера)
   window.copyToClipboard = function(text) {
     navigator.clipboard.writeText(text).then(() => {
       alert('Номер скопирован в буфер обмена');
     });
   };
 
-  // Загрузка и рендер контактов из JSON
   async function loadContacts() {
     try {
       const response = await fetch('./public/data/contacts.json');
+      if (!response.ok) throw new Error(`Ошибка ${response.status}`);
       const data = await response.json();
       renderContacts(data.contacts);
     } catch (err) {
+      container.innerHTML = `<p>❌ Ошибка загрузки контактов: ${err.message}</p>`;
       console.error('Ошибка загрузки контактов:', err);
     }
   }
 
   function renderContacts(contacts) {
     container.innerHTML = '';
-
-    // Телефоны
     if (contacts.phone) {
-      const phoneHTML = contacts.phone.map(phone => `
+      const phonesHTML = contacts.phone.map(phone => `
         <div>
           <strong>${phone.label}:</strong>
           <a href="tel:${phone.number}" class="contact-btn">
-            <i class="fas fa-phone"></i>${phone.display}
+            <i class="fas fa-phone"></i> ${phone.display}
           </a>
           <button class="contact-btn" onclick="copyToClipboard('${phone.display}')">
             <i class="fas fa-copy"></i>
           </button>
         </div>
       `).join('');
-      container.insertAdjacentHTML('beforeend', `<section><h3>Телефоны</h3>${phoneHTML}</section>`);
+      container.insertAdjacentHTML('beforeend', `<section><h3>Телефоны</h3>${phonesHTML}</section>`);
     }
-
-    // Telegram
     if (contacts.telegram && contacts.telegram.url) {
       container.insertAdjacentHTML('beforeend', `
         <section>
@@ -66,8 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </section>
       `);
     }
-
-    // Дополнительные контакты (Whatsapp, email, Instagram) можно добавить аналогично
   }
 
   loadContacts();

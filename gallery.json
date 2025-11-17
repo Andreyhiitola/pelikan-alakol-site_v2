@@ -1,146 +1,162 @@
 [
   {
     "id": "lake-view",
-    "title": "Вид на озеро",
+    "icon": "🌊",
+    "name": "Вид на озеро",
     "description": "Панорамный вид на озеро Алаколь с чистой минеральной водой",
-    "image": "./index/gallery/lake-view.jpg",
     "category": "nature",
     "tags": ["озеро", "вода", "панорама"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/lake-view.jpg"
   },
   {
     "id": "sunset",
-    "title": "Закат на озере",
+    "icon": "🌅",
+    "name": "Закат на озере",
     "description": "Красивый закат над озером Алаколь в летнее время",
-    "image": "./index/gallery/sunset.jpg",
     "category": "nature",
     "tags": ["закат", "озеро", "природа"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/sunset.jpg"
   },
   {
     "id": "wooden-house",
-    "title": "Деревянный домик",
+    "icon": "🏡",
+    "name": "Деревянный домик",
     "description": "Комфортный деревянный домик для проживания на базе",
-    "image": "./index/gallery/wooden-house.jpg",
     "category": "accommodation",
     "tags": ["домик", "дерево", "размещение"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/wooden-house.jpg"
   },
   {
     "id": "cozy-interior",
-    "title": "Уютный интерьер",
+    "icon": "🛏️",
+    "name": "Уютный интерьер",
     "description": "Современный и уютный интерьер номера на базе",
-    "image": "./index/gallery/cozy-interior.jpg",
     "category": "accommodation",
     "tags": ["интерьер", "номер", "уют"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/cozy-interior.jpg"
   },
   {
     "id": "outdoor-pool",
-    "title": "Открытый бассейн",
+    "icon": "🏊",
+    "name": "Открытый бассейн",
     "description": "Чистый открытый бассейн с подогревом воды",
-    "image": "./index/gallery/outdoor-pool.jpg",
     "category": "infrastructure",
     "tags": ["бассейн", "вода", "спорт"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/outdoor-pool.jpg"
   },
   {
     "id": "summer-terrace",
-    "title": "Летняя терраса",
+    "icon": "🌇",
+    "name": "Летняя терраса",
     "description": "Уютная летняя терраса для отдыха и ужина с видом на озеро",
-    "image": "./index/gallery/summer-terrace.jpg",
     "category": "infrastructure",
     "tags": ["терраса", "отдых", "вид"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/summer-terrace.jpg"
   },
   {
     "id": "magic-sunset",
-    "title": "Волшебный закат",
+    "icon": "✨",
+    "name": "Волшебный закат",
     "description": "Магический закат с отражением в воде озера",
-    "image": "./index/gallery/magic-sunset.jpg",
     "category": "nature",
     "tags": ["закат", "вода", "волшебство"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/magic-sunset.jpg"
   },
   {
     "id": "mountain-view",
-    "title": "Горный массив Мойынтау",
+    "icon": "⛰️",
+    "name": "Горный массив Мойынтау",
     "description": "Впечатляющий вид на горы Мойынтау с территории базы",
-    "image": "./index/gallery/mountain-view.jpg",
     "category": "nature",
     "tags": ["горы", "панорама", "пейзаж"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/mountain-view.jpg"
   },
   {
     "id": "beach-day",
-    "title": "День на пляже",
+    "icon": "🏖️",
+    "name": "День на пляже",
     "description": "Туристы на чистом галечном пляже озера Алаколь",
-    "image": "./index/gallery/beach-day.jpg",
     "category": "activities",
     "tags": ["пляж", "люди", "отдых"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/beach-day.jpg"
   },
   {
     "id": "swimming-pool-kids",
-    "title": "Детский бассейн",
+    "icon": "👧",
+    "name": "Детский бассейн",
     "description": "Безопасный детский бассейн для малышей и родителей",
-    "image": "./index/gallery/swimming-pool-kids.jpg",
     "category": "accommodation",
     "tags": ["бассейн", "дети", "безопасность"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/swimming-pool-kids.jpg"
   },
   {
     "id": "restaurant-dinner",
-    "title": "Ресторан и ужин",
+    "icon": "🍽️",
+    "name": "Ресторан и ужин",
     "description": "Красивый ресторан с сервировкой стола для ужина",
-    "image": "./index/gallery/restaurant-dinner.jpg",
     "category": "infrastructure",
     "tags": ["ресторан", "еда", "ужин"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/restaurant-dinner.jpg"
   },
   {
     "id": "morning-nature",
-    "title": "Утро на природе",
+    "icon": "🌅",
+    "name": "Утро на природе",
     "description": "Спокойное утро с туманом на озере и пением птиц",
-    "image": "./index/gallery/morning-nature.jpg",
     "category": "nature",
     "tags": ["утро", "природа", "туман"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/morning-nature.jpg"
   },
   {
     "id": "bonfire-evening",
-    "title": "Вечер у костра",
+    "icon": "🔥",
+    "name": "Вечер у костра",
     "description": "Романтический вечер у костра с гостями",
-    "image": "./index/gallery/bonfire-evening.jpg",
     "category": "activities",
     "tags": ["костер", "вечер", "романтика"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/bonfire-evening.jpg"
   },
   {
     "id": "family-vacation",
-    "title": "Семейный отдых",
+    "icon": "👨‍👩‍👧‍👦",
+    "name": "Семейный отдых",
     "description": "Счастливая семья на отдыхе на базе Пеликан",
-    "image": "./index/gallery/family-vacation.jpg",
     "category": "activities",
     "tags": ["семья", "дети", "отдых"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/family-vacation.jpg"
   },
   {
     "id": "bird-watching",
-    "title": "Наблюдение за птицами",
+    "icon": "🕊️",
+    "name": "Наблюдение за птицами",
     "description": "Редкие птицы озера Алаколь - основное богатство природы",
-    "image": "./index/gallery/bird-watching.jpg",
     "category": "nature",
     "tags": ["птицы", "природа", "фото"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/bird-watching.jpg"
   },
   {
     "id": "night-sky",
-    "title": "Ночное небо и звёзды",
+    "icon": "🌌",
+    "name": "Ночное небо и звёзды",
     "description": "Чистое звёздное небо над озером Алаколь ночью",
-    "image": "./index/gallery/night-sky.jpg",
     "category": "nature",
     "tags": ["ночь", "звёзды", "небо"],
-    "uploaded": "2025-11-12"
+    "uploaded": "2025-11-12",
+    "image": "./images/gallery/night-sky.jpg"
   }
 ]

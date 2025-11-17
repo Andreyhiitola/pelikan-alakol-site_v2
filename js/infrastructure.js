@@ -1,35 +1,18 @@
 async function loadInfrastructure() {
   try {
-    const response = await fetch(
-      CONFIG.getDataFile('infrastructure.json') + '?t=' + new Date().getTime()
-    );
-    if (!response.ok) {
-      throw new Error('Ошибка загрузки инфраструктуры: ' + response.status);
-    }
+    const response = await fetch(CONFIG.getDataFile('infrastructure.json'));
     const data = await response.json();
-    const container = document.getElementById('infrastructureContainer');
-    
-    if (container && data.infrastructure) {
-      container.innerHTML = data.infrastructure.map(item => `
+    const list = document.getElementById('infrastructureList');
+    if (list) {
+      list.innerHTML = data.infrastructure.map(item => `
         <div class="infrastructure-item">
-          <div class="infra-icon">${item.icon || '🏢'}</div>
           <h3>${item.title}</h3>
           <p>${item.description}</p>
-          ${item.features ? `
-            <ul class="infra-features">
-              ${item.features.map(f => `<li>${f}</li>`).join('')}
-            </ul>
-          ` : ''}
-        </div>
-      `).join('');
-      console.log('✓ Инфраструктура загружена');
+        </div>`
+      ).join('');
     }
-  } catch (error) {
-    console.error('❌ Ошибка при загрузке инфраструктуры:', error);
-    document.getElementById('infrastructureContainer').innerHTML = 
-      '<p style="color: red;">Ошибка загрузки данных инфраструктуры</p>';
+  } catch(error) {
+    console.error(error);
   }
 }
-
-// Вызываем при загрузке страницы
-document.addEventListener('DOMContentLoaded', loadInfrastructure);
+window.addEventListener('DOMContentLoaded', loadInfrastructure);

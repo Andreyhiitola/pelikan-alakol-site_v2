@@ -1,18 +1,37 @@
-function renderInfrastructure(data) {
-  const container = document.getElementById('infrastructureContainer');
-  if (!container || !data || !data.infrastructure) return;
+async function loadInfrastructure() {
+  try {
+    const response = await fetch(CONFIG.getDataFile('infrastructure.json'));
+    if (!response.ok) throw new Error('HTTP ' + response.status);
 
-  container.innerHTML = ''; // очистить предыдущий контент
+    const data = await response.json();
+    const container = document.getElementById('infrastructureContainer');
+    if (!container) return;
 
-  data.infrastructure.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'infrastructure-card';
-    card.innerHTML = `
-      <h3>${item.title}</h3>
-      <p class="infrastructure-description">${item.description}</p>
-    `;
-    container.appendChild(card);
-  });
-  console.log('✅ Infrastructure загружена');
+    container.innerHTML = '';
+
+    // Ожидаем формат: { "infrastructure": [ { "title": "...", "description": "...", "icon": "...", "image": "..." } ] }
+    data.infrastructure.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'scroll-item';
+
+      card.innerHTML = `
+        ${item.image ? `<img src="${item.image}" alt="${item.title || ''}">` : ''}
+        <h3>${item.title || ''}</h3>
+        <p>${item.description || ''}</p>
+      `;
+
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error('loadInfrastructure error', error);
+    const container = document.getElementById('infrastructureContainer');
+    if (container) {
+      container.innerHTML = '<div class="error">Не удалось загрузить инфраструктуру.</div>';
+    }
+  }
 }
-window.renderInfrastructure = renderInfrastructure;
+
+// запуск вместе с остальными
+window.addEventListener('DOMContentLoaded', () => {
+  loadInfrastructure();
+});

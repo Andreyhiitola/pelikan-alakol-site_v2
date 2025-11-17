@@ -68,30 +68,6 @@ function createPhoneCard(phones) {
   return card;
 }
 
-
-  const buttonsHtml = phones.map(phone => `
-    <div class="contact-btn-group">
-      <a href="tel:${phone.number}" class="contact-btn" title="Позвонить">
-        <i class="fas fa-phone"></i> Позвонить
-      </a>
-      <button
-        class="contact-btn copy-btn"
-        onclick="copyToClipboard('${phone.display}', '${phone.label}')"
-        title="Скопировать номер"
-      >
-        <i class="fas fa-copy"></i> Копировать
-      </button>
-    </div>
-  `).join('');
-
-  return createContactCard({
-    icon: 'fas fa-phone-alt',
-    title: 'Телефон',
-    bodyHtml,
-    buttonsHtml
-  });
-}
-
 function createTelegramCard(telegram) {
   return createContactCard({
     icon: 'fab fa-telegram',

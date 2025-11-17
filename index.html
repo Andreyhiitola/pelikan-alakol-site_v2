@@ -1101,24 +1101,26 @@ width: 100%;
 </div>
 
 <div class="filter-section">
-<div class="filter-group">
-<label>📅 Дата приезда</label>
-<input type="date" id="checkIn">
-</div>
-<div class="filter-group">
-<label>📅 Дата отъезда</label>
-<input type="date" id="checkOut">
-</div>
-<div class="filter-group">
-<label>👥 Гостей</label>
-<select id="guests">
-<option>1 человек</option>
-<option>2 человека</option>
-<option>3 человека</option>
-<option>4+ человека</option>
-</select>
-</div>
-<button class="filter-btn" onclick="filterRooms()">🔍 Поиск</button>
+  <div class="filter-group">
+    <label>Дата заезда</label>
+    <input type="date" id="checkIn">
+  </div>
+  <div class="filter-group">
+    <label>Дата выезда</label>
+    <input type="date" id="checkOut">
+  </div>
+  <div class="filter-group">
+    <label>Гости</label>
+    <select id="guests">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4+</option>
+    </select>
+  </div>
+  <div>
+    <button class="filter-btn" onclick="filterRooms()">Найти номер</button>
+  </div>
 </div>
 
 <h2 id="rooms"><i class="fas fa-bed"></i> Жилье</h2>

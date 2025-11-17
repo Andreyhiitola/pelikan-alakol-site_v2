@@ -32,10 +32,10 @@
         "display": "+7 (72833) 30002"
       }
     ],
-    "telegram": {
-      "username": "pelikan_alakol",
-      "url": "https://t.me/pelikan_alakol",
-      "description": "Оперативная связь, отправьте сообщение в Telegram"
+   "telegram": {
+      "description": "Напишите в Telegram, ответим в рабочее время.",
+      "userUrl": "https://t.me/your_admin_username",
+      "botUrl": "https://t.me/your_pelican_bot"
     },
     "whatsapp": {
       "number": "+77017714733",

@@ -32,7 +32,7 @@ function renderAccommodation(data) {
 
     // Ссылка на страницу номера
     const link = document.createElement('a');
-    link.href = `room.html?id=${encodeURIComponent(room.id)}`;
+    link.href = `accommodation.html?id=${encodeURIComponent(room.id)}`; // ← ВАЖНО: тут новое имя файла
     link.style.textDecoration = 'none';
     link.style.color = 'inherit';
 

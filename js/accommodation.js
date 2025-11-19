@@ -1,85 +1,16 @@
-function renderAccommodation(data) {
-  const container = document.getElementById('roomsContainer');
-  
-  if (!container) {
-    console.error('❌ roomsContainer не найден');
-    return;
+{
+  "101": {
+    "imgThumb": "img/room101_thumb.jpg",
+    "imgFull": "img/room101_full.jpg",
+    "title": "Номер 101",
+    "descriptionShort": "Краткое описание номера 101",
+    "descriptionFull": "Полное описание номера 101 с дополнительными деталями"
+  },
+  "102": {
+    "imgThumb": "img/room102_thumb.jpg",
+    "imgFull": "img/room102_full.jpg",
+    "title": "Номер 102",
+    "descriptionShort": "Краткое описание номера 102",
+    "descriptionFull": "Полное описание номера 102"
   }
-
-  if (!data) {
-    console.error('❌ data не передана');
-    return;
-  }
-
-  const rooms = Array.isArray(data) ? data : (data.accommodations || []);
-  
-  if (!rooms.length) {
-    console.error('❌ нет данных accommodation');
-    container.innerHTML = '<div class="error-message">Номера не найдены</div>';
-    return;
-  }
-
-  container.innerHTML = '';
-
-  rooms.forEach(room => {
-    // Валидация ключевых полей
-    if (!room.id) {
-      console.warn('Пропущена карточка без id', room);
-      return;
-    }
-    if (!room.name) {
-      console.warn(`Пропущена карточка без name для id=${room.id}`);
-      return;
-    }
-    if (typeof room.price !== 'number' || room.price <= 0) {
-      console.warn(`Пропущена карточка с некорректной ценой для id=${room.id}`, room.price);
-      return;
-    }
-
-    const card = document.createElement('div');
-    card.className = 'scroll-item';
-
-    const link = document.createElement('a');
-    link.href = `accommodation.html?id=${encodeURIComponent(room.id)}`;
-    link.style.textDecoration = 'none';
-    link.style.color = 'inherit';
-
-    const imgSrc = room.imageThumb || room.imageFull || room.image;
-    if (imgSrc) {
-      const img = document.createElement('img');
-      img.src = imgSrc;
-      img.alt = room.name;
-      img.style.height = '250px';
-      img.style.objectFit = 'cover';
-      img.onerror = () => {
-        img.src = './images/placeholder.jpg';
-      };
-      link.appendChild(img);
-    }
-
-    const h3 = document.createElement('h3');
-    h3.textContent = `${room.icon || '🏠'} ${room.name}`;
-    link.appendChild(h3);
-
-    if (room.description) {
-      const p = document.createElement('p');
-      p.textContent = room.description;
-      link.appendChild(p);
-    }
-
-    const pPrice = document.createElement('p');
-    const strong = document.createElement('strong');
-    strong.style.color = 'var(--primary-green)';
-    strong.style.fontSize = '1.1em';
-    strong.textContent = `от ${room.price} ₸ / ночь`;
-    pPrice.appendChild(strong);
-    link.appendChild(pPrice);
-
-    card.appendChild(link);
-    container.appendChild(card);
-  });
-
-  console.log(`✅ Accommodation: ${rooms.length} номеров (валидных)`);
 }
-
-window.renderAccommodation = renderAccommodation;

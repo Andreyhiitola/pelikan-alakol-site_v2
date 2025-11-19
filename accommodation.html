@@ -400,8 +400,14 @@
       <!/div>
     <!/div>
   <!/div>
-!`;  // <-- здесь закрывается шаблонная строка и ставится точка с запятой
+!`;  // <-- здесь закрывается шаблонная строка и ставится точка с запятой. Здесь настроим потом сделаем ссылку на бронирование на нашем сайте
 
+<div class="booking-section">
+  <p style="margin-bottom: 15px; color: var(--text-dark);">Заинтересованы в бронировании?</p>
+  <a href="https://pelican-alacol.ru/booking/?begin=28.11.2025&end=30.11.2025&adults=1&children=0&children-ages%5B%5D=0&roomType=&locale=ru" target="_blank" rel="noopener" class="booking-btn">
+    <i class="fas fa-calendar"></i> Забронировать!
+  </a>
+</div>      // Это ссылка на старый сайт. Потом мы ее уберем
 
         console.log('✓ Номер загружен успешно:', roomId);
       } catch (error) {

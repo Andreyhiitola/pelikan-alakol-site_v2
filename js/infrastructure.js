@@ -4,7 +4,6 @@ async function loadInfrastructure() {
     if (!response.ok) throw new Error('HTTP ошибка: ' + response.status);
     const data = await response.json();
 
-    // Проверяем, что это массив
     if (!Array.isArray(data)) throw new Error('Неверная структура данных: ожидается массив');
 
     const container = document.getElementById('infrastructureContainer');

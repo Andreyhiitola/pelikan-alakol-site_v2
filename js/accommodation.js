@@ -1,3 +1,30 @@
+// Функция загрузки JSON с обработкой ошибок
+function loadAccommodationData(url) {
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Ошибка сети: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      renderAccommodation(data);
+    })
+    .catch(error => {
+      const container = document.getElementById('roomsContainer');
+      if (container) {
+        container.innerHTML = `<div class="error-message" style="color:red;">Ошибка загрузки данных: ${error.message}</div>`;
+      }
+      console.error('Ошибка загрузки JSON:', error);
+    });
+}
+
+// Ваша функция рендеринга (renderAccommodation) остается без изменений
+
+// Запуск загрузки при загрузке страницы или нужного события
+document.addEventListener('DOMContentLoaded', () => {
+  loadAccommodationData('rooms.json'); // путь к вашему JSON с данными о номерах
+});
 function renderAccommodation(data) {
   const container = document.getElementById('roomsContainer');
   

@@ -1041,13 +1041,14 @@ width: 100%;
 }
 <style>
     /* Здесь ваши стили  блока бронирования  */
-    #mbh-form-wrapper {
-  max-height: 35px; /* уменьшено с 50px */
+#mbh-form-wrapper {
+  display: flex;           /* включаем flex-контейнер */
+  justify-content: center; /* центрируем по горизонтали */
+  align-items: center;     /* центрируем по вертикали */
+  max-height: 35px;
   overflow: hidden;
-  padding: 2px 10px; /* уменьшены вертикальные отступы */
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem; /* можно уменьшить размер шрифта для компактности */
+  padding: 2px 10px;
+  font-size: 0.9rem;
 }
 </style>
 </head>

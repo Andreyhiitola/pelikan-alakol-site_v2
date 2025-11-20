@@ -35,7 +35,7 @@
    "telegram": {
       "description": "Напишите в Telegram, ответим в рабочее время.",
       "userUrl": "https://t.me/your_admin_username",
-      "botUrl": "https://t.me/your_pelican_bot"
+      "botUrl": "https://t.me/https://t.me/FAQhotel_example_bot"
     },
     "whatsapp": {
       "number": "+77017714733",

@@ -10,8 +10,8 @@
     "capacity": 5,
     "area": 38,
     "bathroom": "Общие",
-    "imageThumb": "./images/rooms/эконом-коннект-5ти-местный.jpg",
-    "imageFull": "./images/rooms/эконом-коннект-5ти-местный.jpg"
+    "imageThumb": "./images/accommodation/эконом-коннект-5ти-местный.jpg",
+    "imageFull": "./images/accommodation/эконом-коннект-5ти-местный.jpg"
   },
   {
     "id": "эконом-семейный-6ти-местный",
@@ -24,8 +24,8 @@
     "capacity": 6,
     "area": 38,
     "bathroom": "Общие",
-    "imageThumb": "./images/rooms/эконом-семейный-6ти-местный.jpg",
-    "imageFull": "./images/rooms/эконом-семейный-6ти-местный.jpg"
+    "imageThumb": "./images/accommodation/эконом-семейный-6ти-местный.jpg",
+    "imageFull": "./images/accommodation/эконом-семейный-6ти-местный.jpg"
   },
   {
     "id": "бунгало-3х-местный",

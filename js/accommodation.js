@@ -34,7 +34,7 @@ function renderAccommodation(data) {
       img.style.objectFit = 'cover';
       img.style.width = '70%';
       img.onerror = () => {
-        img.src = './images/rooms/placeholder.jpg';
+        img.src = './images/accommodation/placeholder.jpg';
       };
       link.appendChild(img);
     }

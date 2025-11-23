@@ -38,8 +38,8 @@
     "capacity": 3,
     "area": 25,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/бунгало-3х-местный.jpg",
-    "imageFull": "./images/rooms/бунгало-3х-местный.jpg"
+    "imageThumb": "./images/accommodation/бунгало-3х-местный.jpg",
+    "imageFull": "./images/accommodation/бунгало-3х-местный.jpg"
   },
   {
     "id": "бунгало-юниор-4х-2+2-местный",
@@ -52,8 +52,8 @@
     "capacity": 4,
     "area": 25,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/бунгало-юниор-4х-22-местный.jpg",
-    "imageFull": "./images/rooms/бунгало-юниор-4х-22-местный.jpg"
+    "imageThumb": "./images/accommodation/бунгало-юниор-4х-22-местный.jpg",
+    "imageFull": "./images/accommodation/бунгало-юниор-4х-22-местный.jpg"
   },
   {
     "id": "бунгало-улучшенный-3х-местный",
@@ -66,8 +66,8 @@
     "capacity": 3,
     "area": 32,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/бунгало-улучшенный-3х-местный.jpg",
-    "imageFull": "./images/rooms/бунгало-улучшенный-3х-местный.jpg"
+    "imageThumb": "./images/accommodation/бунгало-улучшенный-3х-местный.jpg",
+    "imageFull": "./images/accommodation/бунгало-улучшенный-3х-местный.jpg"
   },
   {
     "id": "бунгало-семейный-6ти-местный",
@@ -80,8 +80,8 @@
     "capacity": 6,
     "area": 64,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/бунгало-семейный-6ти-местный.jpg",
-    "imageFull": "./images/rooms/бунгало-семейный-6ти-местный.jpg"
+    "imageThumb": "./images/accommodation/бунгало-семейный-6ти-местный.jpg",
+    "imageFull": "./images/accommodation/бунгало-семейный-6ти-местный.jpg"
   },
   {
     "id": "стандарт-2х-местный",
@@ -94,8 +94,8 @@
     "capacity": 2,
     "area": 27,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-2х-местный.jpg",
-    "imageFull": "./images/rooms/стандарт-2х-местный.jpg"
+    "imageThumb": "./images/accommodation/стандарт-2х-местный.jpg",
+    "imageFull": "./images/accommodation/стандарт-2х-местный.jpg"
   },
   {
     "id": "стандарт-3х-2+1-местный",
@@ -108,8 +108,8 @@
     "capacity": 3,
     "area": 27,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-3х-21-местный.jpg",
-    "imageFull": "./images/rooms/стандарт-3х-21-местный.jpg"
+    "imageThumb": "./images/accommodation/стандарт-3х-21-местный.jpg",
+    "imageFull": "./images/accommodation/стандарт-3х-21-местный.jpg"
   },
   {
     "id": "стандарт-4х-местный",
@@ -122,8 +122,8 @@
     "capacity": 4,
     "area": 27,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-4х-местный.jpg",
-    "imageFull": "./images/rooms/стандарт-4х-местный.jpg"
+    "imageThumb": "./images/accommodation/стандарт-4х-местный.jpg",
+    "imageFull": "./images/accommodation/стандарт-4х-местный.jpg"
   },
   {
     "id": "стандарт-семейный-5ти-местный",
@@ -136,8 +136,8 @@
     "capacity": 5,
     "area": 54,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-семейный-5ти-местный.jpg",
-    "imageFull": "./images/rooms/стандарт-семейный-5ти-местный.jpg"
+    "imageThumb": "./images/accommodation/стандарт-семейный-5ти-местный.jpg",
+    "imageFull": "./images/accommodation/стандарт-семейный-5ти-местный.jpg"
   },
   {
     "id": "стандарт-семейный-5ти-местный-с-террасой",
@@ -150,8 +150,8 @@
     "capacity": 5,
     "area": 54,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-семейный-5ти-местный-с-террасой.jpg",
-    "imageFull": "./images/rooms/стандарт-семейный-5ти-местный-с-террасой.jpg"
+    "imageThumb": "./images/accommodation/стандарт-семейный-5ти-местный-с-террасой.jpg",
+    "imageFull": "./images/accommodation/стандарт-семейный-5ти-местный-с-террасой.jpg"
   },
   {
     "id": "стандарт-junior-4х-местный-корпус-1",
@@ -164,8 +164,8 @@
     "capacity": 4,
     "area": 26,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-junior-4х-местный-корпус-1.jpg",
-    "imageFull": "./images/rooms/стандарт-junior-4х-местный-корпус-1.jpg"
+    "imageThumb": "./images/accommodation/стандарт-junior-4х-местный-корпус-1.jpg",
+    "imageFull": "./images/accommodation/стандарт-junior-4х-местный-корпус-1.jpg"
   },
   {
     "id": "стандарт-junior-4х-местный-с-верандой-корпус-2",
@@ -178,8 +178,8 @@
     "capacity": 4,
     "area": 45,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/стандарт-junior-4х-местный-с-верандой-корпус-2.jpg",
-    "imageFull": "./images/rooms/стандарт-junior-4х-местный-с-верандой-корпус-2.jpg"
+    "imageThumb": "./images/accommodation/стандарт-junior-4х-местный-с-верандой-корпус-2.jpg",
+    "imageFull": "./images/accommodation/стандарт-junior-4х-местный-с-верандой-корпус-2.jpg"
   },
   {
     "id": "люкс-2х-местный",
@@ -192,8 +192,8 @@
     "capacity": 2,
     "area": 42,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/люкс-2х-местный.jpg",
-    "imageFull": "./images/rooms/люкс-2х-местный.jpg"
+    "imageThumb": "./images/accommodation/люкс-2х-местный.jpg",
+    "imageFull": "./images/accommodation/люкс-2х-местный.jpg"
   },
   {
     "id": "люкс-роза-2х-местный",
@@ -206,8 +206,8 @@
     "capacity": 2,
     "area": 42,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/люкс-роза-2х-местный.jpg",
-    "imageFull": "./images/rooms/люкс-роза-2х-местный.jpg"
+    "imageThumb": "./images/accommodation/люкс-роза-2х-местный.jpg",
+    "imageFull": "./images/accommodation/люкс-роза-2х-местный.jpg"
   },
   {
     "id": "люкс-бунгало-2х-местный",
@@ -220,8 +220,8 @@
     "capacity": 2,
     "area": 58,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/люкс-бунгало-2х-местный.jpg",
-    "imageFull": "./images/rooms/люкс-бунгало-2х-местный.jpg"
+    "imageThumb": "./images/accommodation/люкс-бунгало-2х-местный.jpg",
+    "imageFull": "./images/accommodation/люкс-бунгало-2х-местный.jpg"
   },
   {
     "id": "улучшенный-стандарт-4х-местный",
@@ -234,8 +234,8 @@
     "capacity": 4,
     "area": 57,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/улучшенный-стандарт-4х-местный.jpg",
-    "imageFull": "./images/rooms/улучшенный-стандарт-4х-местный.jpg"
+    "imageThumb": "./images/accommodation/улучшенный-стандарт-4х-местный.jpg",
+    "imageFull": "./images/accommodation/улучшенный-стандарт-4х-местный.jpg"
   },
   {
     "id": "коттедж-6ти-местный",
@@ -248,8 +248,8 @@
     "capacity": 7,
     "area": 7,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/коттедж-6ти-местный.jpg",
-    "imageFull": "./images/rooms/коттедж-6ти-местный.jpg"
+    "imageThumb": "./images/accommodation/коттедж-6ти-местный.jpg",
+    "imageFull": "./images/accommodation/коттедж-6ти-местный.jpg"
   },
   {
     "id": "коттедж-роза-7ми-местный",
@@ -259,10 +259,10 @@
     "descriptionFull": "Отдельно стоящий дом из трёх спален и просторной гостиной, четырёхкомнатный, 7-ми местный номер.\nВ номере: Спальня 1- двуспальная кровать, плательный шкаф с большим зеркалом, прикроватные тумбы с настольными лампами, кондиционер; Спальня 2 - двуспальная кровать, прикроватные тумбы, стойка для одежды, комод; Спальня 3 - раскладывающийся диван на 2 места, односпальная кровать, письменный стол, настольная лампа, трюмо с зеркалом, кондиционер; Гостиная – большой угловой диван, кондиционер,  2 холодильника, большой плоский телевизор со спутниковыми каналами, DVD, СВЧ - печь, кухонный гарнитур с дополнительным освещением, набор столовой и чайной посуды, большая обеденная зона, эл/чайник.Санузел совмещённый с  душевой кабиной, стиральная машина.\nВ гостиной с мягкой мебелью можно организовать 2  доп. места по 7 000 тенге в сутки за каждое доп. место.\nПлощадь номера - 95 кв.м.",
     "amenities": [],
     "price": "59400",
-    "capacity": null,
-    "area": null,
+    "capacity": 7,
+    "area": 95,
     "bathroom": "Частная",
-    "imageThumb": "./images/rooms/коттедж-роза-7ми-местный.jpg",
-    "imageFull": "./images/rooms/коттедж-роза-7ми-местный.jpg"
+    "imageThumb": "./images/accommodation/коттедж-роза-7ми-местный.jpg",
+    "imageFull": "./images/accommodation/коттедж-роза-7ми-местный.jpg"
   }
 ]

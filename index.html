@@ -1093,14 +1093,23 @@ width: 100%;
 }
 #mbh-form-wrapper {
   display: flex;
-  flex-direction: row;          /* ← горизонтальное расположение */
-  justify-content: center;      /* ← центр по горизонтали */
-  align-items: center;          /* ← центр по вертикали */
-  width: 100%;                  /* ← полная ширина */
-  min-height: 60px;             /* ← комфортная высота */
-  padding: 15px 10px;           /* ← больше отступов */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  padding: 15px 10px;
   font-size: 0.9rem;
-  gap: 10px;                    /* ← расстояние между элементами */
+  gap: 10px;
+}
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  padding: 15px 10px;
+  font-size: 0.9rem;
 }
 </style>
 </head>
@@ -1162,11 +1171,59 @@ width: 100%;
 <p>Семейный отдых на озере Алаколь — более 5000 деревьев, чистый пляж, комфортные домики и незабываемые впечатления для всей семьи!</p>
 </div>
 
-  <div class="filter-section">
-  <div id="mbh-form-wrapper">
-    <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+  <!-- ========== MAXIBOOKING ВИДЖЕТ БРОНИРОВАНИЯ ========== -->
+  <div class="filter-section" style="display: flex; flex-direction: column; gap: 0;">
+    <div id="mbh-form-wrapper">
+      <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+    </div>
+    <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-search-form"></script>
+    
+    <div id="mbh-results-wrapper">
+      <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+    </div>
+    <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
   </div>
-</div>
+  
+  <!-- Условия бронирования - отдельный блок на всю ширину -->
+  <div style="background: var(--white); border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: var(--shadow);">
+    <div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05)); border-radius: 12px; padding: 20px; border-left: 4px solid var(--secondary-green);">
+      <hr style="border: none; border-top: 2px solid rgba(45, 134, 89, 0.2); margin: 20px 0;">
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        Все цены указаны без учета действующих скидок. Действие всех скидок будет рассчитано нашим менеджером при подтверждении брони.
+      </p>
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        Для подтверждения брони с Вами свяжется менеджер компании с 09:00 до 17:00 в рабочие дни. После подтверждения брони Вам необходимо будет произвести оплату в течение трех рабочих дней.
+      </p>
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        В случае, если дата заезда близка, оплата должна быть произведена не позднее чем за 24 часа до даты заезда.
+      </p>
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        Оплату можно произвести в офисе продаж или дистанционно после выставления счета.
+      </p>
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        Если по истечении указанных сроков оплата не будет произведена, Ваша бронь снимается.
+      </p>
+      
+      <p style="text-align: center; margin: 20px 0;">
+        <strong style="color: var(--primary-green); font-size: 1.1em;">⚠️ ВНИМАНИЕ!!!</strong>
+      </p>
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        Обязательно корректно указывайте свой номер телефона и e-mail, иначе менеджер не сможет с Вами связаться и бронь снимается.
+      </p>
+      
+      <p style="font-size: 0.95em; line-height: 1.6; color: var(--text-dark); margin: 10px 0;">
+        Если в течение трех рабочих дней с Вами не вышли на связь, срочно выйдите на связь с нами самостоятельно, иначе бронь снимается.
+      </p>
+      
+      <hr style="border: none; border-top: 2px solid rgba(45, 134, 89, 0.2); margin: 20px 0;">
+    </div>
+  </div>
 
 <h2 id="rooms"><i class="fas fa-bed"></i> Жилье</h2>
 <div class="scroll-wrapper">
@@ -2051,9 +2108,6 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="./js/infrastructure.js"></script>
 <script src="./js/main.js"></script>
 <script src="js/contacts.js"></script>
-
-<script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-search-form"></script>
-<script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
 
 <!--
 ═══════════════════════════════════════════════════════════════════

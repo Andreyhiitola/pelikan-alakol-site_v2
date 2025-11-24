@@ -1827,13 +1827,28 @@ function closeMapModal() {
 document.getElementById('mapModal').classList.remove('active');
 }
 
-function initMap() {
+!function initMap() {
+!if (mapInitialized) return;
+!const map = L.map('map').setView([LATITUDE, LONGITUDE], 11);
+!L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+!attribution: '© OpenStreetMap contributors',
+!maxZoom: 18
+!}).addTo(map);
+
+function initMap() 
 if (mapInitialized) return;
+const LATITUDE = 45.955;
+const LONGITUDE = 81.571;
 const map = L.map('map').setView([LATITUDE, LONGITUDE], 11);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-attribution: '© OpenStreetMap contributors',
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+attribution: '© CartoDB © OpenStreetMap contributors',
 maxZoom: 18
 }).addTo(map);
+
+  // Здесь можно добавить метки и другие слои по вашему усмотрению
+
+  mapInitialized = true;
+}  
 
 const pelicanIcon = L.divIcon({
 html: `<div style="background: linear-gradient(135deg, #2d8659, #4ca876); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3); border: 3px solid white;">🌲</div>`,

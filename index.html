@@ -1996,7 +1996,221 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="./js/infrastructure.js"></script>
 <script src="./js/main.js"></script>
 <script src="js/contacts.js"></script>
+
 <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-search-form"></script>
 <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
+
+<!--
+═══════════════════════════════════════════════════════════════════
+  ОПЦИОНАЛЬНАЯ МОДУЛЬНАЯ СТРУКТУРА - js/map.js
+═══════════════════════════════════════════════════════════════════
+  
+  Если хотите вынести логику карты в отдельный файл:
+  
+  1. Создайте файл js/map.js
+  2. Скопируйте содержимое из блока ниже
+  3. Раскомментируйте строку: <script src="js/map.js"></script>
+  4. Удалите блок "========== КАРТА ==========" из основного <script> выше
+  
+═══════════════════════════════════════════════════════════════════
+  СОДЕРЖИМОЕ ФАЙЛА js/map.js:
+═══════════════════════════════════════════════════════════════════
+
+Создайте файл js/map.js со следующим содержимым:
+
+// ========== КАРТА (МОДУЛЬНАЯ ВЕРСИЯ) ==========
+// Этот файл содержит всю логику работы с картой
+
+let mapInitialized = false;
+
+// Переключение табов в модальном окне карты
+function switchMapTab(event, tabName) {
+  document.querySelectorAll('[id$="-view"]').forEach(el => {
+    el.style.display = 'none';
+  });
+  document.querySelectorAll('.map-tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  document.getElementById(tabName).style.display = 'block';
+  event.target.classList.add('active');
+
+  if (tabName === 'map-view' && !mapInitialized) {
+    setTimeout(initMap, 100);
+  }
+}
+
+// Открыть модальное окно с картой
+function openMapModal() {
+  document.getElementById('mapModal').classList.add('active');
+  if (!mapInitialized) {
+    setTimeout(initMap, 100);
+  }
+}
+
+// Закрыть модальное окно с картой
+function closeMapModal() {
+  document.getElementById('mapModal').classList.remove('active');
+}
+
+// Инициализация Google Maps
+// ⚠️ Для смены на другой провайдер (Yandex, OpenStreetMap) - замените только эту функцию
+function initMap() {
+  if (mapInitialized) return;
+
+  // Получаем координаты из глобальных переменных (определены в index.html)
+  const lat = LATITUDE;
+  const lng = LONGITUDE;
+
+  // Создаём карту Google Maps
+  const map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: lat, lng: lng },
+    zoom: 11,
+    mapTypeControl: true,
+    streetViewControl: false,
+    fullscreenControl: true
+  });
+
+  // Кастомная иконка для базы Пеликан
+  const pelicanIcon = {
+    url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
+        <circle cx="25" cy="25" r="23" fill="url(#grad1)" stroke="white" stroke-width="3"/>
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2d8659;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#4ca876;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <text x="25" y="32" font-size="24" text-anchor="middle" fill="white">🌲</text>
+      </svg>
+    `),
+    scaledSize: new google.maps.Size(50, 50),
+    anchor: new google.maps.Point(25, 50)
+  };
+
+  // Маркер базы Пеликан
+  const pelicanMarker = new google.maps.Marker({
+    position: { lat: lat, lng: lng },
+    map: map,
+    icon: pelicanIcon,
+    title: 'Пеликан Алаколь'
+  });
+
+  // Всплывающее окно для базы
+  const infoWindow = new google.maps.InfoWindow({
+    content: `
+      <div style="text-align: center; font-weight: bold; color: #2d8659; padding: 10px;">
+        <h3 style="margin: 0 0 8px 0;">🌲 Пеликан Алаколь</h3>
+        <p style="margin: 4px 0;">📍 пос. Акши, озеро Алаколь</p>
+        <p style="margin: 4px 0;">📞 +7 (72833) 30002</p>
+      </div>
+    `
+  });
+
+  pelicanMarker.addListener('click', () => {
+    infoWindow.open(map, pelicanMarker);
+  });
+
+  // Открываем всплывающее окно сразу
+  infoWindow.open(map, pelicanMarker);
+
+  // Круг радиуса 25 км вокруг базы
+  const circle = new google.maps.Circle({
+    strokeColor: '#00d4ff',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#00d4ff',
+    fillOpacity: 0.1,
+    map: map,
+    center: { lat: lat, lng: lng },
+    radius: 25000
+  });
+
+  // Маркер Алматы
+  const almatyMarker = new google.maps.Marker({
+    position: { lat: 43.2362, lng: 76.9378 },
+    map: map,
+    title: 'Алматы'
+  });
+
+  const almatyInfo = new google.maps.InfoWindow({
+    content: '<div style="font-weight: bold;">Алматы</div><p>200 км | 2.5-3 часа</p>'
+  });
+
+  almatyMarker.addListener('click', () => {
+    almatyInfo.open(map, almatyMarker);
+  });
+
+  // Маркер Риддер
+  const ridderMarker = new google.maps.Marker({
+    position: { lat: 50.3667, lng: 85.9833 },
+    map: map,
+    title: 'Риддер'
+  });
+
+  const ridderInfo = new google.maps.InfoWindow({
+    content: '<div style="font-weight: bold;">Риддер</div><p>50 км | 45 мин - 1 час</p>'
+  });
+
+  ridderMarker.addListener('click', () => {
+    ridderInfo.open(map, ridderMarker);
+  });
+
+  mapInitialized = true;
+}
+
+// Закрытие модального окна при клике вне его
+document.getElementById('mapModal').addEventListener('click', (e) => {
+  if (e.target.id === 'mapModal') closeMapModal();
+});
+
+═══════════════════════════════════════════════════════════════════
+  ИНСТРУКЦИЯ ПО ПЕРЕХОДУ НА МОДУЛЬНУЮ СТРУКТУРУ
+═══════════════════════════════════════════════════════════════════
+
+1. Создайте файл js/map.js
+2. Скопируйте содержимое из блока выше в js/map.js
+3. В index.html раскомментируйте строку:
+   <script src="js/map.js"></script>
+4. В index.html удалите или закомментируйте блок "========== КАРТА =========="
+5. Сохраните изменения
+
+ПРЕИМУЩЕСТВА МОДУЛЬНОЙ СТРУКТУРЫ:
+✅ Код карты изолирован в отдельном файле
+✅ Легко менять провайдера карты (только js/map.js)
+✅ Проще поддерживать и тестировать
+✅ index.html становится короче и читабельнее
+
+ДЛЯ СМЕНЫ КАРТЫ:
+Замените только функцию initMap() в js/map.js на версию для:
+- Yandex Maps
+- OpenStreetMap (Leaflet)
+- Mapbox
+- CartoDB
+Остальные функции (openMapModal, closeMapModal, switchMapTab) не трогайте!
+
+  
+  ПРЕИМУЩЕСТВА МОДУЛЬНОЙ СТРУКТУРЫ:
+  ✅ Код карты изолирован в отдельном файле
+  ✅ Легко менять провайдера карты (только js/map.js)
+  ✅ Проще поддерживать и тестировать
+  ✅ index.html становится короче и читабельнее
+  
+  ДЛЯ СМЕНЫ КАРТЫ:
+  Замените только функцию initMap() в js/map.js на версию для:
+  - Yandex Maps
+  - OpenStreetMap (Leaflet)
+  - Mapbox
+  - CartoDB
+  
+  Остальные функции (openMapModal, closeMapModal, switchMapTab) не трогайте!
+
+═══════════════════════════════════════════════════════════════════
+-->
+
+<!-- ⚠️ ОПЦИОНАЛЬНАЯ МОДУЛЬНАЯ СТРУКТУРА: Раскомментируйте строку ниже -->
+<!-- <script src="js/map.js"></script> -->
+
 </body>
 </html>

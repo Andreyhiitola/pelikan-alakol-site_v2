@@ -11,7 +11,6 @@ const CONFIG = {
 };
 console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 </script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Пеликан Алаколь - Семейный отдых на озере</title>
@@ -956,7 +955,6 @@ flex-wrap: nowrap;
 padding: 20px 40px;
 position: static;
 }
-
 .hamburger {
 display: flex;
 margin-left: 0;
@@ -1198,7 +1196,7 @@ width: 100%;
 <div class="scroll-wrapper">
   <div class="scroll-container" id="infrastructureContainer">
     <div class="scroll-item" style="display: flex; align-items: center; justify-content: center; min-height: 350px;">
-      <p>[translate:Загрузка инфраструктуры...]</p>
+      <p>Загрузка инфраструктуры...</p>
     </div>
   </div>
   <button class="scroll-nav-btn prev" onclick="scrollItems('infrastructure', -1)">❮</button>
@@ -1827,28 +1825,15 @@ function closeMapModal() {
 document.getElementById('mapModal').classList.remove('active');
 }
 
-!function initMap() {
-!if (mapInitialized) return;
-!const map = L.map('map').setView([LATITUDE, LONGITUDE], 11);
-!L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-!attribution: '© OpenStreetMap contributors',
-!maxZoom: 18
-!}).addTo(map);
-
-function initMap() 
+function initMap() {
 if (mapInitialized) return;
-const LATITUDE = 45.955;
-const LONGITUDE = 81.571;
 const map = L.map('map').setView([LATITUDE, LONGITUDE], 11);
+
+// CartoDB карта (бесплатно, без API ключа)
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 attribution: '© CartoDB © OpenStreetMap contributors',
 maxZoom: 18
 }).addTo(map);
-
-  // Здесь можно добавить метки и другие слои по вашему усмотрению
-
-  mapInitialized = true;
-}  
 
 const pelicanIcon = L.divIcon({
 html: `<div style="background: linear-gradient(135deg, #2d8659, #4ca876); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3); border: 3px solid white;">🌲</div>`,

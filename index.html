@@ -15,9 +15,8 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Пеликан Алаколь - Семейный отдых на озере</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <link rel="stylesheet" href="css/infrastructure.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 <style>
 :root {
 --primary-green: #2d8659;
@@ -1827,42 +1826,101 @@ document.getElementById('mapModal').classList.remove('active');
 
 function initMap() {
 if (mapInitialized) return;
-const map = L.map('map').setView([LATITUDE, LONGITUDE], 11);
 
-// CartoDB карта (бесплатно, без API ключа)
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-attribution: '© CartoDB © OpenStreetMap contributors',
-maxZoom: 18
-}).addTo(map);
-
-const pelicanIcon = L.divIcon({
-html: `<div style="background: linear-gradient(135deg, #2d8659, #4ca876); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; box-shadow: 0 4px 12px rgba(45, 134, 89, 0.3); border: 3px solid white;">🌲</div>`,
-iconSize: [50, 50],
-iconAnchor: [25, 50],
-popupAnchor: [0, -50]
+// Создаём карту Google Maps
+const map = new google.maps.Map(document.getElementById('map'), {
+center: { lat: LATITUDE, lng: LONGITUDE },
+zoom: 11,
+mapTypeControl: true,
+streetViewControl: false,
+fullscreenControl: true
 });
 
-L.marker([LATITUDE, LONGITUDE], { icon: pelicanIcon })
-.bindPopup('<div style="text-align: center; font-weight: bold; color: #2d8659;"><h3>🌲 Пеликан Алаколь</h3><p>📍 пос. Акши, озеро Алаколь</p><p>📞 +7 (72833) 30002</p></div>')
-.addTo(map)
-.openPopup();
+// Кастомная иконка для базы Пеликан
+const pelicanIcon = {
+url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50">
+<circle cx="25" cy="25" r="23" fill="url(#grad1)" stroke="white" stroke-width="3"/>
+<defs>
+<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#2d8659;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#4ca876;stop-opacity:1" />
+</linearGradient>
+</defs>
+<text x="25" y="32" font-size="24" text-anchor="middle" fill="white">🌲</text>
+</svg>
+`),
+scaledSize: new google.maps.Size(50, 50),
+anchor: new google.maps.Point(25, 50)
+};
 
-L.circle([LATITUDE, LONGITUDE], {
-color: '#00d4ff',
-fill: true,
+// Маркер базы Пеликан
+const pelicanMarker = new google.maps.Marker({
+position: { lat: LATITUDE, lng: LONGITUDE },
+map: map,
+icon: pelicanIcon,
+title: 'Пеликан Алаколь'
+});
+
+// Всплывающее окно для базы
+const infoWindow = new google.maps.InfoWindow({
+content: `
+<div style="text-align: center; font-weight: bold; color: #2d8659; padding: 10px;">
+<h3 style="margin: 0 0 8px 0;">🌲 Пеликан Алаколь</h3>
+<p style="margin: 4px 0;">📍 пос. Акши, озеро Алаколь</p>
+<p style="margin: 4px 0;">📞 +7 (72833) 30002</p>
+</div>
+`
+});
+
+pelicanMarker.addListener('click', () => {
+infoWindow.open(map, pelicanMarker);
+});
+
+// Открываем сразу
+infoWindow.open(map, pelicanMarker);
+
+// Круг радиуса 25 км вокруг базы
+const circle = new google.maps.Circle({
+strokeColor: '#00d4ff',
+strokeOpacity: 0.8,
+strokeWeight: 2,
 fillColor: '#00d4ff',
 fillOpacity: 0.1,
-weight: 2,
+map: map,
+center: { lat: LATITUDE, lng: LONGITUDE },
 radius: 25000
-}).addTo(map);
+});
 
-L.marker([43.2362, 76.9378])
-.bindPopup('<strong>Алматы</strong><p>200 км | 2.5-3 часа</p>')
-.addTo(map);
+// Маркер Алматы
+const almatyMarker = new google.maps.Marker({
+position: { lat: 43.2362, lng: 76.9378 },
+map: map,
+title: 'Алматы'
+});
 
-L.marker([50.3667, 85.9833])
-.bindPopup('<strong>Риддер</strong><p>50 км | 45 мин - 1 час</p>')
-.addTo(map);
+const almatyInfo = new google.maps.InfoWindow({
+content: '<div style="font-weight: bold;">Алматы</div><p>200 км | 2.5-3 часа</p>'
+});
+
+almatyMarker.addListener('click', () => {
+almatyInfo.open(map, almatyMarker);
+});
+
+// Маркер Риддер
+const ridderMarker = new google.maps.Marker({
+position: { lat: 50.3667, lng: 85.9833 },
+map: map,
+title: 'Риддер'
+});
+
+const ridderInfo = new google.maps.InfoWindow({
+content: '<div style="font-weight: bold;">Риддер</div><p>50 км | 45 мин - 1 час</p>'
+});
+
+ridderMarker.addListener('click', () => {
+ridderInfo.open(map, ridderMarker);
+});
 
 mapInitialized = true;
 }

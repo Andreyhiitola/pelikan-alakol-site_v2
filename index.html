@@ -288,48 +288,41 @@ border-radius: 10px;
 background: var(--primary-green);
 }
 .scroll-item {
-flex: 0 0 calc(100% - 20px);
-scroll-snap-align: start;
-background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05));
-border-radius: 15px;
-border-left: 4px solid var(--secondary-green);
-padding: 20px;
-box-shadow: 0 2px 8px rgba(45, 134, 89, 0.08);
-transition: all 0.3s;
-min-width: 300px;
-cursor: pointer;
-position: relative;
+  flex: 0 0 calc(100% - 20px);
+  scroll-snap-align: start;
+  background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05));
+  border-radius: 15px;
+  border-left: 4px solid var(--secondary-green);
+  padding: 12px;           /* ← уменьшили с 20px на 12px */
+  box-shadow: 0 2px 8px rgba(45, 134, 89, 0.08);
+  transition: all 0.3s;
+  min-width: 300px;
+  cursor: pointer;
+  position: relative;
 }
-.scroll-item:hover {
-box-shadow: var(--shadow);
-transform: translateY(-5px);
-}
+
 .scroll-item img {
   display: block;
-  width: 30%;              /* ← 45% ширины */
-  margin: 0 auto 15px auto; /* ← центрирование (auto слева и справа) */
+  margin: 0 auto 8px auto;   /* ← уменьшили отступ с 10px на 8px */
+  width: 50%;                /* ← увеличили с 45% на 50% */
   border-radius: 10px;
-  height: 200px;
-  object-fit: cover;
+  height: 220px;             /* ← увеличили с 200px на 220px */
+  object-fit: contain;
   transition: all 0.3s;
 }
-.scroll-item:hover img {
-transform: scale(1.05);
-filter: brightness(0.85);
-}
+
 .scroll-item h3 {
-  margin: 8px 0 6px 0;         /* ← минимальные отступы */
+  margin: 4px 0 3px 0;       /* ← минимальные отступы */
   color: var(--primary-green);
-  font-size: 0.95em;           /* ← ещё меньше */
+  font-size: 0.85em;         /* ← ещё меньше */
   font-weight: 600;
 }
 
-}
 .scroll-item p {
-margin: 0;
-font-size: 0.95em;
-line-height: 1.5;
-color: var(--text-dark);
+  margin: 0;
+  font-size: 0.85em;         /* ← меньше */
+  line-height: 1.3;          /* ← теснее строки */
+  color: var(--text-dark);
 }
 .photo-overlay {
 position: absolute;

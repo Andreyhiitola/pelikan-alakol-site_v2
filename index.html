@@ -305,25 +305,21 @@ box-shadow: var(--shadow);
 transform: translateY(-5px);
 }
 .scroll-item img {
-  display: block;
-  width: 30%;              /* ← 45% ширины */
-  margin: 0 auto 15px auto; /* ← центрирование (auto слева и справа) */
-  border-radius: 10px;
-  height: 200px;
-  object-fit: cover;
-  transition: all 0.3s;
+width: 70%;
+border-radius: 10px;
+margin: 0 0 15px 0;
+height: 250px;
+object-fit: cover;
+transition: all 0.3s;
 }
 .scroll-item:hover img {
 transform: scale(1.05);
 filter: brightness(0.85);
 }
 .scroll-item h3 {
-  margin: 8px 0 6px 0;         /* ← минимальные отступы */
-  color: var(--primary-green);
-  font-size: 0.95em;           /* ← ещё меньше */
-  font-weight: 600;
-}
-
+margin: 0 0 10px 0;
+color: var(--primary-green);
+font-size: 1.2em;
 }
 .scroll-item p {
 margin: 0;

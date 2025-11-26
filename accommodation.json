@@ -136,8 +136,9 @@
     "capacity": 5,
     "area": 54,
     "bathroom": "Частная",
-    "imageThumb": "./images/accommodation/стандарт-семейный-5ти-местный.jpg",
-    "imageFull": "./images/accommodation/стандарт-семейный-5ти-местный.jpg"
+    "imageThumb": "./images/accommodation/Стандарт семейный 5-ти местный.png",
+    "imageFull": "./images/accommodation/Стандарт семейный 5-ти местный.png
+"
   },
   {
     "id": "стандарт-семейный-5ти-местный-с-террасой",

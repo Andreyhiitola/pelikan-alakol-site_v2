@@ -122,8 +122,8 @@
     "capacity": 4,
     "area": 27,
     "bathroom": "Частная",
-    "imageThumb": "./images/accommodation/стандарт-4х-местный.jpg",
-    "imageFull": "./images/accommodation/стандарт-4х-местный.jpg"
+    "imageThumb": "./images/accommodation/Стандарт 4-х местный.png",
+    "imageFull": "./images/accommodation/Стандарт 4-х местный.png"
   },
   {
     "id": "стандарт-семейный-5ти-местный",

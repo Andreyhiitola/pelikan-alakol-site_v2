@@ -51,9 +51,9 @@
     "price": "26400",
     "capacity": 4,
     "area": 25,
-    "bathroom": "Частная",
-    "imageThumb": "./images/accommodation/бунгало-юниор-4х-22-местный.jpg",
-    "imageFull": "./images/accommodation/бунгало-юниор-4х-22-местный.jpg"
+    "bathroom": "Частная",Бунгало юниор 4-х (2+2) местный.png
+    "imageThumb": "./images/accommodation/Бунгало юниор 4-х (2+2) местный.png",
+    "imageFull": "./images/accommodation/Бунгало юниор 4-х (2+2) местный.png"
   },
   {
     "id": "бунгало-улучшенный-3х-местный",

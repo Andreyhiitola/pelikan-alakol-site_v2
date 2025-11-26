@@ -1,0 +1,97 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for background -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F7931E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FDB913;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradient for pelican -->
+    <linearGradient id="pelicanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E0E0E0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradient for water -->
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00B4D8;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#0077B6;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle with sunset colors -->
+  <circle cx="200" cy="140" r="120" fill="url(#skyGrad)" opacity="0.3"/>
+  
+  <!-- Large sun -->
+  <circle cx="200" cy="60" r="35" fill="#FDB913" opacity="0.8"/>
+  <circle cx="200" cy="60" r="42" fill="none" stroke="#FF6B35" stroke-width="2" opacity="0.4"/>
+  <circle cx="200" cy="60" r="50" fill="none" stroke="#FF6B35" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Mountain ranges - bold geometric -->
+  <path d="M 50 180 L 90 120 L 130 160 L 170 100 L 210 150 L 250 90 L 290 140 L 330 110 L 350 180 Z" 
+        fill="#1A535C" opacity="0.7"/>
+  <path d="M 80 180 L 120 140 L 160 170 L 200 120 L 240 155 L 280 125 L 320 165 L 350 180 Z" 
+        fill="#2A6F7C" opacity="0.5"/>
+  
+  <!-- Abstract water -->
+  <ellipse cx="200" cy="175" rx="140" ry="25" fill="url(#waterGrad)"/>
+  <ellipse cx="200" cy="170" rx="120" ry="15" fill="#48CAE4" opacity="0.6"/>
+  
+  <!-- BOLD Pelican - geometric and modern -->
+  <!-- Body - angular and stylized -->
+  <path d="M 180 130 L 220 125 L 230 145 L 200 155 L 170 150 Z" 
+        fill="url(#pelicanGrad)" stroke="#1A535C" stroke-width="3"/>
+  
+  <!-- Wing - sharp geometric -->
+  <path d="M 185 135 L 145 115 L 150 125 L 155 140 L 185 142 Z" 
+        fill="#FFFFFF" stroke="#1A535C" stroke-width="3"/>
+  
+  <!-- Neck - bold curve -->
+  <path d="M 218 127 Q 245 105 265 115" 
+        stroke="#1A535C" stroke-width="5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Head - strong shape -->
+  <circle cx="268" cy="112" r="12" fill="#FFFFFF" stroke="#1A535C" stroke-width="3"/>
+  
+  <!-- Beak - BOLD and iconic -->
+  <path d="M 278 108 L 320 100 L 318 115 L 278 118 Z" 
+        fill="#FF6B35" stroke="#C4451C" stroke-width="2.5"/>
+  
+  <!-- Pouch - signature element -->
+  <path d="M 278 118 Q 300 130 318 115" 
+        fill="#F7931E" stroke="#C4451C" stroke-width="2.5"/>
+  
+  <!-- Eye - bold dot -->
+  <circle cx="272" cy="110" r="3.5" fill="#1A535C"/>
+  
+  <!-- Tail feathers - geometric -->
+  <path d="M 172 148 L 150 155 L 158 142 Z" 
+        fill="#E0E0E0" stroke="#1A535C" stroke-width="2.5"/>
+  <path d="M 175 151 L 155 160 L 163 148 Z" 
+        fill="#F0F0F0" stroke="#1A535C" stroke-width="2"/>
+  
+  <!-- Kazakh ornament circle -->
+  <circle cx="90" cy="240" r="18" fill="none" stroke="#FF6B35" stroke-width="2"/>
+  <path d="M 90 228 L 90 252 M 78 240 L 102 240" stroke="#FF6B35" stroke-width="2"/>
+  <circle cx="90" cy="240" r="6" fill="#FDB913"/>
+  
+  <circle cx="310" cy="240" r="18" fill="none" stroke="#FF6B35" stroke-width="2"/>
+  <path d="M 310 228 L 310 252 M 298 240 L 322 240" stroke="#FF6B35" stroke-width="2"/>
+  <circle cx="310" cy="240" r="6" fill="#FDB913"/>
+  
+  <!-- Text: ПЕЛИКАН - BOLD -->
+  <text x="200" y="220" font-family="Arial, sans-serif" font-size="48" font-weight="900" 
+        fill="#1A535C" text-anchor="middle" letter-spacing="3">ПЕЛИКАН</text>
+  
+  <!-- Text: ПАРК-ОТЕЛЬ -->
+  <text x="200" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="600" 
+        fill="#FF6B35" text-anchor="middle" letter-spacing="6">ПАРК-ОТЕЛЬ</text>
+  
+  <!-- Decorative lines -->
+  <rect x="120" y="255" width="160" height="3" fill="#FDB913" rx="1.5"/>
+  
+  <!-- Text: Location -->
+  <text x="200" y="275" font-family="Arial, sans-serif" font-size="11" font-weight="600"
+        fill="#2A6F7C" text-anchor="middle" letter-spacing="2">АХЧИ • ҚАЗАҚСТАН</text>
+</svg>

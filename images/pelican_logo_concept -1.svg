@@ -1,0 +1,109 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="seaBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0891B2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0E7490;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- SUN - warm background -->
+  <circle cx="240" cy="80" r="35" fill="#FDB813" opacity="0.9"/>
+  <circle cx="240" cy="80" r="40" fill="#FFA500" opacity="0.3"/>
+  
+  <!-- Sun rays -->
+  <line x1="240" y1="35" x2="240" y2="45" stroke="#FDB813" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+  <line x1="275" y1="80" x2="285" y2="80" stroke="#FDB813" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+  <line x1="268" y1="52" x2="275" y2="45" stroke="#FDB813" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+  <line x1="268" y1="108" x2="275" y2="115" stroke="#FDB813" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+  <line x1="212" y1="52" x2="205" y2="45" stroke="#FDB813" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+  
+  <!-- LAKE - serene water surface -->
+  <ellipse cx="200" cy="155" rx="120" ry="15" fill="#0891B2" opacity="0.25"/>
+  <ellipse cx="200" cy="153" rx="110" ry="12" fill="#06B6D4" opacity="0.3"/>
+  
+  <!-- Water ripples -->
+  <path d="M 90 155 Q 145 150 200 155 Q 255 160 310 155" 
+        stroke="#22D3EE" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M 100 160 Q 150 156 200 160 Q 250 164 300 160" 
+        stroke="#06B6D4" stroke-width="1.5" fill="none" opacity="0.3"/>
+  
+  <!-- PELICAN PROFILE - classic recognizable shape -->
+  
+  <!-- Body - horizontal oval -->
+  <ellipse cx="160" cy="130" rx="45" ry="30" fill="#FFFFFF" stroke="#0E7490" stroke-width="3"/>
+  
+  <!-- Chest shading -->
+  <ellipse cx="165" cy="135" rx="30" ry="20" fill="#F0FDFA" opacity="0.6"/>
+  
+  <!-- Wing - elegant folded -->
+  <path d="M 130 120 Q 115 115 110 120 Q 112 130 120 135 Q 130 138 140 135 Q 145 130 140 120 Z" 
+        fill="#E0F2FE" stroke="#0E7490" stroke-width="2.5"/>
+  
+  <!-- Wing feather details -->
+  <path d="M 118 122 Q 115 127 118 132" stroke="#0891B2" stroke-width="1.5" fill="none"/>
+  <path d="M 125 123 Q 122 128 125 134" stroke="#0891B2" stroke-width="1.5" fill="none"/>
+  <path d="M 132 124 Q 130 129 133 134" stroke="#0891B2" stroke-width="1.5" fill="none"/>
+  
+  <!-- LONG GRACEFUL NECK - key feature! -->
+  <path d="M 190 120 Q 210 100 230 95 Q 245 92 255 98" 
+        stroke="#FFFFFF" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M 190 120 Q 210 100 230 95 Q 245 92 255 98" 
+        stroke="#0E7490" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Head - small and refined -->
+  <ellipse cx="257" cy="96" rx="12" ry="10" fill="#FFFFFF" stroke="#0E7490" stroke-width="2.5"/>
+  
+  <!-- Eye - alert and bright -->
+  <circle cx="260" cy="94" r="3" fill="#0E7490"/>
+  <circle cx="261" cy="93" r="1" fill="#FFFFFF"/>
+  
+  <!-- Small crest -->
+  <path d="M 255 88 Q 253 83 256 87" stroke="#0E7490" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- THE MASSIVE ICONIC BEAK WITH POUCH -->
+  <!-- Upper beak - long and straight -->
+  <path d="M 267 93 L 320 85 L 318 95 L 267 100 Z" 
+        fill="#F97316" stroke="#C2410C" stroke-width="2.5"/>
+  
+  <!-- Beak detail line -->
+  <line x1="267" y1="96" x2="318" y2="90" stroke="#EA580C" stroke-width="1.5"/>
+  
+  <!-- THE HUGE DISTINCTIVE POUCH - most recognizable feature -->
+  <path d="M 267 100 Q 260 115 265 125 Q 285 140 305 130 Q 315 120 318 95 Z" 
+        fill="#FBBF24" stroke="#C2410C" stroke-width="2.5"/>
+  
+  <!-- Pouch skin texture -->
+  <path d="M 275 108 Q 285 120 295 110" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M 270 115 Q 285 128 300 118" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M 268 122 Q 285 135 302 125" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity="0.5"/>
+  
+  <!-- Tail feathers - pointed upward -->
+  <path d="M 120 135 L 100 130 L 108 140 Z" 
+        fill="#E0F2FE" stroke="#0E7490" stroke-width="2.5"/>
+  <path d="M 122 132 L 105 128 L 112 138 Z" 
+        fill="#F0FDFA" stroke="#0E7490" stroke-width="2"/>
+  
+  <!-- Legs - thin and elegant -->
+  <line x1="155" y1="155" x2="155" y2="168" stroke="#F97316" stroke-width="3"/>
+  <line x1="165" y1="155" x2="165" y2="168" stroke="#F97316" stroke-width="3"/>
+  
+  <!-- Webbed feet -->
+  <path d="M 150 168 L 160 168" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 160 168 L 170 168" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Main text -->
+  <text x="200" y="210" font-family="Arial, sans-serif" font-size="46" font-weight="700" 
+        fill="#0E7490" text-anchor="middle" letter-spacing="6">ПЕЛИКАН</text>
+  
+  <!-- Wave accent -->
+  <path d="M 100 225 Q 150 220 200 225 Q 250 230 300 225" 
+        stroke="#F97316" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Subtitle -->
+  <text x="200" y="250" font-family="Arial, sans-serif" font-size="15" font-weight="500" 
+        fill="#0891B2" text-anchor="middle" letter-spacing="5">ПАРК-ОТЕЛЬ</text>
+  
+  <!-- Location -->
+  <text x="200" y="273" font-family="Arial, sans-serif" font-size="12" font-weight="400"
+        fill="#22D3EE" text-anchor="middle" letter-spacing="2">Ахчи, Казахстан</text>
+</svg>

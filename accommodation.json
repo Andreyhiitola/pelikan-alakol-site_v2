@@ -192,8 +192,8 @@
     "capacity": 2,
     "area": 42,
     "bathroom": "Частная",
-    "imageThumb": "./images/accommodation/люкс-2х-местный.jpg",
-    "imageFull": "./images/accommodation/люкс-2х-местный.jpg"
+    "imageThumb": "./images/accommodation/Люкс 2-х местный.png",
+    "imageFull": "./images/accommodation/Люкс 2-х местный.png"
   },
   {
     "id": "люкс-роза-2х-местный",

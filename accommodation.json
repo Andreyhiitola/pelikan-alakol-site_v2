@@ -94,8 +94,8 @@
     "capacity": 2,
     "area": 27,
     "bathroom": "Частная",
-    "imageThumb": "./images/accommodation/стандарт-2х-местный.jpg",
-    "imageFull": "./images/accommodation/стандарт-2х-местный.jpg"
+    "imageThumb": "./images/accommodation/Стандарт 2-х местный.png",
+    "imageFull": "./images/accommodation/Стандарт 2-х местный.png"
   },
   {
     "id": "стандарт-3х-2+1-местный",

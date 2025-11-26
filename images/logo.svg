@@ -82,11 +82,11 @@
   
   <!-- Text: PELICAN - BOLD -->
   <text x="200" y="220" font-family="Arial, sans-serif" font-size="48" font-weight="900" 
-        fill="#1A535C" text-anchor="middle" letter-spacing="3">ПЕЛИКАН</text>
+        fill="#1A535C" text-anchor="middle" letter-spacing="3">PELICAN</text>
   
   <!-- Text: PARK-OTEL -->
   <text x="200" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="600" 
-        fill="#FF6B35" text-anchor="middle" letter-spacing="6">ПАРК-ОТЕЛЬ</text>
+        fill="#FF6B35" text-anchor="middle" letter-spacing="6">PARK-OTEL</text>
   
   <!-- Decorative lines -->
   <rect x="120" y="255" width="160" height="3" fill="#FDB913" rx="1.5"/>

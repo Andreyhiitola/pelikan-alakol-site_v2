@@ -51,7 +51,7 @@
     "price": "26400",
     "capacity": 4,
     "area": 25,
-    "bathroom": "Частная",Бунгало юниор 4-х (2+2) местный.png
+    "bathroom": "Частная",
     "imageThumb": "./images/accommodation/Бунгало юниор 4-х (2+2) местный.png",
     "imageFull": "./images/accommodation/Бунгало юниор 4-х (2+2) местный.png"
   },
@@ -150,8 +150,8 @@
     "capacity": 5,
     "area": 54,
     "bathroom": "Частная",
-    "imageThumb": "./images/accommodation/стандарт-семейный-5ти-местный-с-террасой.jpg",
-    "imageFull": "./images/accommodation/стандарт-семейный-5ти-местный-с-террасой.jpg"
+    "imageThumb": "./images/accommodation/Стандарт семейный 5-ти местный с террасой.png",
+    "imageFull": "./images/accommodation/Стандарт семейный 5-ти местный с террасой.png"
   },
   {
     "id": "стандарт-junior-4х-местный-корпус-1",

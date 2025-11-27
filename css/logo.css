@@ -1,4 +1,23 @@
 .logo {
-  width: 300px;
+  max-width: 200px;        /* Было: width: 300px */
+  max-height: 80px;        /* Ограничение высоты */
+  width: auto;             /* Авто по пропорциям */
   height: auto;
+  object-fit: contain;     /* Не растягивать */
+  transition: all 0.3s;
+}
+
+/* ✅ МОБИЛЬНАЯ ВЕРСИЯ */
+@media (max-width: 767px) {
+  .logo {
+    max-width: 120px !important;   /* Компактно на телефоне */
+    max-height: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    max-width: 100px !important;   /* Очень маленькие экраны */
+    max-height: 40px !important;
+  }
 }

@@ -1,11 +1,7 @@
 .logo {
+  border: 2px solid red;   /* Для визуальной отладки */
+  background-color: yellow;
   max-width: 300px;
   height: auto;
-  display: block;   /* Обязательно */
-  object-fit: contain;
-}
-
-.header-left {
-  display: flex;        /* Для корректного отображения */
-  align-items: center;  /* Выравнивание по центру */
+  display: block;
 }

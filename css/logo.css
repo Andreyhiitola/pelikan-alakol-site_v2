@@ -1,8 +1,16 @@
 .logo {
-  border: 2px solid red;
-  background-color: yellow;
   max-width: 300px;
-  width: 200px !important;   /* Задаём фиксированную ширину для теста */
-  height: 80px !important;   /* Фиксированная высота для теста */
-  display: block;
+  height: auto;
+  width: auto;           /* ✅ Авто по содержимому */
+  min-height: 60px;      /* ✅ Минимум высоты */
+  object-fit: contain;   /* ✅ Сохраняет пропорции */
+  display: block;        /* ✅ Обязательно */
+  transition: all 0.3s;
+}
+
+@media (max-width: 767px) {
+  .logo {
+    max-width: 120px !important;
+    min-height: 40px !important;
+  }
 }

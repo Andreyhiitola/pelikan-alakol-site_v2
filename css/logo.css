@@ -1,8 +1,8 @@
 .logo {
-  max-width: 300px;
+  max-width: 350px;
   height: auto;
   width: auto;           /* ✅ Авто по содержимому */
-  min-height: 60px;      /* ✅ Минимум высоты */
+  min-height: 100px;      /* ✅ Минимум высоты */
   object-fit: contain;   /* ✅ Сохраняет пропорции */
   display: block;        /* ✅ Обязательно */
   transition: all 0.3s;
@@ -10,7 +10,7 @@
 
 @media (max-width: 767px) {
   .logo {
-    max-width: 120px !important;
-    min-height: 40px !important;
+    max-width: 200px !important;
+    min-height: 70px !important;
   }
 }

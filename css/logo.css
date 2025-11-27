@@ -1,34 +1,19 @@
-/* css/logo.css — ЛОГОТИП ВСТРОЕН! */
 .logo {
-  /* ✅ SVG ЛОГОТИП как background */
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='300' height='80' viewBox='0 0 300 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%232d8659;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%234ca876;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='40' cy='40' r='35' fill='url(%23grad1)' stroke='white' stroke-width='3'/%3E%3Ctext x='40' y='48' font-size='24' text-anchor='middle' fill='white' font-weight='bold'%3EP%3C/text%3E%3Ctext x='85' y='45' font-size='28' font-weight='bold' fill='%232d8659'%3EELIKAN%3C/text%3E%3Ctext x='85' y='62' font-size='14' fill='%234ca876'%3EAlakol%3C/text%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 300px;
-  height: 80px;
-  display: block;
-  border-radius: 8px;
+  max-width: 300px;
+  height: auto;
+  object-fit: contain;
   transition: all 0.3s;
 }
 
-/* ✅ АДАПТИВНОСТЬ */
 @media (max-width: 767px) {
   .logo {
-    width: 120px !important;
-    height: 40px !important;
+    max-width: 120px !important;
+    height: auto !important;
   }
 }
 
 @media (max-width: 480px) {
   .logo {
-    width: 100px !important;
-    height: 35px !important;
+    max-width: 100px !important;
   }
-}
-
-/* Hover эффект */
-.logo:hover {
-  transform: scale(1.02);
-  filter: drop-shadow(0 4px 12px rgba(45, 134, 89, 0.3));
 }

@@ -2050,13 +2050,40 @@ renderContacts('contactGridModal');
 });
 
 // ========== ГАМБУРГЕР МЕНЮ ==========
+//function toggleMobileMenu() {
+//const hamburger = document.getElementById('hamburger');
+//const navMobile = document.getElementById('navMobile');
+//hamburger.classList.toggle('active');
+//navMobile.classList.toggle('active');
+//}   этот блок закомментирован блок ниже новый
+
 function toggleMobileMenu() {
-const hamburger = document.getElementById('hamburger');
-const navMobile = document.getElementById('navMobile');
-hamburger.classList.toggle('active');
-navMobile.classList.toggle('active');
+  const nav = document.getElementById('navMobile');
+  const hamburger = document.querySelector('.hamburger');
+  
+  nav.classList.toggle('active');
+  hamburger.classList.toggle('active');
+  
+  // ✅ НОВОЕ: скрываем основное меню на мобильных
+  const mainNav = document.querySelector('nav');
+  if (window.innerWidth <= 767) {
+    mainNav.style.display = nav.classList.contains('active') ? 'none' : 'flex';
+  }
 }
 
+function closeMobileMenu() {
+  document.getElementById('navMobile').classList.remove('active');
+  document.querySelector('.hamburger').classList.remove('active');
+  
+  // ✅ НОВОЕ: показываем основное меню
+  const mainNav = document.querySelector('nav');
+  mainNav.style.display = 'flex';
+ //--------------------------------------------------------------------- 
+  
+}
+
+
+  
 function closeMobileMenu() {
 const hamburger = document.getElementById('hamburger');
 const navMobile = document.getElementById('navMobile');

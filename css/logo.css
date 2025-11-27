@@ -1,8 +1,8 @@
 .logo {
-  width: 336px;              /* ✅ МАКСИМУМ десктоп *//* 420px - 20% = 336px */
+  width: 294px;              /* ✅ МАКСИМУМ десктоп *//* 420px - 20% = 336px */
   height: auto;
-  min-height: 96px;         /* ✅ Высокий */ /* 120px - 20% = 96px */
-  max-width: 360px;          /* 450px - 20% = 360px */
+  min-height: 67px;         /* ✅ Высокий */ /* 120px - 20% = 96px */
+  max-width: 252px;          /* 450px - 20% = 360px */
   object-fit: contain;
   display: block;
   transition: all 0.3s;

@@ -21,18 +21,26 @@
   .logo { width: 200px !important; }
 }
 
-/* ✅ АДАПТИВНОЕ МЕНЮ */
+/* ✅ АДАПТИВНОЕ МЕНЮ — ДЕСКТОП */
 @media (min-width: 768px) {
   .nav-mobile { display: none !important; }
-  nav { 
+  .header-center { 
     display: flex !important; 
     flex-direction: row !important; 
   }
 }
 
+/* ✅ АДАПТИВНОЕ МЕНЮ — МОБИЛЬНЫЕ */
 @media (max-width: 767px) {
-  .hamburger { display: flex !important; }
+  .hamburger { 
+    display: flex !important; 
+    margin-left: auto; 
+  }
+  
+  /* ✅ СКРЫВАЕМ ВСЕ кнопки меню на мобилках */
+  .header-center { display: none !important; }
   nav { display: none !important; }
+  
   .nav-mobile { display: none; }
   .nav-mobile.active { display: flex !important; }
 }

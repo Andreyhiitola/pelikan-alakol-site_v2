@@ -1,7 +1,8 @@
 .logo {
-  border: 2px solid red;   /* Для визуальной отладки */
+  border: 2px solid red;
   background-color: yellow;
   max-width: 300px;
-  height: auto;
+  width: 200px !important;   /* Задаём фиксированную ширину для теста */
+  height: 80px !important;   /* Фиксированная высота для теста */
   display: block;
 }

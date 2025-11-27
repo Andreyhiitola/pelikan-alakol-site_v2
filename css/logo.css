@@ -1,19 +1,11 @@
 .logo {
   max-width: 300px;
   height: auto;
+  display: block;   /* Обязательно */
   object-fit: contain;
-  transition: all 0.3s;
 }
 
-@media (max-width: 767px) {
-  .logo {
-    max-width: 120px !important;
-    height: auto !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo {
-    max-width: 100px !important;
-  }
+.header-left {
+  display: flex;        /* Для корректного отображения */
+  align-items: center;  /* Выравнивание по центру */
 }

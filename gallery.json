@@ -7,7 +7,7 @@
     "category": "nature",
     "tags": ["озеро", "вода", "панорама"],
     "uploaded": "2025-11-12",
-    "image": "./images/gallery/lake-view.jpg"
+    "image": "./images/gallery/lake-view/*"
   },
   {
     "id": "sunset",

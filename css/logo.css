@@ -1,16 +1,29 @@
 .logo {
-  max-width: 350px;
+  width: 420px;              /* ✅ МАКСИМУМ десктоп */
   height: auto;
-  width: auto;           /* ✅ Авто по содержимому */
-  min-height: 100px;      /* ✅ Минимум высоты */
-  object-fit: contain;   /* ✅ Сохраняет пропорции */
-  display: block;        /* ✅ Обязательно */
+  min-height: 120px;         /* ✅ Высокий */
+  max-width: 450px;
+  object-fit: contain;
+  display: block;
   transition: all 0.3s;
+}
+
+@media (max-width: 1024px) {
+  .logo {
+    width: 350px !important;   /* Планшет */
+    min-height: 100px !important;
+  }
 }
 
 @media (max-width: 767px) {
   .logo {
-    max-width: 200px !important;
-    min-height: 70px !important;
+    width: 240px !important;   /* ✅ КРУПНО на телефоне */
+    min-height: 85px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 200px !important;   /* Маленькие телефоны */
   }
 }

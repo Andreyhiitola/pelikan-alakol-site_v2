@@ -57,7 +57,7 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 45.9532096708809,
+    "latitude": 45.951820,
     "longitude": 81.5714
   },
   "image": "https://pelican-alacol.ru/images/hotel-photo.jpg",
@@ -1390,10 +1390,10 @@ width: 100%;
     <div id="map" style="height: 400px; margin: 20px 0; border-radius: 12px;"></div>
     
     <!-- 2. GPS координаты (кликабельные) -->
-    <div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--secondary-green); cursor: pointer;" onclick="copyToClipboard('45.9532096708809, 81.5693809232173', 'GPS координаты')" title="Нажмите, чтобы скопировать">
+    <div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--secondary-green); cursor: pointer;" onclick="copyToClipboard('45.951820, 81.568732', 'GPS координаты')" title="Нажмите, чтобы скопировать">
       <p style="margin: 0; display: flex; align-items: center; gap: 10px;">
         <strong style="color: var(--primary-green);">📍 GPS:</strong> 
-        <span style="font-family: monospace; font-size: 1.1em;">45.9532096708809, 81.5693809232173</span>
+        <span style="font-family: monospace; font-size: 1.1em;">45.951820, 81.568732</span>
         <i class="fas fa-copy" style="color: var(--secondary-green); margin-left: auto;"></i>
       </p>
     </div>
@@ -1537,7 +1537,7 @@ width: 100%;
 <script>
 const CONTACTS_JSON_URL = 'contacts.json';
 const WEATHER_API_KEY = 'f59a23d3c33e1335a9226aad91b13cdf';
-const LATITUDE = 45.9532096708809;
+const LATITUDE = 45.951820;
 const LONGITUDE = 81.5714;
 const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${LATITUDE}&lon=${LONGITUDE}&appid=${WEATHER_API_KEY}&units=metric&lang=ru`;
 

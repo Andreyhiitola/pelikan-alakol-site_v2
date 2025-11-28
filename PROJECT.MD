@@ -276,8 +276,8 @@ pelikan-alakol-site/
        "addressCountry": "KZ"
      },
      "geo": {
-       "latitude": 45.955,
-       "longitude": 81.5714
+       "latitude": 45.953120,
+       "longitude": 81.568958
      }
    }
    </script>

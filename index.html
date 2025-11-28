@@ -1378,75 +1378,56 @@ width: 100%;
 </div>
 </div>
 </div>
-
 <div class="modal" id="mapModal">
-<div class="modal-content">
-<button class="modal-close" onclick="closeMapModal()">✕</button>
-<h2><i class="fas fa-map-location-dot"></i> Как добраться до базы Пеликан Алаколь</h2>
-
-<div class="map-tabs">
-<button class="map-tab-btn active" onclick="switchMapTab(event, 'map-view')">🗺️ Карта</button>
-<button class="map-tab-btn" onclick="switchMapTab(event, 'routes-view')">🚗 Маршруты</button>
-<button class="map-tab-btn" onclick="switchMapTab(event, 'info-view')">ℹ️ Информация</button>
+  <div class="modal-content">
+    <span class="close" onclick="closeMapModal()">&times;</span>
+    <h2>
+      <img src="images/logo.svg" alt="Пеликан" class="header-logo">
+      Как добраться до базы Пеликан
+    </h2>
+    
+    <!-- 1. Google Maps -->
+    <div id="map" style="height: 400px; margin: 20px 0; border-radius: 12px;"></div>
+    
+    <!-- 2. GPS координаты (кликабельные) -->
+    <div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--secondary-green); cursor: pointer;" onclick="copyToClipboard('45.953120, 81.568958', 'GPS координаты')" title="Нажмите, чтобы скопировать">
+      <p style="margin: 0; display: flex; align-items: center; gap: 10px;">
+        <strong style="color: var(--primary-green);">📍 GPS:</strong> 
+        <span style="font-family: monospace; font-size: 1.1em;">45.953120, 81.568958</span>
+        <i class="fas fa-copy" style="color: var(--secondary-green); margin-left: auto;"></i>
+      </p>
+    </div>
+    
+    <!-- 3. Кнопки навигации -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 25px;">
+      <button onclick="openGoogleMaps()" style="padding: 14px; background: linear-gradient(135deg, #4285f4, #357ae8); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        🗺️ Google Maps
+      </button>
+      <button onclick="openYandexMaps()" style="padding: 14px; background: linear-gradient(135deg, #fc3f1d, #d63516); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        📍 Яндекс.Карты
+      </button>
+      <button onclick="open2GIS()" style="padding: 14px; background: linear-gradient(135deg, #31ac45, #28923a); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        🧭 2ГИС
+      </button>
+    </div>
+    
+    <!-- 4. Расстояния -->
+    <div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05)); padding: 20px; border-radius: 12px; border-left: 4px solid var(--secondary-green);">
+      <h3 style="margin: 0 0 15px 0; color: var(--primary-green);"><i class="fas fa-route"></i> Расстояние от городов</h3>
+      <div style="display: grid; gap: 10px;">
+        <div style="padding: 10px; background: white; border-radius: 8px; color: var(--text-dark); font-weight: 500;">
+  🏙️ Алматы: ~600 км (8 часов)
+</div>
+<div style="padding: 10px; background: white; border-radius: 8px; color: var(--text-dark); font-weight: 500;">
+  🏙️ Усть-Каменогорск: ~350 км (5 часов)
+</div>
+<div style="padding: 10px; background: white; border-radius: 8px; color: var(--text-dark); font-weight: 500;">
+  🏙️ Семей: ~380 км (5.5 часов)
 </div>
 
-<div id="map-view" class="map-view-content">
-<div id="map"></div>
-</div>
-
-<div id="routes-view" class="routes-view-content" style="display: none;">
-<h3 style="color: var(--primary-green); margin-top: 0;">🚗 Маршруты и способы доезда</h3>
-
-<div class="route-card">
-<h4><i class="fas fa-car"></i> Из Алматы на автомобиле</h4>
-<p><strong>Расстояние:</strong> ~200 км</p>
-<p><strong>Время в пути:</strong> 2.5-3 часа</p>
-<p><strong>Маршрут:</strong> Алматы → R38 → Болеевка → Дракино → озеро Алаколь</p>
-<p><strong>GPS координаты:</strong> 45.955, 81.5714</p>
-</div>
-
-<div class="route-card">
-<h4><i class="fas fa-bus"></i> На общественном транспорте</h4>
-<p><strong>Маршрут:</strong> Автобус Алматы → Риддер → маршрутка до Акши</p>
-<p><strong>Время в пути:</strong> 4-5 часов</p>
-<p><strong>Рекомендация:</strong> Сообщите нам время прибытия — организуем встречу</p>
-</div>
-
-<div class="route-card">
-<h4><i class="fas fa-plane"></i> Самолетом через Алматы</h4>
-<p><strong>Аэропорт:</strong> Международный аэропорт Алматы</p>
-<p><strong>До озера:</strong> 200 км (~3 часа)</p>
-<p><strong>Трансфер:</strong> +7 (727) 292-78-99</p>
-</div>
-
-<div class="route-card">
-<h4><i class="fas fa-train"></i> На поезде</h4>
-<p><strong>Маршрут:</strong> Алматы → Риддер (ночной поезд)</p>
-<p><strong>Затем:</strong> Маршрутка Риддер → Акши (~1 час)</p>
-</div>
-</div>
-
-<div id="info-view" class="info-view-content" style="display: none;">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
-<div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 10px;">
-<strong style="color: var(--primary-green);">📍 Адрес</strong>
-<p>пос. Акши<br>озеро Алаколь<br>Восточно-Казахстанская область</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 10px;">
-<strong style="color: var(--primary-green);">🌍 GPS</strong>
-<p>45.955, 81.5714</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 10px;">
-<strong style="color: var(--primary-green);">📌 Расстояния</strong>
-<p>От Алматы: 200 км<br>От Риддера: 50 км</p>
-</div>
-<div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.1), rgba(0, 212, 255, 0.1)); padding: 15px; border-radius: 10px;">
-<strong style="color: var(--primary-green);">☎️ Контакты</strong>
-<p>+7 (72833) 30002<br>+7 (727) 292-78-99</p>
-</div>
-</div>
-</div>
-</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal" id="faqModal">
@@ -1909,21 +1890,6 @@ if (e.target.id === 'weatherModal') closeWeatherModal();
 // ========== КАРТА ==========
 let mapInitialized = false;
 
-function switchMapTab(event, tabName) {
-document.querySelectorAll('[id$="-view"]').forEach(el => {
-el.style.display = 'none';
-});
-document.querySelectorAll('.map-tab-btn').forEach(btn => {
-btn.classList.remove('active');
-});
-
-document.getElementById(tabName).style.display = 'block';
-event.target.classList.add('active');
-
-if (tabName === 'map-view' && !mapInitialized) {
-setTimeout(initMap, 100);
-}
-}
 
 function openMapModal() {
 document.getElementById('mapModal').classList.add('active');
@@ -1934,6 +1900,23 @@ setTimeout(initMap, 100);
 
 function closeMapModal() {
 document.getElementById('mapModal').classList.remove('active');
+}
+// Открыть маршрут в Google Maps
+function openGoogleMaps() {
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${LATITUDE},${LONGITUDE}`;
+  window.open(url, '_blank');
+}
+
+// Открыть маршрут в Яндекс.Картах
+function openYandexMaps() {
+  const url = `https://yandex.ru/maps/?rtext=~${LATITUDE},${LONGITUDE}&rtt=auto`;
+  window.open(url, '_blank');
+}
+
+// Открыть маршрут в 2ГИС
+function open2GIS() {
+  const url = `https://2gis.kz/geo/${LONGITUDE},${LATITUDE}`;
+  window.open(url, '_blank');
 }
 
 function initMap() {
@@ -1978,7 +1961,7 @@ title: 'Пеликан Алаколь'
 const infoWindow = new google.maps.InfoWindow({
 content: `
 <div style="text-align: center; font-weight: bold; color: #2d8659; padding: 10px;">
-<h3 style="margin: 0 0 8px 0;">🌲 Пеликан Алаколь</h3>
+<h3 style="margin: 0 0 8px 0;"><img src="images/logo.svg" alt="Пеликан" style="height: 20px; vertical-align: middle;"> Пеликан Алаколь</h3>
 <p style="margin: 4px 0;">📍 пос. Акши, озеро Алаколь</p>
 <p style="margin: 4px 0;">📞 +7 (72833) 30002</p>
 </div>

@@ -80,9 +80,9 @@
   
   <!-- Subtitle -->
   <text x="200" y="245" font-family="Arial, sans-serif" font-size="18" font-weight="500" 
-        fill="#0E7490" text-anchor="middle" letter-spacing="6">PARK-HOTEL</text>
+        fill="#0C4A6E" text-anchor="middle" letter-spacing="6">PARK-HOTEL</text>
   
   <!-- Location -->
   <text x="200" y="270" font-family="Arial, sans-serif" font-size="14" font-weight="400"
-        fill="#0E7490" text-anchor="middle" letter-spacing="2">Ахчи, Казахстан</text>
+        fill="#0C4A6E" text-anchor="middle" letter-spacing="2">Ахчи, Казахстан</text>
 </svg>

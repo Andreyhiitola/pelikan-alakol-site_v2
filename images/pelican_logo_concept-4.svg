@@ -1,0 +1,88 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="deepSea" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#164E63;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#083344;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Mountains silhouette background -->
+  <path d="M 50 140 L 90 90 L 130 110 L 170 70 L 210 100 L 250 65 L 290 95 L 330 80 L 350 140 Z" 
+        fill="#164E63" opacity="0.2"/>
+  
+  <!-- Elegant pelican - strong profile, realistic proportions -->
+  
+  <!-- Body - realistic shape -->
+  <path d="M 140 115 Q 150 105 170 103 Q 190 105 205 115 Q 210 125 205 135 Q 195 145 175 143 Q 155 140 145 130 Z" 
+        fill="#FFFFFF" stroke="#0C4A6E" stroke-width="2.8"/>
+  
+  <!-- Chest detail -->
+  <path d="M 165 115 Q 180 120 195 115" stroke="#E0F2FE" stroke-width="2" fill="none"/>
+  
+  <!-- Wing - graceful -->
+  <path d="M 155 112 Q 135 105 125 110 Q 128 120 145 125 Q 155 127 160 125 Z" 
+        fill="#F0F9FF" stroke="#0C4A6E" stroke-width="2.5"/>
+  
+  <!-- Wing feathers -->
+  <path d="M 133 110 Q 130 115 133 120" stroke="#0C4A6E" stroke-width="1.5" fill="none"/>
+  <path d="M 140 112 Q 137 117 140 123" stroke="#0C4A6E" stroke-width="1.5" fill="none"/>
+  <path d="M 148 115 Q 145 120 148 125" stroke="#0C4A6E" stroke-width="1.5" fill="none"/>
+  
+  <!-- Long elegant neck -->
+  <path d="M 205 110 Q 225 95 240 98 Q 255 100 262 105" 
+        stroke="#FFFFFF" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <path d="M 205 110 Q 225 95 240 98 Q 255 100 262 105" 
+        stroke="#0C4A6E" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+  
+  <!-- Head - elegant -->
+  <ellipse cx="264" cy="103" rx="11" ry="12" fill="#FFFFFF" stroke="#0C4A6E" stroke-width="2.5"/>
+  
+  <!-- Eye - expressive -->
+  <circle cx="267" cy="101" r="3" fill="#0C4A6E"/>
+  <circle cx="268" cy="100" r="1.2" fill="#FFFFFF"/>
+  
+  <!-- Small crest feathers -->
+  <path d="M 262 93 L 260 88 L 263 92" stroke="#0C4A6E" stroke-width="1.5" fill="none"/>
+  <path d="M 266 92 L 265 87 L 268 91" stroke="#0C4A6E" stroke-width="1.5" fill="none"/>
+  
+  <!-- ICONIC LARGE BEAK -->
+  <path d="M 274 100 L 320 94 L 318 106 L 274 108 Z" 
+        fill="#EA580C" stroke="#C2410C" stroke-width="2.5"/>
+  
+  <!-- Beak detail ridge -->
+  <line x1="274" y1="104" x2="318" y2="100" stroke="#DC2626" stroke-width="1.5"/>
+  
+  <!-- DISTINCTIVE POUCH -->
+  <path d="M 274 108 Q 268 120 273 130 Q 295 143 313 130 Q 322 118 318 106 Z" 
+        fill="#FBBF24" stroke="#C2410C" stroke-width="2.5"/>
+  
+  <!-- Pouch texture -->
+  <path d="M 280 115 Q 295 128 308 117" stroke="#F59E0B" stroke-width="1.8" fill="none" opacity="0.7"/>
+  <path d="M 276 122 Q 295 136 312 124" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity="0.6"/>
+  
+  <!-- Tail -->
+  <path d="M 145 135 L 128 142 L 138 132 Z" 
+        fill="#F0F9FF" stroke="#0C4A6E" stroke-width="2.5"/>
+  
+  <!-- Water surface -->
+  <ellipse cx="200" cy="150" rx="100" ry="8" fill="#164E63" opacity="0.2"/>
+  
+  <!-- Gentle waves -->
+  <path d="M 110 150 Q 155 147 200 150 Q 245 153 290 150" 
+        stroke="#0E7490" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+  
+  <!-- Text - clean and professional -->
+  <text x="200" y="200" font-family="Arial, sans-serif" font-size="50" font-weight="700" 
+        fill="#0C4A6E" text-anchor="middle" letter-spacing="8">ПЕЛИКАН</text>
+  
+  <!-- Simple elegant line -->
+  <line x1="115" y1="215" x2="285" y2="215" stroke="#EA580C" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Subtitle -->
+  <text x="200" y="245" font-family="Arial, sans-serif" font-size="16" font-weight="500" 
+        fill="#0E7490" text-anchor="middle" letter-spacing="6">ПАРК-ОТЕЛЬ</text>
+  
+  <!-- Location -->
+  <text x="200" y="270" font-family="Arial, sans-serif" font-size="12" font-weight="400"
+        fill="#67E8F9" text-anchor="middle" letter-spacing="2">Ахчи, Казахстан</text>
+</svg>

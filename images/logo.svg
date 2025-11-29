@@ -73,16 +73,16 @@
   
   <!-- Text - clean and professional -->
   <text x="200" y="200" font-family="Arial, sans-serif" font-size="50" font-weight="700" 
-        fill="#0C4A6E" text-anchor="middle" letter-spacing="8">ПЕЛИКАН</text>
+        fill="#0C4A6E" text-anchor="middle" letter-spacing="8">PELICAN</text>
   
   <!-- Simple elegant line -->
   <line x1="115" y1="215" x2="285" y2="215" stroke="#EA580C" stroke-width="3" stroke-linecap="round"/>
   
   <!-- Subtitle -->
-  <text x="200" y="245" font-family="Arial, sans-serif" font-size="16" font-weight="500" 
-        fill="#0E7490" text-anchor="middle" letter-spacing="6">ПАРК-ОТЕЛЬ</text>
+  <text x="200" y="245" font-family="Arial, sans-serif" font-size="18" font-weight="500" 
+        fill="#0E7490" text-anchor="middle" letter-spacing="6">PARK-HOTEL</text>
   
   <!-- Location -->
-  <text x="200" y="270" font-family="Arial, sans-serif" font-size="12" font-weight="400"
+  <text x="200" y="270" font-family="Arial, sans-serif" font-size="14" font-weight="400"
         fill="#67E8F9" text-anchor="middle" letter-spacing="2">Ахчи, Казахстан</text>
 </svg>

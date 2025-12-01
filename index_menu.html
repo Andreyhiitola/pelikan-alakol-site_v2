@@ -70,7 +70,9 @@ let globalMenuData = {};
 
 async function loadMenu() {
     try {
-        const response = await fetch('menu.json');
+// Добавляем timestamp для обхода кэша
+const response = await fetch(`menu.json?t=${new Date().getTime()}`, { cache: "no-store" });
+
         if (!response.ok) throw new Error('menu.json не найден');
         const data = await response.json();
         

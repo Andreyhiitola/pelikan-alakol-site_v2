@@ -6,517 +6,36 @@
 <title>Меню Пеликан-Алаколь</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-    --primary-color: #2180ad;
-    --secondary-color: #e74c3c;
-    --bg-gradient-start: #f5f7fa;
-    --bg-gradient-end: #c3cfe2;
-    --card-bg: white;
-    --text-color: #2c3e50;
-    --text-muted: #7f8c8d;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-    --shadow-md: 0 8px 25px rgba(0,0,0,0.12);
-}
-
-body.dark-mode {
-    --bg-gradient-start: #1a1a2e;
-    --bg-gradient-end: #16213e;
-    --card-bg: #0f3460;
-    --text-color: #eaeaea;
-    --text-muted: #aaa;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-    --shadow-md: 0 8px 25px rgba(0,0,0,0.5);
-}
-
-body {
-    font-family: 'Georgia', serif;
-    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-    min-height: 100vh;
-    padding: 20px;
-    color: var(--text-color);
-    transition: all 0.3s ease;
-}
-
-/* ШАПКА */
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-    animation: fadeInDown 0.6s ease;
-}
-
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.header h1 {
-    font-size: 3em;
-    color: var(--text-color);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
-}
-
-.header p {
-    font-size: 1.2em;
-    color: var(--text-muted);
-}
-
-.header-stats {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 15px;
-    flex-wrap: wrap;
-}
-
-.stat-badge {
-    background: var(--card-bg);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    box-shadow: var(--shadow-sm);
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-/* ПАНЕЛЬ УПРАВЛЕНИЯ */
-.controls {
-    max-width: 1400px;
-    margin: 0 auto 30px;
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.8s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.btn {
-    padding: 12px 25px;
-    font-size: 16px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, var(--secondary-color), #c0392b);
-    color: white;
-    box-shadow: 0 4px 15px rgba(231,76,60,0.3);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(231,76,60,0.4);
-}
-
-.btn-secondary {
-    background: linear-gradient(45deg, var(--primary-color), #1a5f8a);
-    color: white;
-    box-shadow: 0 4px 15px rgba(33,128,173,0.3);
-}
-
-.btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(33,128,173,0.4);
-}
-
-.btn-icon {
-    background: var(--card-bg);
-    color: var(--text-color);
-    box-shadow: var(--shadow-sm);
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-}
-
-.search-box {
-    padding: 12px 20px;
-    border-radius: 50px;
-    border: 2px solid #ddd;
-    font-size: 16px;
-    width: 250px;
-    font-family: inherit;
-    background: var(--card-bg);
-    color: var(--text-color);
-    transition: all 0.3s ease;
-}
-
-.search-box:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(33, 128, 173, 0.1);
-}
-
-.select-box {
-    padding: 12px 20px;
-    border-radius: 50px;
-    border: 2px solid #ddd;
-    font-size: 16px;
-    font-family: inherit;
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-}
-
-/* ФИЛЬТРЫ КАТЕГОРИЙ */
-.category-filter {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 20px;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.category-btn {
-    padding: 10px 25px;
-    border-radius: 25px;
-    border: 2px solid var(--primary-color);
-    background: var(--card-bg);
-    color: var(--primary-color);
-    cursor: pointer;
-    transition: all 0.3s;
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.category-btn:hover {
-    background: rgba(33, 128, 173, 0.1);
-    transform: translateY(-2px);
-}
-
-.category-btn.active {
-    background: var(--primary-color);
-    color: white;
-}
-
-/* РЕЖИМЫ ОТОБРАЖЕНИЯ */
-.view-mode-toggle {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.view-btn {
-    padding: 10px 20px;
-    border: 2px solid var(--primary-color);
-    background: var(--card-bg);
-    color: var(--primary-color);
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.view-btn.active {
-    background: var(--primary-color);
-    color: white;
-}
-
-/* СЕТКА КАРТОЧЕК */
-.menu-section {
-    max-width: 1400px;
-    margin: 0 auto 40px;
-    animation: slideUp 0.6s ease;
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.section-title {
-    font-size: 2.5em;
-    color: var(--text-color);
-    text-align: center;
-    margin-bottom: 25px;
-    padding: 15px;
-    background: var(--card-bg);
-    border-radius: 20px;
-    box-shadow: var(--shadow-sm);
-}
-
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.dish-card {
-    background: var(--card-bg);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s;
-    border: 1px solid rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-}
-
-.dish-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.dish-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-}
-
-.dish-card:hover::before {
-    opacity: 1;
-}
-
-.dish-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 10px;
-}
-
-.favorite-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 5px;
-    line-height: 1;
-    transition: transform 0.3s;
-}
-
-.favorite-btn:hover {
-    transform: scale(1.2);
-}
-
-.favorite-btn.active {
-    color: #e74c3c;
-}
-
-.dish-name {
-    font-size: 1.3em;
-    color: var(--text-color);
-    margin-bottom: 8px;
-    font-weight: bold;
-    flex-grow: 1;
-    line-height: 1.4;
-}
-
-.dish-weight {
-    font-size: 0.95em;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    font-style: italic;
-}
-
-.dish-price {
-    font-size: 1.9em;
-    font-weight: bold;
-    color: var(--secondary-color);
-    text-shadow: 1px 1px 2px rgba(231,76,60,0.2);
-    margin-top: auto;
-}
-
-/* ТАБЛИЧНЫЙ РЕЖИМ */
-.table-view {
-    max-width: 1400px;
-    margin: 0 auto;
-    background: var(--card-bg);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-}
-
-.menu-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.menu-table thead {
-    background: linear-gradient(135deg, var(--primary-color), #1a5f8a);
-    color: white;
-}
-
-.menu-table th {
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-}
-
-.menu-table tbody tr {
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    transition: background 0.2s;
-}
-
-.menu-table tbody tr:hover {
-    background: rgba(33, 128, 173, 0.05);
-}
-
-.menu-table td {
-    padding: 15px;
-}
-
-.category-badge {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: 600;
-    color: white;
-}
-
-.category-breakfast { background: #ff9800; }
-.category-lunch { background: #9c27b0; }
-.category-dinner { background: #009688; }
-
-/* ПУСТОЕ СОСТОЯНИЕ */
-.empty-state {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-}
-
-.empty-state h2 {
-    font-size: 2em;
-    margin-bottom: 15px;
-}
-
-/* ЗАГРУЗЧИК */
-.loader {
-    text-align: center;
-    padding: 60px 20px;
-}
-
-.spinner {
-    border: 4px solid rgba(33, 128, 173, 0.1);
-    border-left-color: var(--primary-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* ПЕЧАТЬ */
+body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 20px; }
+.header { text-align: center; margin-bottom: 30px; }
+.header h1 { font-size: 3em; color: #2c3e50; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px; }
+.header p { font-size: 1.2em; color: #7f8c8d; }
+.controls { max-width: 1400px; margin: 0 auto 30px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.btn { padding: 12px 25px; font-size: 16px; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+.btn-primary { background: linear-gradient(45deg, #e74c3c, #c0392b); color: white; box-shadow: 0 4px 15px rgba(231,76,60,0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(231,76,60,0.4); }
+.search-box { padding: 12px 20px; border-radius: 50px; border: 2px solid #ddd; font-size: 16px; width: 250px; font-family: inherit; }
+.category-filter { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; max-width: 1400px; margin: 0 auto; }
+.category-btn { padding: 10px 25px; border-radius: 25px; border: 2px solid #3498db; background: white; color: #3498db; cursor: pointer; transition: all 0.3s; font-family: inherit; font-size: 16px; font-weight: bold; }
+.category-btn:hover { background: #ecf0f1; }
+.category-btn.active { background: #3498db; color: white; }
+.menu-section { max-width: 1400px; margin: 0 auto 40px; }
+.section-title { font-size: 2.5em; color: #2c3e50; text-align: center; margin-bottom: 25px; padding: 15px; background: white; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.dish-card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: all 0.3s; border: 1px solid #ecf0f1; display: flex; flex-direction: column; }
+.dish-card:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+.dish-name { font-size: 1.3em; color: #2c3e50; margin-bottom: 8px; font-weight: bold; flex-grow: 1; }
+.dish-weight { font-size: 0.95em; color: #95a5a6; margin-bottom: 10px; font-style: italic; }
+.dish-price { font-size: 1.9em; font-weight: bold; color: #e74c3c; text-shadow: 1px 1px 2px rgba(231,76,60,0.2); margin-top: auto; }
+.empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #7f8c8d; }
+.empty-state h2 { font-size: 2em; margin-bottom: 15px; }
 @media print {
-    body {
-        background: white !important;
-        padding: 10px !important;
-    }
-    
-    .header h1 {
-        font-size: 2em;
-        color: #000 !important;
-        text-shadow: none;
-    }
-    
-    .header p {
-        font-size: 1em;
-        color: #333 !important;
-    }
-    
-    .controls,
-    .category-filter,
-    .view-mode-toggle,
-    .header-stats,
-    .favorite-btn {
-        display: none !important;
-    }
-    
-    .section-title {
-        font-size: 1.8em;
-        padding: 10px;
-        box-shadow: none !important;
-        border: 2px solid #2c3e50;
-        margin-bottom: 15px;
-        page-break-after: avoid;
-    }
-    
-    .menu-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 12px !important;
-    }
-    
-    .dish-card {
-        break-inside: avoid;
-        box-shadow: none !important;
-        border: 1px solid #bdc3c7 !important;
-        padding: 12px !important;
-        margin-bottom: 10px;
-    }
-    
-    .dish-name { font-size: 1em; }
-    .dish-weight { font-size: 0.85em; }
-    .dish-price { color: #c0392b !important; font-size: 1.4em !important; }
-    
-    @page {
-        margin: 0.8cm;
-        size: A4;
-    }
+body { background: white !important; padding: 10px !important; }
+.controls, .category-filter { display: none !important; }
+.menu-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 12px !important; }
+.dish-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #bdc3c7 !important; padding: 12px !important; margin-bottom: 10px; }
 }
-
-/* МОБИЛЬНЫЙ */
-@media (max-width: 768px) {
-    .menu-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .header h1 { font-size: 2em; }
-    .section-title { font-size: 1.8em; }
-    
-    .controls {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    .search-box {
-        width: 100%;
-    }
-    
-    .category-filter {
-        gap: 8px;
-    }
-    
-    .category-btn {
-        font-size: 14px;
-        padding: 8px 15px;
-    }
-}
+@media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; gap: 15px; } .controls { flex-direction: column; width: 100%; } .search-box { width: 100%; } }
 </style>
 </head>
 <body>
@@ -524,31 +43,12 @@ body {
 <div class="header">
     <h1>🍽️ Меню Пеликан-Алаколь</h1>
     <p>Свежая кухня | Алаколь | <span id="menuDate">Загрузка...</span></p>
-    <div class="header-stats">
-        <span class="stat-badge">📊 Блюд: <span id="totalDishes">0</span></span>
-        <span class="stat-badge">🌅 Завтраков: <span id="breakfastCount">0</span></span>
-        <span class="stat-badge">🍲 Обедов: <span id="lunchCount">0</span></span>
-        <span class="stat-badge">🌙 Ужинов: <span id="dinnerCount">0</span></span>
-    </div>
 </div>
 
+<!-- ЭЛЕМЕНТЫ, КОТОРЫЕ СКРИПТ НЕ НАХОДИЛ -->
 <div class="controls">
-    <button class="btn btn-primary" onclick="window.print()">🖨️ Печать</button>
-    <button class="btn btn-secondary" onclick="downloadMenu()">📥 Скачать</button>
-    <button class="btn-icon" onclick="toggleDarkMode()" title="Темная тема">🌙</button>
-    <button class="btn-icon" onclick="showFavorites()" title="Избранное">⭐</button>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Печать меню</button>
     <input type="text" class="search-box" id="searchBox" placeholder="🔍 Поиск блюда..." oninput="filterMenu()">
-    <select class="select-box" id="sortSelect" onchange="sortMenu()">
-        <option value="default">По умолчанию</option>
-        <option value="price-asc">Цена ↑</option>
-        <option value="price-desc">Цена ↓</option>
-        <option value="name-asc">Название А-Я</option>
-    </select>
-</div>
-
-<div class="view-mode-toggle">
-    <button class="view-btn active" onclick="setViewMode('cards')">📇 Карточки</button>
-    <button class="view-btn" onclick="setViewMode('table')">📋 Таблица</button>
 </div>
 
 <div class="category-filter">
@@ -559,119 +59,72 @@ body {
 </div>
 
 <div id="menuContainer">
-    <div class="loader">
-        <div class="spinner"></div>
+    <div class="empty-state">
         <p>Загрузка меню...</p>
     </div>
 </div>
 
 <script>
-// Конфигурация
-const CONFIG = {
-    menuJsonUrl: 'https://andreyhiitola.github.io/pelikan-alakol-site/public/data/menu.json',
-    fallbackMenu: {
-        'Завтрак': [
-            { id: 1, name: 'Каша рисовая', weight: '250/500 гр', price: 400, category: 'Завтрак' },
-            { id: 2, name: 'Омлет запеченный', weight: '120 гр', price: 500, category: 'Завтрак' }
-        ],
-        'Обед': [
-            { id: 3, name: 'Борщ', weight: '250/500 мл', price: 800, category: 'Обед' }
-        ],
-        'Ужин': [
-            { id: 4, name: 'Шорпа', weight: '400 гр', price: 2200, category: 'Ужин' }
-        ]
-    }
-};
-
-let menuData = {};
 let currentCategory = 'Все';
-let currentViewMode = 'cards';
-let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let globalMenuData = {};
 
-// Загрузка меню при старте
 async function loadMenu() {
     try {
-        const response = await fetch(CONFIG.menuJsonUrl);
-        if (!response.ok) throw new Error('Не удалось загрузить меню');
-        
+        const response = await fetch('menu.json');
+        if (!response.ok) throw new Error('menu.json не найден');
         const data = await response.json();
         
-        // Преобразуем данные из админ-панели в нужный формат
-        menuData = {
+        globalMenuData = {
             'Завтрак': data.dishes?.filter(d => d.category === 'Завтрак') || [],
             'Обед': data.dishes?.filter(d => d.category === 'Обед') || [],
             'Ужин': data.dishes?.filter(d => d.category === 'Ужин') || []
         };
-        
-        if (data.lastUpdate) {
-            document.getElementById('menuDate').textContent = new Date(data.lastUpdate).toLocaleDateString('ru-RU');
-        }
-        
-    } catch (error) {
-        console.error('Ошибка загрузки меню:', error);
-        menuData = CONFIG.fallbackMenu;
-        document.getElementById('menuDate').textContent = new Date().toLocaleDateString('ru-RU');
-    }
-    
-    updateStats();
-    renderMenu();
-}
 
-function updateStats() {
-    const total = Object.values(menuData).flat().length;
-    document.getElementById('totalDishes').textContent = total;
-    document.getElementById('breakfastCount').textContent = menuData['Завтрак']?.length || 0;
-    document.getElementById('lunchCount').textContent = menuData['Обед']?.length || 0;
-    document.getElementById('dinnerCount').textContent = menuData['Ужин']?.length || 0;
+        if (data.lastUpdate) {
+             document.getElementById('menuDate').textContent = new Date(data.lastUpdate).toLocaleDateString('ru-RU');
+        } else {
+             document.getElementById('menuDate').textContent = new Date().toLocaleDateString('ru-RU');
+        }
+
+        renderMenu();
+        
+    } catch (err) {
+        console.warn('Ошибка загрузки, используем демо-данные', err);
+        // Фолбэк
+        globalMenuData = {
+            'Завтрак': [{name:'Каша (демо)', weight:'200гр', price:500}],
+            'Обед': [{name:'Борщ (демо)', weight:'300мл', price:900}],
+            'Ужин': []
+        };
+        document.getElementById('menuDate').textContent = 'Демо режим';
+        renderMenu();
+    }
 }
 
 function renderMenu() {
     const searchTerm = document.getElementById('searchBox').value.toLowerCase();
     const container = document.getElementById('menuContainer');
-    
-    if (currentViewMode === 'table') {
-        renderTableView(searchTerm);
-        return;
-    }
-    
     container.innerHTML = '';
     
-    const categoriesToShow = currentCategory === 'Все'
-        ? Object.keys(menuData)
-        : [currentCategory];
-    
+    const categoriesToShow = currentCategory === 'Все' ? Object.keys(globalMenuData) : [currentCategory];
     let hasResults = false;
-    
+
     categoriesToShow.forEach(category => {
-        let dishes = menuData[category] || [];
-        
-        // Фильтрация
-        dishes = dishes.filter(dish =>
-            dish.name.toLowerCase().includes(searchTerm)
-        );
-        
-        // Сортировка
-        dishes = applySorting(dishes);
+        let dishes = globalMenuData[category] || [];
+        dishes = dishes.filter(dish => dish.name.toLowerCase().includes(searchTerm));
         
         if (dishes.length === 0) return;
         hasResults = true;
         
         const section = document.createElement('div');
         section.className = 'menu-section';
-        
         const icons = { 'Завтрак': '🌅', 'Обед': '🍲', 'Ужин': '🌙' };
         
         section.innerHTML = `
-            <h2 class="section-title">${icons[category]} ${category}</h2>
+            <h2 class="section-title">${icons[category] || '🍽️'} ${category}</h2>
             <div class="menu-grid">
                 ${dishes.map(dish => `
                     <div class="dish-card">
-                        <div class="dish-header">
-                            <button class="favorite-btn ${favorites.includes(dish.id) ? 'active' : ''}" 
-                                onclick="toggleFavorite(${dish.id})">
-                                ${favorites.includes(dish.id) ? '❤️' : '🤍'}
-                            </button>
-                        </div>
                         <div class="dish-name">${dish.name}</div>
                         <div class="dish-weight">${dish.weight}</div>
                         <div class="dish-price">${dish.price}₸</div>
@@ -679,10 +132,9 @@ function renderMenu() {
                 `).join('')}
             </div>
         `;
-        
         container.appendChild(section);
     });
-    
+
     if (!hasResults) {
         container.innerHTML = `
             <div class="empty-state">
@@ -690,83 +142,6 @@ function renderMenu() {
                 <p>Попробуйте изменить поисковый запрос</p>
             </div>
         `;
-    }
-}
-
-function renderTableView(searchTerm) {
-    const container = document.getElementById('menuContainer');
-    
-    let allDishes = Object.entries(menuData).flatMap(([category, dishes]) =>
-        dishes.map(dish => ({ ...dish, category }))
-    );
-    
-    allDishes = allDishes.filter(dish =>
-        dish.name.toLowerCase().includes(searchTerm) &&
-        (currentCategory === 'Все' || dish.category === currentCategory)
-    );
-    
-    allDishes = applySorting(allDishes);
-    
-    if (allDishes.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <h2>🍽️ Блюда не найдены</h2>
-            </div>
-        `;
-        return;
-    }
-    
-    const getCategoryClass = (cat) => {
-        const map = { 'Завтрак': 'breakfast', 'Обед': 'lunch', 'Ужин': 'dinner' };
-        return `category-${map[cat]}`;
-    };
-    
-    container.innerHTML = `
-        <div class="table-view">
-            <table class="menu-table">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Категория</th>
-                        <th>Наименование</th>
-                        <th>Вес/Объём</th>
-                        <th style="text-align: right;">Цена</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${allDishes.map((dish, idx) => `
-                        <tr>
-                            <td>${idx + 1}</td>
-                            <td>
-                                <span class="category-badge ${getCategoryClass(dish.category)}">
-                                    ${dish.category}
-                                </span>
-                            </td>
-                            <td><strong>${dish.name}</strong></td>
-                            <td>${dish.weight}</td>
-                            <td style="text-align: right; font-weight: 600; color: var(--secondary-color);">
-                                ${dish.price} ₸
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        </div>
-    `;
-}
-
-function applySorting(dishes) {
-    const sortType = document.getElementById('sortSelect').value;
-    
-    switch(sortType) {
-        case 'price-asc':
-            return [...dishes].sort((a, b) => a.price - b.price);
-        case 'price-desc':
-            return [...dishes].sort((a, b) => b.price - a.price);
-        case 'name-asc':
-            return [...dishes].sort((a, b) => a.name.localeCompare(b.name, 'ru'));
-        default:
-            return dishes;
     }
 }
 
@@ -781,70 +156,7 @@ function filterMenu() {
     renderMenu();
 }
 
-function sortMenu() {
-    renderMenu();
-}
-
-function setViewMode(mode) {
-    currentViewMode = mode;
-    document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    renderMenu();
-}
-
-function toggleFavorite(dishId) {
-    const index = favorites.indexOf(dishId);
-    if (index > -1) {
-        favorites.splice(index, 1);
-    } else {
-        favorites.push(dishId);
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    renderMenu();
-}
-
-function showFavorites() {
-    if (favorites.length === 0) {
-        alert('У вас пока нет избранных блюд');
-        return;
-    }
-    
-    const favDishes = Object.values(menuData).flat().filter(d => favorites.includes(d.id));
-    
-    let html = '<h3>⭐ Избранное:</h3><ul>';
-    favDishes.forEach(dish => {
-        html += `<li><strong>${dish.name}</strong> - ${dish.price}₸</li>`;
-    });
-    html += '</ul>';
-    
-    alert(html);
-}
-
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-}
-
-function downloadMenu() {
-    const allDishes = Object.entries(menuData).flatMap(([cat, dishes]) =>
-        dishes.map(d => ({ ...d, category: cat }))
-    );
-    
-    const dataStr = JSON.stringify(allDishes, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `menu_pelikan_${new Date().toISOString().split('T')[0]}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-}
-
-// Инициализация
-if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-}
-
+// Запуск
 loadMenu();
 </script>
 

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect x="10" y="25" width="80" height="55" rx="10" fill="#45B7D1"/>
+  ircle cx="30" cy="22" r="5" fill="#F9CA24"/>
+  ircle cx="70" cy="22" r="5" fill="#F9CA24"/>
+  <rect x="20" y="45" width="12" height="20" rx="2" fill="#FFF"/>
+  <rect x="68" y="45" width="12" height="20" rx="2" fill="#FFF"/>
+  ircle cx="40" cy="75" r="8" fill="#FF6B6B"/>
+  ircle cx="60" cy="75" r="8" fill="#BB8FCE"/>
+</svg>

@@ -1,47 +1,64 @@
-async function loadInfrastructure() {
-  try {
-    const response = await fetch(CONFIG.getDataFile('infrastructure.json'));
-    if (!response.ok) throw new Error('HTTP ошибка: ' + response.status);
-    const data = await response.json();
-
-    if (!Array.isArray(data)) throw new Error('Неверная структура данных: ожидается массив');
-
-    const container = document.getElementById('infrastructureContainer');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    data.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'scroll-item';
-
-      card.innerHTML = `
-        ${item.image ? `<img src="${item.image}" alt="${item.name || ''}">` : ''}
-        <h3>${item.name || ''}</h3>
-        <p>${item.description || ''}</p>
-      `;
-
-      container.appendChild(card);
-    });
-  } catch (error) {
-    console.error('[translate:Ошибка загрузки инфраструктуры]', error);
-    const container = document.getElementById('infrastructureContainer');
-    if (container) {
-      container.innerHTML = '<div class="error">[translate:Не удалось загрузить инфраструктуру.]</div>';
-    }
+// Функция для переключения полного и укороченного текста
+function toggleFullText(e) {
+  const element = e.currentTarget;
+  if (element.classList.contains('full-text')) {
+    element.classList.remove('full-text');
+  } else {
+    element.classList.add('full-text');
   }
 }
 
-// Функция для горизонтального скролла элементов
-function scrollItems(section, direction) {
-  const containerId = section + 'Container';
-  const container = document.getElementById(containerId);
-  if (!container) return;
+async function initInfrastructure() {
+  const container = document.getElementById('infrastructureContainer');
+  
+  try {
+    const response = await fetch('infrastructure.json');
+    if (!response.ok) throw new Error('Ошибка загрузки JSON');
+    
+    const data = await response.json();
+    console.log('✅ JSON загружен:', data.length, 'элементов');
+    
+    container.innerHTML = '';
 
-  const scrollAmount = container.clientWidth * 0.8; // Прокрутка на 80% ширины контейнера
-  container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+    data.forEach((item, index) => {
+      console.log(`📁 Проверяем ${index}: ${item.title}, icon:`, item.icon);
+      
+      const card = document.createElement('div');
+      card.className = 'scroll-item infra-card';
+      
+      card.innerHTML = `
+        ${item.icon ? `
+          <div class="infra-img-wrapper">
+            <img src="${item.icon}" alt="${item.title}" loading="lazy">
+          </div>
+        ` : '<div class="infra-img-wrapper"><span>🖼️</span></div>'}
+        <h3>${item.title}</h3>
+        <p class="infrastructure-description">${item.description}</p>
+      `;
+
+      const descriptionEl = card.querySelector('p');
+      if (descriptionEl && item.description) {
+        requestAnimationFrame(() => {
+          if (descriptionEl.scrollHeight > descriptionEl.clientHeight) {
+            descriptionEl.classList.add('has-more');
+            descriptionEl.title = item.description;
+            descriptionEl.dataset.fullText = item.description;
+            descriptionEl.style.cursor = 'pointer';
+            descriptionEl.addEventListener('click', toggleFullText);
+          }
+        });
+      }
+
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error('❌ Ошибка:', error);
+    if (container) container.innerHTML = '<p style="color:red; text-align:center;">Не удалось загрузить данные</p>';
+  }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  loadInfrastructure();
+// Запускаем загрузку после загрузки DOM
+document.addEventListener('DOMContentLoaded', () => {
+  initInfrastructure();
 });

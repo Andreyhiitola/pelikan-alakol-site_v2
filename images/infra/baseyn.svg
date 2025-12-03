@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect x="15" y="40" width="70" height="40" rx="15" fill="#00CEC9"/>
+  <path d="M20 30 Q50 15 80 30" stroke="#0984E3" stroke-width="6" fill="none"/>
+  ircle cx="25" cy="25" r="3" fill="#FFF"/>
+  ircle cx="75" cy="25" r="3" fill="#FFF"/>
+  <rect x="35" y="60" width="30" height="25" rx="5" fill="#FF7675"/>
+  ircle cx="50" cy="68" r="8" fill="#FFF"/>
+</svg>

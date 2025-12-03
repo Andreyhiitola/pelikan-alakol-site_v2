@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <path d="M10 70 L90 70 L85 85 L15 85 Z" fill="#A55EEA"/>
+  ircle cx="25" cy="78" r="6" fill="#FFF"/>
+  ircle cx="75" cy="78" r="6" fill="#FFF"/>
+  <path d="M20 60 L80 60 L85 70 L15 70 Z" fill="#74B9FF"/>
+  <path d="M0 90 Q50 75 100 90 L100 100 L0 100 Z" fill="#00B894"/>
+  ircle cx="20" cy="82" r="3" fill="#FFF"/>
+  ircle cx="80" cy="82" r="3" fill="#FFF"/>
+</svg>

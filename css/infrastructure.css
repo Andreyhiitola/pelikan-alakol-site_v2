@@ -1,18 +1,49 @@
-#infrastructureContainer {
-  height: 400px; /* фиксированная высота блока */
-  overflow-y: auto; /* вертикальная прокрутка */
-  padding-right: 10px;
+.infra-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;     /* Показываем 3 строки */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-.infrastructure-card {
-  margin-bottom: 20px;
+/* Стиль для текста с "читать далее" */
+.infra-card p.has-more::after {
+    content: '…читать далее';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(to right, transparent 0%, white 50%);
+    padding: 0 10px 5px 0;
+    font-size: 0.85rem;
+    color: #e74c3c;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
-.infrastructure-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;   /* показываем не более 3 строк */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
+/* При наведении на "читать далее" */
+.infra-card p.has-more:hover::after {
+    color: #c0392b;
+}
+
+/* Полный текст (скрытый) */
+.infra-card p.full-text {
+    -webkit-line-clamp: unset !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+.infra-card p.full-text::after {
+    content: '…свернуть';
+    position: static;
+    display: inline-block;
+    margin-left: 10px;
+    color: #e74c3c;
+    cursor: pointer;
+    font-weight: 500;
 }

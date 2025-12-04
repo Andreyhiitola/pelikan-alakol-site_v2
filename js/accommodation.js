@@ -1,90 +1,56 @@
-function renderAccommodation(data) {
-  const container = document.getElementById('roomsContainer');
+function renderActivities(data) {
+  // 1. Ищем контейнер для активностей (не путать с номерами!)
+  const container = document.getElementById('activitiesContainer');
   if (!container) return;
 
   container.innerHTML = '';
 
-  const rooms = Array.isArray(data) ? data : (data.accommodations || []);
+  // 2. Получаем массив
+  const activities = Array.isArray(data) ? data : (data.activities || []);
 
-  rooms.forEach(room => {
-    if (!room.id || !room.name) {
-      console.warn('Пропущена некорректная карточка', room);
-      return;
-    }
-    const price = Number(room.price);
-    if (isNaN(price) || price <= 0) {
-      console.warn(`Пропущена карточка с некорректной ценой для id=${room.id}`);
-      return;
-    }
-
+  activities.forEach(item => {
+    // 3. Создаем карточку
     const card = document.createElement('div');
-    card.className = 'scroll-item accommodation-card'; // добавлен класс для CSS
+    card.className = 'scroll-item activity-card'; // Класс activity-card для стилей
 
-    const link = document.createElement('a');
-    link.href = `accommodation.html?id=${encodeURIComponent(room.id)}`;
-    link.style.textDecoration = 'none';
-    link.style.color = 'inherit';
+    // 4. Путь к SVG иконке
+    const iconPath = item.icon 
+        ? `./images/activities/${item.icon}` 
+        : './images/activities/activity-pools.svg';
 
-    const imgSrc = room.imageThumb || room.imageFull || room.image;
-    if (imgSrc) {
-      const img = document.createElement('img');
-      img.src = imgSrc;
-      img.alt = room.name;
-      img.style.height = '150px';
-      img.style.objectFit = 'cover';
-      img.style.width = '70%';
-      img.onerror = () => {
-        img.src = './images/accommodation/placeholder.jpg';
-      };
-      link.appendChild(img);
-    }
+    // 5. Собираем HTML
+    card.innerHTML = `
+        <div class="activity-icon-box" style="width: 80px; height: 80px; margin: 0 auto 15px;">
+            <img src="${iconPath}" 
+                 alt="${item.title}" 
+                 style="width: 100%; height: 100%; object-fit: contain;"
+                 onerror="this.style.opacity=0.5">
+        </div>
 
-    const h3 = document.createElement('h3');
-    h3.textContent = `${room.icon || '🏠'} ${room.name}`;
-    link.appendChild(h3);
+        <h3>${item.title}</h3>
 
-    if (room.description) {
-      const p = document.createElement('p');
-      p.textContent = room.description;
-      p.className = 'accommodation-description'; // добавлен класс для CSS обрезки
-      link.appendChild(p);
-    }
+        <div class="time-badge" style="background: #FFF3E0; color: #E65100; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; font-size: 0.9em; margin: 10px 0;">
+            🕐 ${item.time}
+        </div>
 
-    const pPrice = document.createElement('p');
-    const strong = document.createElement('strong');
-    strong.style.color = 'var(--primary-green)';
-    strong.style.fontSize = '1.1em';
-    strong.textContent = `от ${price} ₸ / сутки`;
-    pPrice.appendChild(strong);
-    link.appendChild(pPrice);
+        <p style="color: #666; font-size: 0.95em; margin-top: 10px;">
+            ${item.description}
+        </p>
+    `;
 
-    card.appendChild(link);
     container.appendChild(card);
   });
 
-  console.log(`✅ Accommodation: ${rooms.length} номеров (валидных)`);
+  console.log(`✅ Activities: загружено ${activities.length} элементов`);
 }
 
-function loadAccommodationData(url) {
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Ошибка сети: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      renderAccommodation(data);
-    })
-    .catch(error => {
-      const container = document.getElementById('roomsContainer');
-      if (container) {
-        container.innerHTML = `<div class="error-message" style="color:red;">Ошибка загрузки данных: ${error.message}</div>`;
-      }
-      console.error('Ошибка загрузки JSON:', error);
-    });
+// Загрузка данных
+function loadActivitiesData() {
+  fetch('activities.json')
+    .then(res => res.json())
+    .then(data => renderActivities(data))
+    .catch(err => console.error('Ошибка activities:', err));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadAccommodationData('accommodation.json'); // Укажите правильный путь к JSON
-});
+// Запуск
+document.addEventListener('DOMContentLoaded', loadActivitiesData);

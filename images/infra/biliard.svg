@@ -1,9 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect x="15" y="25" width="70" height="50" rx="5" fill="#00B894"/>
-  ircle cx="50" cy="45" r="18" stroke="#FFF" stroke-width="4" fill="none"/>
-  ircle cx="35" cy="38" r="5" fill="#FF3838"/>
-  ircle cx="65" cy="38" r="5" fill="#2ED573"/>
-  ircle cx="35" cy="52" r="5" fill="#FFA502"/>
-  <rect x="30" y="80" width="40" height="15" rx="3" fill="#E17055"/>
-</svg>
-
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <path class="blob" d="M12 44C8 30 18 20 32 20C46 20 56 30 54 44C52 58 38 60 24 58C10 56 16 58 12 44Z" fill="#27AE60" opacity="0.3"/>
+                    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Ракетка -->
+                        ircle cx="26" cy="28" r="11" />
+                        <line x1="26" y1="39" x2="26" y2="52" />
+                        <path d="M26 52H30" />
+                        <!-- Шар 8 -->
+                        ircle cx="46" cy="40" r="9" fill="white" stroke-width="2"/>
+                        <path d="M46 36C47.5 36 48 37 48 38C48 39 47 40 46 40C47 40 48 41 48 42C48 43 47.5 44 46 44C44.5 44 44 43 44 42C44 41 45 40 46 40C45 40 44 39 44 38C44 37 44.5 36 46 36Z" stroke-width="1.5" />
+                        <!-- Кий -->
+                        <line x1="12" y1="14" x2="52" y2="54" stroke-width="2" opacity="0.3" />
+                    </g>
+                </svg>

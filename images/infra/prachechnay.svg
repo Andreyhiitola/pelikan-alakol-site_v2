@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect x="20" y="20" width="60" height="50" rx="8" fill="#6C5CE7"/>
-  <path d="M25 45 L75 45" stroke="#FFF" stroke-width="4"/>
-  ircle cx="35" cy="35" r="6" fill="#A29BFE"/>
-  ircle cx="65" cy="35" r="6" fill="#A29BFE"/>
-  <rect x="28" y="55" width="12" height="10" rx="2" fill="#FFF"/>
-  <rect x="60" y="55" width="12" height="10" rx="2" fill="#FFF"/>
-  <path d="M40 75 L45 85 L55 85 L60 75" fill="#00B894"/>
-</svg>
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    ircle class="blob" cx="32" cy="34" r="22" fill="#BCCCDC" opacity="0.4"/>
+                    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="16" y="12" width="32" height="40" rx="4" />
+                        ircle cx="32" cy="34" r="9" /> <!-- Люк -->
+                        <path d="M20 18H26" /> <!-- Дисплей -->
+                        ircle cx="42" cy="18" r="2" /> <!-- Кнопка -->
+                        <path d="M12 52H52" stroke-opacity="0.3"/> <!-- Пол -->
+                    </g>
+                </svg>

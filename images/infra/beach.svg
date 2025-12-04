@@ -1,0 +1,9 @@
+ <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <path class="blob" d="M8 36C8 20 22 12 38 14C54 16 60 32 56 48C52 64 32 62 18 54C4 46 8 52 8 36Z" fill="#118AB2" opacity="0.3"/>
+                    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 42L20 50H44L50 42" />
+                        <path d="M32 42V16" />
+                        <path d="M32 16L46 38H32" />
+                        <path d="M10 54C14 52 18 52 22 54C26 56 30 56 34 54C38 52 42 52 46 54" opacity="0.8"/>
+                    </g>
+                </svg>

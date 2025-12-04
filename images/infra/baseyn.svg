@@ -1,8 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect x="15" y="40" width="70" height="40" rx="15" fill="#00CEC9"/>
-  <path d="M20 30 Q50 15 80 30" stroke="#0984E3" stroke-width="6" fill="none"/>
-  ircle cx="25" cy="25" r="3" fill="#FFF"/>
-  ircle cx="75" cy="25" r="3" fill="#FFF"/>
-  <rect x="35" y="60" width="30" height="25" rx="5" fill="#FF7675"/>
-  ircle cx="50" cy="68" r="8" fill="#FFF"/>
-</svg>
+ <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <path class="blob" d="M16 32C16 18 28 10 40 12C54 14 60 28 56 42C50 54 30 58 20 50C14 44 16 38 16 32Z" fill="#3498DB" opacity="0.4"/>
+                    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Лестница бассейна -->
+                        <path d="M24 10C24 6 28 4 32 4C36 4 40 6 40 10V40" />
+                        <path d="M24 10V40" />
+                        <line x1="24" y1="18" x2="40" y2="18" />
+                        <line x1="24" y1="28" x2="40" y2="28" />
+                        <!-- Вода -->
+                        <path d="M12 44C18 40 26 40 32 44C38 48 46 48 52 44" />
+                        <path d="M48 32C50 28 52 26 54 24" opacity="0.6"/> <!-- Брызги/Пар -->
+                    </g>
+                </svg>

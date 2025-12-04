@@ -54,7 +54,7 @@ function renderAccommodation(data) {
     const strong = document.createElement('strong');
     strong.style.color = 'var(--primary-green)';
     strong.style.fontSize = '1.1em';
-    strong.textContent = `от ${price} ₸ / ночь`;
+    strong.textContent = `от ${price} ₸ / сутки`;
     pPrice.appendChild(strong);
     link.appendChild(pPrice);
 

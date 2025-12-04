@@ -1,10 +1,13 @@
-// Функция для переключения полного и укороченного текста
-function toggleFullText(e) {
-  const element = e.currentTarget;
-  if (element.classList.contains('full-text')) {
-    element.classList.remove('full-text');
+// Функция для переключения текста (теперь принимает кнопку и параграф)
+function toggleText(button, paragraph) {
+  const isExpanded = paragraph.classList.contains('expanded');
+  
+  if (isExpanded) {
+    paragraph.classList.remove('expanded');
+    button.textContent = 'Читать далее';
   } else {
-    element.classList.add('full-text');
+    paragraph.classList.add('expanded');
+    button.textContent = 'Свернуть';
   }
 }
 
@@ -21,11 +24,11 @@ async function initInfrastructure() {
     container.innerHTML = '';
 
     data.forEach((item, index) => {
-      console.log(`📁 Проверяем ${index}: ${item.title}, icon:`, item.icon);
-      
       const card = document.createElement('div');
       card.className = 'scroll-item infra-card';
       
+      // Сразу создаем кнопку (пока скрытую display: none или не добавляем в DOM)
+      // Но лучше добавить и скрыть, чтобы layout не прыгал
       card.innerHTML = `
         ${item.icon ? `
           <div class="infra-img-wrapper">
@@ -34,22 +37,29 @@ async function initInfrastructure() {
         ` : '<div class="infra-img-wrapper"><span>🖼️</span></div>'}
         <h3>${item.title}</h3>
         <p class="infrastructure-description">${item.description}</p>
+        <button class="read-more-btn" style="display: none;">Читать далее</button>
       `;
 
-      const descriptionEl = card.querySelector('p');
-      if (descriptionEl && item.description) {
-        requestAnimationFrame(() => {
-          if (descriptionEl.scrollHeight > descriptionEl.clientHeight) {
-            descriptionEl.classList.add('has-more');
-            descriptionEl.title = item.description;
-            descriptionEl.dataset.fullText = item.description;
-            descriptionEl.style.cursor = 'pointer';
-            descriptionEl.addEventListener('click', toggleFullText);
-          }
-        });
-      }
+      container.appendChild(card); // Сначала добавляем в DOM, чтобы измерить высоту
 
-      container.appendChild(card);
+      const p = card.querySelector('p');
+      const btn = card.querySelector('.read-more-btn');
+
+      // Проверяем переполнение
+      // Используем requestAnimationFrame, чтобы браузер успел отрисовать и посчитать высоту
+      requestAnimationFrame(() => {
+        // Сравниваем высоту контента с высотой блока (с учетом line-clamp в CSS)
+        // Важно: в CSS у p должно быть ограничение высоты или line-clamp
+        if (p.scrollHeight > p.clientHeight) {
+          btn.style.display = 'inline-block'; // Показываем кнопку
+          
+          // Вешаем клик на кнопку
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Чтобы клик не ушел выше
+            toggleText(btn, p);
+          });
+        }
+      });
     });
 
   } catch (error) {
@@ -58,7 +68,7 @@ async function initInfrastructure() {
   }
 }
 
-// Запускаем загрузку после загрузки DOM
+// Запускаем
 document.addEventListener('DOMContentLoaded', () => {
   initInfrastructure();
 });

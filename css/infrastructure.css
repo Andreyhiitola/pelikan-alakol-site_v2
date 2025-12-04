@@ -1,49 +1,47 @@
+/* Контейнер карточки должен быть flex, чтобы кнопка прижалась куда надо */
+.infra-card {
+    display: flex;
+    flex-direction: column;
+    /* ... ваши остальные стили карточки (padding, background и т.д.) ... */
+}
+
 .infra-card p {
     font-size: 0.95rem;
     color: #666;
     line-height: 1.5;
-    flex-grow: 1;
+    margin-bottom: 10px; /* Отступ до кнопки */
+    
+    /* Логика скрытия текста */
     display: -webkit-box;
-    -webkit-line-clamp: 3;     /* Показываем 3 строки */
+    -webkit-line-clamp: 3; /* Сколько строк показывать в свернутом виде */
     -webkit-box-orient: vertical;
     overflow: hidden;
-    position: relative;
-    transition: all 0.3s ease;
+    transition: max-height 0.3s ease; /* Для плавности, если нужно */
 }
 
-/* Стиль для текста с "читать далее" */
-.infra-card p.has-more::after {
-    content: '…читать далее';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(to right, transparent 0%, white 50%);
-    padding: 0 10px 5px 0;
+/* Когда текст развернут */
+.infra-card p.expanded {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+
+/* Сама кнопка "Читать далее" / "Свернуть" */
+.read-more-btn {
+    align-self: flex-start; /* Прижимаем влево */
     font-size: 0.85rem;
     color: #e74c3c;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: auto; /* Если карточка фиксированной высоты, это прижмет кнопку к низу */
+    text-decoration: none;
+    border-bottom: 1px dotted #e74c3c; /* Пунктирное подчеркивание (стильно) */
+    transition: color 0.2s;
 }
 
-/* При наведении на "читать далее" */
-.infra-card p.has-more:hover::after {
+.read-more-btn:hover {
     color: #c0392b;
-}
-
-/* Полный текст (скрытый) */
-.infra-card p.full-text {
-    -webkit-line-clamp: unset !important;
-    max-height: none !important;
-    overflow: visible !important;
-}
-
-.infra-card p.full-text::after {
-    content: '…свернуть';
-    position: static;
-    display: inline-block;
-    margin-left: 10px;
-    color: #e74c3c;
-    cursor: pointer;
-    font-weight: 500;
+    border-bottom-style: solid;
 }

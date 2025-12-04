@@ -1,56 +1,110 @@
-function renderActivities(data) {
-  // 1. Ищем контейнер для активностей (не путать с номерами!)
-  const container = document.getElementById('activitiesContainer');
+function renderAccommodation(data) {
+  const container = document.getElementById('roomsContainer');
   if (!container) return;
 
   container.innerHTML = '';
 
-  // 2. Получаем массив
-  const activities = Array.isArray(data) ? data : (data.activities || []);
+  const rooms = Array.isArray(data) ? data : (data.accommodations || []);
 
-  activities.forEach(item => {
-    // 3. Создаем карточку
+  rooms.forEach(room => {
+    // Проверка на валидность данных
+    if (!room.id || !room.name) {
+      console.warn('Пропущена некорректная карточка', room);
+      return;
+    }
+    
+    // Парсинг цены
+    const price = Number(room.price);
+    
+    // Создаем карточку
     const card = document.createElement('div');
-    card.className = 'scroll-item activity-card'; // Класс activity-card для стилей
+    card.className = 'scroll-item accommodation-card';
 
-    // 4. Путь к SVG иконке
-    const iconPath = item.icon 
-        ? `./images/activities/${item.icon}` 
-        : './images/activities/activity-pools.svg';
+    const link = document.createElement('a');
+    link.href = `accommodation.html?id=${encodeURIComponent(room.id)}`;
+    link.style.textDecoration = 'none';
+    link.style.color = 'inherit';
 
-    // 5. Собираем HTML
-    card.innerHTML = `
-        <div class="activity-icon-box" style="width: 80px; height: 80px; margin: 0 auto 15px;">
-            <img src="${iconPath}" 
-                 alt="${item.title}" 
-                 style="width: 100%; height: 100%; object-fit: contain;"
-                 onerror="this.style.opacity=0.5">
-        </div>
+    // Картинка
+    const imgSrc = room.imageThumb || room.imageFull || room.image;
+    if (imgSrc) {
+      const img = document.createElement('img');
+      img.src = imgSrc;
+      img.alt = room.name;
+      img.style.height = '150px';
+      img.style.objectFit = 'cover';
+      img.style.width = '100%'; // Исправил на 100% для красоты
+      img.style.borderRadius = '10px';
+      img.onerror = () => {
+        img.src = './images/placeholder.jpg'; // Заглушка
+      };
+      link.appendChild(img);
+    }
 
-        <h3>${item.title}</h3>
+    // Заголовок
+    const h3 = document.createElement('h3');
+    h3.textContent = `${room.icon || '🏠'} ${room.name}`;
+    h3.style.marginTop = '10px';
+    link.appendChild(h3);
 
-        <div class="time-badge" style="background: #FFF3E0; color: #E65100; padding: 4px 12px; border-radius: 20px; display: inline-block; font-weight: bold; font-size: 0.9em; margin: 10px 0;">
-            🕐 ${item.time}
-        </div>
+    // Описание (обрезанное)
+    if (room.description) {
+      const p = document.createElement('p');
+      p.textContent = room.description;
+      p.className = 'accommodation-description'; 
+      p.style.fontSize = '0.9em';
+      p.style.color = '#666';
+      p.style.margin = '5px 0';
+      // Обрезка текста CSS-ом (если класс не работает)
+      p.style.display = '-webkit-box';
+      p.style.webkitLineClamp = '3';
+      p.style.webkitBoxOrient = 'vertical';
+      p.style.overflow = 'hidden';
+      link.appendChild(p);
+    }
 
-        <p style="color: #666; font-size: 0.95em; margin-top: 10px;">
-            ${item.description}
-        </p>
-    `;
+    // Цена
+    const pPrice = document.createElement('p');
+    const strong = document.createElement('strong');
+    strong.style.color = 'var(--primary-green, #2d8659)';
+    strong.style.fontSize = '1.1em';
+    
+    // ВАЖНО: Вот тут исправленный текст "сутки"
+    strong.textContent = (isNaN(price) || price <= 0) 
+        ? 'Цена по запросу' 
+        : `от ${price} ₸ / сутки`;
+        
+    pPrice.appendChild(strong);
+    link.appendChild(pPrice);
 
+    card.appendChild(link);
     container.appendChild(card);
   });
 
-  console.log(`✅ Activities: загружено ${activities.length} элементов`);
+  console.log(`✅ Accommodation: ${rooms.length} номеров загружено`);
 }
 
-// Загрузка данных
-function loadActivitiesData() {
-  fetch('activities.json')
-    .then(res => res.json())
-    .then(data => renderActivities(data))
-    .catch(err => console.error('Ошибка activities:', err));
+function loadAccommodationData(url) {
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      renderAccommodation(data);
+    })
+    .catch(error => {
+      const container = document.getElementById('roomsContainer');
+      if (container) {
+        container.innerHTML = `<div style="color:red; padding:20px;">Ошибка загрузки: ${error.message}</div>`;
+      }
+      console.error('Ошибка загрузки номеров:', error);
+    });
 }
 
-// Запуск
-document.addEventListener('DOMContentLoaded', loadActivitiesData);
+// ЗАПУСК (Самое важное!)
+document.addEventListener('DOMContentLoaded', () => {
+  loadAccommodationData('accommodation.json'); 
+});

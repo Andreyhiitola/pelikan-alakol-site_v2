@@ -1,10 +1,20 @@
-<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                    ircle class="blob" cx="32" cy="34" r="22" fill="#BCCCDC" opacity="0.4"/>
-                    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="16" y="12" width="32" height="40" rx="4" />
-                        ircle cx="32" cy="34" r="9" /> <!-- Люк -->
-                        <path d="M20 18H26" /> <!-- Дисплей -->
-                        ircle cx="42" cy="18" r="2" /> <!-- Кнопка -->
-                        <path d="M12 52H52" stroke-opacity="0.3"/> <!-- Пол -->
-                    </g>
-                </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Пятно: Свежесть/Пена -->
+  ircle class="blob" cx="32" cy="34" r="24" fill="#BCCCDC" opacity="0.4"/>
+  
+  <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Корпус (Квадратный!) -->
+    <rect x="14" y="12" width="36" height="40" rx="3" />
+    
+    <!-- Панель управления -->
+    <line x1="14" y1="22" x2="50" y2="22" />
+    ircle cx="42" cy="17" r="2" /> <!-- Крутилка программ -->
+    <rect x="18" y="15" width="8" height="4" rx="1" /> <!-- Лоток для порошка -->
+    
+    <!-- Большой люк -->
+    ircle cx="32" cy="36" r="9" />
+    
+    <!-- Вода внутри люка (чтобы точно не холодильник) -->
+    <path d="M26 38C28 40 30 40 32 38C34 36 36 36 38 38" opacity="0.6"/>
+  </g>
+</svg>

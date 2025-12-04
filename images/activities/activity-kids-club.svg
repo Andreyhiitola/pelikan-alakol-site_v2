@@ -3,7 +3,7 @@
   <path fill="#E0F2FF" d="M16 10c6-5 18-6 26-2s14 12 11 22-9 16-18 19-18 2-23-4-6-16 4-25z"/>
   <path fill="#BBDEFB" d="M40 8c4 1 9 4 12 9s3 11 1 16-7 9-12 11-11 2-16 1c6-2 11-6 14-11s4-12 1-18z"/>
 
-  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke="#2d8659" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <!-- Воздушный шар -->
     <circle cx="26" cy="24" r="7"/>
     <path d="M26 31v4l-2 3"/>

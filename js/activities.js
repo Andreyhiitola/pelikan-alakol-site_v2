@@ -11,17 +11,19 @@ function renderActivities(data) {
     const card = document.createElement('div');
     card.className = 'scroll-item'; 
     
-    // ВОТ ГЛАВНОЕ ИСПРАВЛЕНИЕ: Формируем путь к иконке
+    // ПРАВИЛЬНЫЙ ПУТЬ К ПАПКЕ ACTIVITIES
     const iconSrc = item.icon ? `./images/activities/${item.icon}` : './images/activities/placeholder.svg';
+    
+    // Обработка локации
+    const location = item.location || '';
 
     card.innerHTML = `
-      <!-- Блок с картинкой -->
       <div style="display: flex; justify-content: center; margin-bottom: 15px;">
          <img src="${iconSrc}" 
               alt="${item.title}" 
               style="width: 80px; height: 80px; object-fit: contain;"
               onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-         <!-- Запасной смайлик, если картинка не загрузится -->
+         <!-- Запасной смайлик -->
          <div style="display:none; font-size: 60px;">🎯</div>
       </div>
 
@@ -34,6 +36,8 @@ function renderActivities(data) {
       </div>
 
       <p style="text-align: center; color: #555;">${item.description}</p>
+      
+      ${location ? `<p style="text-align: center; color: #888; font-size: 0.9em; margin-top: 8px;">📍 ${location}</p>` : ''}
     `;
     
     container.appendChild(card);

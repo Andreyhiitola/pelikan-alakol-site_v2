@@ -1,15 +1,22 @@
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-hidden="true">
-                <path fill="#E0F2FF" d="M16 10c6-5 18-6 26-2s14 12 11 22-9 16-18 19-18 2-23-4-6-16 4-25z"/>
-                <path fill="#BBDEFB" d="M40 8c4 1 9 4 12 9s3 11 1 16-7 9-12 11-11 2-16 1c6-2 11-6 14-11s4-12 1-18z"/>
-                <g fill="none" stroke="#2d8659" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <ellipse cx="26" cy="22" rx="6" ry="7"/>
-                    <path d="M22 25v2a4 4 0 0 0 8 0v-2"/>
-                    <path d="M26 29v8"/>
-                    <path d="M22 39c3-2 5-2 8 0"/>
-                    <path d="M40 18l3-2"/>
-                    <path d="M42 24h3"/>
-                    <path d="M39 28l2 3"/>
-                    <path d="M36 22v5a2.5 2.5 0 1 1-2-2.4"/>
-                    <path d="M36 22l3-1v4"/>
-                </g>
-            </svg>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фоновое пятно -->
+  <path d="M12 30C12 18 24 12 38 14C52 16 60 28 56 46C52 58 32 58 20 52C10 46 12 38 12 30Z" fill="#D1C4E9"/>
+
+  <!-- Микрофон -->
+  <rect x="26" y="16" width="12" height="18" rx="6" stroke="black" stroke-width="2.5" fill="none"/>
+  <path d="M26 22H38" stroke="black" stroke-width="2.5"/>
+  <path d="M26 28H38" stroke="black" stroke-width="2.5"/>
+  <path d="M32 34V46" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M24 46H40" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Бокал (справа внизу) -->
+  <path d="M44 34L50 42H56" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 34H56" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M50 42V50" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M46 50H54" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Звезды/Искры (атмосфера шоу) -->
+  <path d="M16 20L18 24L16 28L14 24L16 20Z" fill="black"/>
+  <path d="M50 14L52 18L50 22L48 18L50 14Z" fill="black"/>
+  ircle cx="20" cy="40" r="2" fill="black"/>
+</svg>

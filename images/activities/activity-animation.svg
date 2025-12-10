@@ -1,0 +1,15 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фоновое пятно -->
+  <path d="M12 28C12 18 24 10 38 12C52 14 60 26 56 42C52 56 34 56 22 52C12 48 12 38 12 28Z" fill="#FFF59D"/>
+  
+  <!-- Маска -->
+  <path d="M16 22C16 22 18 45 32 50C46 45 48 22 48 22C48 22 32 26 16 22Z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Глаза -->
+  <path d="M22 30C22 30 25 28 28 30" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M36 28C36 28 39 26 42 28" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Улыбка -->
+  <path d="M24 38C24 38 28 44 40 38" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M24 38C24 38 32 48 40 38" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

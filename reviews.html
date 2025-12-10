@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Отзывы – Пеликан Алаколь</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем те же стили, что и на главной -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/infrastructure.css">
+  <link rel="stylesheet" href="css/logo.css">
+  <style>
+    /* Немного стилей для этой страницы */
+    .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+    header { display: flex; align-items: center; margin-bottom: 30px; }
+    .back-btn { 
+        text-decoration: none; color: #2d8659; font-weight: bold; 
+        display: flex; align-items: center; gap: 8px; font-size: 1.1em;
+    }
+    .back-btn:hover { color: #1a5c3f; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> На главную
+      </a>
+      <h1 style="margin-left: auto; margin-right: auto; color: #2d8659;">Отзывы наших гостей</h1>
+    </header>
+
+    <main>
+      <!-- СЮДА ВСТАВЛЯЕМ ВАШ КОД ОТЗЫВОВ -->
+      <div style="text-align: center;">
+          <script>var mbPollsWidth = 850; var mbPollsHeight = 1750;</script>
+          <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/poll/js/main"></script>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

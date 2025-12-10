@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Цветное пятно -->
+  <path d="M10 32C10 20 20 14 34 14C48 14 56 22 54 40C52 54 36 56 24 52C12 48 10 42 10 32Z" fill="#FFEBEE"/>
+  
+  <!-- Контур -->
+  <path d="M14 16L30 36V50H22" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 50H38" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  <path d="M46 16L30 36" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  <path d="M14 16H46" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  ircle cx="46" cy="42" r="10" stroke="black" stroke-width="3"/>
+  <path d="M46 38V42" stroke="black" stroke-width="3" stroke-linecap="round"/>
+</svg>

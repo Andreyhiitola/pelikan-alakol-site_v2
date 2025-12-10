@@ -1,0 +1,19 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фоновое пятно -->
+  <path d="M10 32C10 22 20 18 34 18C48 18 56 26 54 42C52 56 36 58 24 54C12 50 10 42 10 32Z" fill="#FFCCBC"/>
+  
+  <!-- Здание -->
+  <path d="M12 28L42 16V50H14V28Z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M12 28H42" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Тент -->
+  <path d="M16 28C16 32 20 32 20 28C20 32 24 32 24 28C24 32 28 32 28 28C28 32 32 32 32 28C32 32 36 32 36 28" stroke="black" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  
+  <!-- Дверь и окно -->
+  <rect x="30" y="36" width="8" height="14" stroke="black" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="18" y="38" width="8" height="6" stroke="black" stroke-width="2.5" stroke-linejoin="round"/>
+  
+  <!-- Вывеска -->
+  <path d="M42 28H50" stroke="black" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="46" y="28" width="8" height="6" stroke="black" stroke-width="2.5" stroke-linejoin="round"/>
+</svg>

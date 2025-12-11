@@ -2123,7 +2123,17 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="./js/infrastructure.js"></script>
 <script src="./js/main.js"></script>
 <script src="js/contacts.js"></script>
-<script src="js/info-modal.js"></script>
+<script>
+    (function() {
+        var script = document.createElement('script');
+        // Подставляем текущее время: js/info-modal.js?v=1731582000123
+        script.src = 'js/info-modal.js?v=' + new Date().getTime();
+        // Гарантируем, что скрипт выполнится корректно
+        script.async = false; 
+        document.body.appendChild(script);
+    })();
+</script>
+
 
 <!--
 ═══════════════════════════════════════════════════════════════════

@@ -1134,6 +1134,11 @@ width: 100%;
     </a>
     <a href="#infrastructure" class="header-btn" onclick="setActive(this)">
       <i class="fas fa-building"></i> Наши услуги
+     <a href="#" class="header-btn" onclick="openTextModal('price')">
+        <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
+    </a>
+    <a href="#" class="header-btn" onclick="openTextModal('rules')">
+        <i class="fas fa-book"></i> Правила проживания
     </a>
     <a href="#offers" class="header-btn" onclick="setActive(this)">
       <i class="fas fa-gift"></i> Акции и Отзывы
@@ -2118,6 +2123,7 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="./js/infrastructure.js"></script>
 <script src="./js/main.js"></script>
 <script src="js/contacts.js"></script>
+<script src="js/info-modal.js"></script>
 
 <!--
 ═══════════════════════════════════════════════════════════════════
@@ -2331,5 +2337,15 @@ document.getElementById('mapModal').addEventListener('click', (e) => {
 <!-- ⚠️ ОПЦИОНАЛЬНАЯ МОДУЛЬНАЯ СТРУКТУРА: Раскомментируйте строку ниже -->
 <!-- <script src="js/map.js"></script> -->
 
+<!-- Модальное окно для текстов (Прайс / Правила) -->
+<div class="modal" id="textModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <button class="modal-close" onclick="closeTextModal()">&times;</button>
+        <h2 id="textModalTitle" style="color: #2d8659; margin-bottom: 20px;">Заголовок</h2>
+        <div id="textModalContent" style="line-height: 1.6; color: #333; white-space: pre-wrap;">
+            <!-- Текст загрузится сюда -->
+        </div>
+    </div>
+</div>
 </body>
 </html>

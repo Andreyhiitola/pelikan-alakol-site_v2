@@ -1165,8 +1165,15 @@ width: 100%;
     <a href="#infrastructure" onclick="closeMobileMenu()">
       <i class="fas fa-building"></i> Наши услуги
     </a>
-    <a href="#offers" onclick="closeMobileMenu()">
-      <i class="fas fa-gift"></i> Предложения
+        <!-- Новые ссылки для Прайса и Правил -->
+    <a href="#" onclick="openTextModal('price'); closeMobileMenu(); return false;">
+      <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
+    </a>
+    <a href="#" onclick="openTextModal('rules'); closeMobileMenu(); return false;">
+      <i class="fas fa-book"></i> Правила проживания
+    </a>
+      <a href="#offers" onclick="closeMobileMenu()">
+      <i class="fas fa-gift"></i> Акции и Отзывы
     </a>
   </nav>
 </header>

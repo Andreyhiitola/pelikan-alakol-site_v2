@@ -1,195 +1,123 @@
-function copyToClipboard(text, label) {
-  navigator.clipboard.writeText(text)
-    .then(() => showNotification(`${label} скопирован в буфер обмена!`))
-    .catch(err => {
-      console.error('Ошибка копирования:', err);
-      alert('Не удалось скопировать. Текст: ' + text);
-    });
-}
-
-function showNotification(message) {
-  const notification = document.createElement('div');
-  notification.className = 'copy-notification';
-  notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-  document.body.appendChild(notification);
-  setTimeout(() => notification.remove(), 3000);
-}
+// ✅ ФИНАЛЬНАЯ ВЕРСИЯ JS/CONTACTS.JS
+// (Одинаковые иконки "Карта" для обоих кнопок)
 
 async function loadContacts() {
-  try {
-    const response = await fetch(CONTACTS_JSON_URL);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+        const response = await fetch('contacts.json');
+        
+        if (!response.ok) throw new Error('Ошибка загрузки contacts.json');
+        const data = await response.json();
+        
+        // Ищем контейнер для карточек
+        const grid = document.getElementById('contactGridModal') || document.querySelector('.contact-grid');
+        
+        if(grid) {
+            grid.innerHTML = ''; // Очищаем перед рендером
+            
+            // Генерируем карточки
+            if(data.contacts && data.contacts.office) {
+                grid.appendChild(createLocationCard(data.contacts.office, 'fa-building'));
+            }
+            if(data.contacts && data.contacts.resort) {
+                grid.appendChild(createLocationCard(data.contacts.resort, 'fa-umbrella-beach'));
+            }
+        } else {
+            console.warn('Контейнер contactGridModal не найден!');
+        }
+    } catch (error) {
+        console.error('Ошибка контактов:', error);
     }
-    const data = await response.json();
-    return data.contacts;
-  } catch (error) {
-    console.error('Ошибка при загрузке контактов:', error);
-    return null;
-  }
 }
 
-function createContactCard({ icon, title, bodyHtml, buttonsHtml }) {
-  const card = document.createElement('div');
-  card.className = 'contact-card';
-  card.innerHTML = `
-    <h3><i class="${icon}"></i> ${title}</h3>
-    <div class="contact-info">
-      ${bodyHtml}
-    </div>
-    <div class="contact-buttons">
-      ${buttonsHtml}
-    </div>
-  `;
-  return card;
+// Функция создания HTML-карточки
+function createLocationCard(info, iconClass) {
+    const card = document.createElement('div');
+    card.className = 'contact-card';
+    
+    // 1. ТЕЛЕФОНЫ
+    let phonesHtml = '';
+    if(info.phones) {
+        info.phones.forEach(p => {
+            let icon = p.isWhatsapp ? '<i class="fab fa-whatsapp" style="color:#25D366"></i>' : '<i class="fas fa-phone-alt"></i>';
+            let link = p.isWhatsapp ? `https://wa.me/${p.number.replace(/\D/g, '')}` : `tel:${p.number}`;
+            
+            phonesHtml += `
+            <div class="phone-item">
+                <span class="phone-label">${icon} ${p.label}:</span> 
+                <a href="${link}" class="phone-number" target="${p.isWhatsapp ? '_blank' : '_self'}" title="Позвонить">
+                    ${p.display}
+                </a>
+            </div>`;
+        });
+    }
+
+    // 2. АДРЕС И ГРАФИК
+    let addressHtml = `<p><strong>Адрес:</strong><br>${info.address}</p>`;
+    if (info.schedule) addressHtml += `<p><strong>График:</strong><br>${info.schedule}</p>`;
+    if (info.gps && iconClass === 'fa-umbrella-beach') addressHtml += `<p><strong>GPS:</strong> ${info.gps}</p>`;
+
+    // 3. КНОПКИ
+    let buttonsHtml = '';
+    
+    // Единый стиль и иконка для кнопок карты
+    const mapBtnStyle = "background: linear-gradient(135deg, #4ECDC4, #44A08D);";
+    // ИСПОЛЬЗУЕМ ОДНУ И ТУ ЖЕ ИКОНКУ: fa-map-marked-alt (Карта с меткой)
+    const mapIcon = '<i class="fas fa-map-marked-alt"></i>';
+
+    if (iconClass === 'fa-umbrella-beach') {
+        // === БАЗА ОТДЫХА (Встроенная карта) ===
+        buttonsHtml += `<button onclick="if(window.closeContactsModal) closeContactsModal(); if(window.openMapModal) openMapModal();" class="contact-btn" style="${mapBtnStyle}">${mapIcon} Показать на карте</button>`;
+    } else {
+        // === ОФИС В ГОРОДЕ (Google Maps) ===
+        buttonsHtml += `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(info.address)}" target="_blank" class="contact-btn" style="${mapBtnStyle}">${mapIcon} Показать на карте</a>`;
+    }
+    
+    // Telegram Бот (общая кнопка)
+    buttonsHtml += `<a href="https://t.me/pelikanalacol" target="_blank" class="contact-btn" style="margin-top: 10px; background: linear-gradient(135deg, #0088cc, #005f8f);"><i class="fab fa-telegram-plane"></i> Telegram бот</a>`;
+
+    // Сборка
+    card.innerHTML = `
+        <h3><i class="fas ${iconClass}"></i> ${info.title}</h3>
+        <div class="contact-info">
+            ${addressHtml}
+            <div style="margin-top:15px; border-top:1px solid #eee; padding-top:10px">
+                ${phonesHtml}
+            </div>
+            <p style="margin-top:10px">
+                <i class="fas fa-envelope"></i> <a href="mailto:${info.email}">${info.email}</a>
+            </p>
+        </div>
+        <div class="contact-buttons" style="margin-top: 20px;">
+            ${buttonsHtml}
+        </div>
+    `;
+    return card;
 }
 
-// КЛИКАБЕЛЬНЫЕ НОМЕРА
-function createPhoneCard(phones) {
-  const card = document.createElement('div');
-  card.className = 'contact-card';
-
-  const bodyHtml = phones.map(phone => `
-    <div class="phone-item">
-      <span class="phone-label">${phone.label}:</span>
-      <a href="tel:${phone.number}" class="phone-number">
-        ${phone.display}
-      </a>
-    </div>
-  `).join('');
-
-  card.innerHTML = `
-    <h3><i class="fas fa-phone-alt"></i> Телефон</h3>
-    <div class="contact-info">
-      ${bodyHtml}
-    </div>
-  `;
-
-  return card;
+// Глобальные функции для модального окна
+if (typeof window.openContactsModal === 'undefined') {
+    window.openContactsModal = function() {
+        const modal = document.getElementById('contactsModal');
+        if(modal) {
+            modal.classList.add('active');
+            loadContacts(); 
+        }
+    };
 }
 
-function createTelegramCard(telegram) {
-  const buttons = [];
-
-  if (telegram.userUrl) {
-    buttons.push(`
-      <a href="${telegram.userUrl}" target="_blank" class="contact-btn">
-        <i class="fab fa-telegram"></i> Написать в Telegram
-      </a>
-    `);
-  }
-
-  if (telegram.botUrl) {
-    buttons.push(`
-      <a href="${telegram.botUrl}" target="_blank" class="contact-btn">
-        <i class="fab fa-telegram"></i> Связаться с ботом
-      </a>
-    `);
-  }
-
-  return createContactCard({
-    icon: 'fab fa-telegram',
-    title: 'Telegram',
-    bodyHtml: `
-      <strong>Оперативная связь</strong><br>
-      ${telegram.description || ''}
-    `,
-    buttonsHtml: buttons.join('')
-  });
+if (typeof window.closeContactsModal === 'undefined') {
+    window.closeContactsModal = function() {
+        const modal = document.getElementById('contactsModal');
+        if(modal) modal.classList.remove('active');
+    };
 }
 
-function createWhatsappCard(whatsapp) {
-  return createContactCard({
-    icon: 'fab fa-whatsapp',
-    title: 'WhatsApp',
-    bodyHtml: `
-      <strong>${whatsapp.description}</strong><br>
-      Отправьте сообщение
-    `,
-    buttonsHtml: `
-      <a href="${whatsapp.url}" target="_blank" class="contact-btn">
-        <i class="fab fa-whatsapp"></i> Открыть WhatsApp
-      </a>
-    `
-  });
+// Слушатель клика на фон
+if (!window.contactsClickListenerAdded) {
+    document.addEventListener('click', (e) => {
+        if (e.target.id === 'contactsModal') {
+            if(window.closeContactsModal) window.closeContactsModal();
+        }
+    });
+    window.contactsClickListenerAdded = true;
 }
-
-function createEmailCard(email) {
-  return createContactCard({
-    icon: 'fas fa-envelope',
-    title: 'Email',
-    bodyHtml: `
-      <strong>${email.description}</strong><br>
-      ${email.address}
-    `,
-    buttonsHtml: `
-      <a href="${email.url}" class="contact-btn">
-        <i class="fas fa-envelope"></i> Отправить Email
-      </a>
-    `
-  });
-}
-
-function createInstagramCard(instagram) {
-  return createContactCard({
-    icon: 'fab fa-instagram',
-    title: 'Instagram',
-    bodyHtml: `
-      <strong>${instagram.description}</strong><br>
-      ${instagram.username}
-    `,
-    buttonsHtml: `
-      <a href="${instagram.url}" target="_blank" class="contact-btn">
-        <i class="fab fa-instagram"></i> Открыть Instagram
-      </a>
-    `
-  });
-}
-
-function createWebsiteCard(website) {
-  return createContactCard({
-    icon: 'fas fa-globe',
-    title: 'Веб-сайт',
-    bodyHtml: `
-      <strong>${website.description}</strong><br>
-      ${website.domain}
-    `,
-    buttonsHtml: `
-      <a href="${website.url}" target="_blank" class="contact-btn">
-        <i class="fas fa-globe"></i> Посетить сайт
-      </a>
-    `
-  });
-}
-
-async function renderContacts(containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-
-  const contacts = await loadContacts();
-  if (!contacts) {
-    container.innerHTML = '<div class="error">❌ Ошибка загрузки контактов</div>';
-    return;
-  }
-
-  container.innerHTML = '';
-  container.appendChild(createPhoneCard(contacts.phone));
-  container.appendChild(createTelegramCard(contacts.telegram));
-  container.appendChild(createWhatsappCard(contacts.whatsapp));
-  container.appendChild(createEmailCard(contacts.email));
-  container.appendChild(createInstagramCard(contacts.instagram));
-  container.appendChild(createWebsiteCard(contacts.website));
-}
-
-function openContactsModal() {
-  document.getElementById('contactsModal').classList.add('active');
-  renderContacts('contactGridModal');
-}
-
-function closeContactsModal() {
-  document.getElementById('contactsModal').classList.remove('active');
-}
-
-document.getElementById('contactsModal').addEventListener('click', (e) => {
-  if (e.target.id === 'contactsModal') closeContactsModal();
-});

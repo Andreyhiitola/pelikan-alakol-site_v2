@@ -12,8 +12,8 @@ async function loadFAQ() {
         container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Загрузка вопросов...</div>';
         
         // ✅ ИСПРАВЛЕНО: правильный путь к файлу
-        const response = await fetch('../faq_item.json');
-        if (!response.ok) throw new Error(`faq-item.json не найден: ${response.status}`);
+        const response = await fetch('../faq.json');
+        if (!response.ok) throw new Error(`faq.json не найден: ${response.status}`);
         
         faqData = await response.json();
         console.log('✅ FAQ загружен:', faqData.items.length, 'вопросов');

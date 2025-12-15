@@ -1507,66 +1507,16 @@ width: 100%;
 </div>
 
 <div class="modal" id="faqModal">
-<div class="modal-content">
-<button class="modal-close" onclick="closeFaqModal()">✕</button>
-<h2><i class="fas fa-question-circle"></i> Часто задаваемые вопросы</h2>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Какие сроки минимального проживания?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">Минимальный срок проживания — 1 ночь. Но для получения скидки рекомендуем бронировать на 3+ ночи.</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Доступно ли размещение с животными?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">Да, мы разрешаем размещение с домашними животными. Дополнительная плата составляет 500 ₸ в сутки. Просьба заранее уведомить о наличии животного.</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Когда лучше всего посещать озеро Алаколь?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">Лучший сезон — июнь-август. Температура воды 22-24°C, воздуха 28-30°C. Май и сентябрь также хороши, но прохладнее.</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Какие документы нужны для проверки?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">Требуется паспорт или удостоверение личности. Для иностранцев также может потребоваться виза и регистрация по месту пребывания.</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Есть ли трансфер с аэропорта?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">Да, мы предоставляем трансфер с аэропорта Алматы за дополнительную плату. Расстояние около 200 км, примерно 3 часа пути.</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Безопасна ли вода озера для плавания?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">Да, вода озера Алаколь безопасна и имеет целебные свойства благодаря минеральному составу. Регулярно проводится мониторинг качества воды.</div>
-</div>
-
-<div class="faq-item">
-<div class="faq-question" onclick="toggleFaq(this)">
-<span>Какие удобства включены в стоимость номера?</span>
-<i class="fas fa-chevron-down faq-icon"></i>
-</div>
-<div class="faq-answer">В стоимость номера включены: завтрак, Wi-Fi, парковка, использование спортивных площадок. Дополнительно можно заказать экскурсии и спа-процедуры.</div>
-</div>
-</div>
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeFaqModal()">✕</button>
+    <h2><i class="fas fa-question-circle"></i> Часто задаваемые вопросы</h2>
+    
+    <div id="faqContainer">
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Загрузка вопросов...
+      </div>
+    </div>
+  </div>
 </div>
 
 <nav>
@@ -1592,9 +1542,10 @@ width: 100%;
 <button class="floating-btn contact-btn" onclick="openContactsModal()" title="Контакты">
 <i class="fas fa-headset"></i>
 </button>
-<button class="floating-btn faq-btn" onclick="openFaqModal()" title="Часто задаваемые вопросы">
+<button class="floating-btn faq-btn" onclick="window.faqAPI.openFAQModal()" title="Часто задаваемые вопросы">
 <i class="fas fa-question-circle"></i>
 </button>
+
 </div>
 
 <!-- Галерея Лайтбокс -->
@@ -2190,6 +2141,7 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="./js/main.js"></script>
 <script src="js/contacts.js?v=3" defer></script>
 <script src="js/price_pravila.js?v=1"></script>
+<script src="./js/faq-item.js"></script>
 
 <!-- Модальное окно для Прайса и Правил -->
 <div class="modal" id="docsModal">

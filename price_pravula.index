@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документы | Пеликан-Алаколь</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2d8659;
+            --secondary: #4ca876;
+            --bg-light: #f5faf8;
+            --text: #2c3e50;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        body.dark {
+            --bg-light: #1a1a1a;
+            --text: #e0e0e0;
+            --white: #2a2a2a;
+            --shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary);
+        }
+
+        /* Крупные кнопки */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .big-btn {
+            background: var(--white);
+            border: none;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .big-btn:hover {
+            transform: translateY(-5px);
+        }
+        .big-btn i {
+            font-size: 3em;
+            color: var(--secondary);
+        }
+        .big-btn span {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .back-btn {
+            margin-top: 40px;
+            padding: 12px 25px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .back-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* Тоггл темы */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        /* Общее модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--white);
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: var(--primary);
+            border: none;
+            background: none;
+        }
+        .modal-title {
+            margin: 0 40px 20px 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Контент правила */
+        .rules-content h3 {
+            color: var(--primary);
+            margin-top: 25px;
+            border-bottom: 2px solid #eee;
+        }
+        .rules-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* Контент прайса */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 15px;
+            border: 1px solid var(--secondary);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background: var(--secondary);
+            color: #fff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            color: var(--text);
+        }
+        .price-val {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+        .error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Переключить тему">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <h1>📄 Информация для гостей</h1>
+
+    <div class="menu-grid">
+        <button class="big-btn" onclick="openDocsModal('rules')">
+            <i class="fas fa-file-contract"></i>
+            <span>Правила проживания</span>
+        </button>
+
+        <button class="big-btn" onclick="openDocsModal('price')">
+            <i class="fas fa-tag"></i>
+            <span>Прайс-лист</span>
+        </button>
+    </div>
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Вернуться на главную
+    </a>
+
+    <!-- ОДНО модальное окно для обоих типов -->
+    <div class="modal" id="docsModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeDocsModal()">&times;</button>
+            <h2 class="modal-title" id="docsModalTitle">
+                <!-- здесь иконка + текст -->
+            </h2>
+            <div id="docsModalBody">
+                Загрузка...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Тема
+        function applyThemeFromStorage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark');
+                document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+            }
+        }
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+            document.querySelector('.theme-toggle i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        applyThemeFromStorage();
+
+        let pricesData = [];
+
+        async function loadRules() {
+            try {
+                const resp = await fetch('docs/rules.txt');
+                if (!resp.ok) throw new Error('Файл rules.txt не найден');
+                const text = await resp.text();
+                const lines = text.split('\n');
+                let html = '';
+                let openList = false;
+
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line) return;
+                    if (/^[IVX]+\./.test(line)) {
+                        if (openList) html += '</ul>';
+                        html += `<h3>${line}</h3><ul>`;
+                        openList = true;
+                    } else {
+                        html += `<li>${line}</li>`;
+                    }
+                });
+                if (openList) html += '</ul>';
+
+                document.getElementById('docsModalBody').innerHTML =
+                    `<div class="rules-content">${html}</div>`;
+            } catch (e) {
+                document.getElementById('docsModalBody').innerHTML =
+                    `<div class="error">Ошибка загрузки правил: ${e.message}</div>`;
+            }
+        }
+
+        async function loadPrices() {
+            try {
+                pricesData = [];
+                const resp = await fetch('docs/prices.txt');
+                if (!resp.ok) throw new Error('Файл prices.txt не найден');
+                const text = await resp.text();
+                const lines = text.split('\n');
+                lines.forEach(line => {
+                    if (!line.trim()) return;
+                    const p = line.split('|');
+                    if (p.length >= 4) {
+                        pricesData.push({
+                            name: p[0],
+                            june: p[1],
+                            july: p[2],
+                            august: p[3]
+                        });
+                    }
+                });
+                renderPrice('all');
+            } catch (e) {
+                document.getElementById('docsModalBody').innerHTML =
+                    `<div class="error">Ошибка загрузки прайса: ${e.message}</div>`;
+            }
+        }
+
+        function renderPrice(mode, btn) {
+            const body = document.getElementById('docsModalBody');
+            let filtersHtml = `
+                <div class="filters">
+                    <button class="filter-btn ${mode === 'all' ? 'active' : ''}" onclick="renderPrice('all', this)">Все периоды</button>
+                    <button class="filter-btn ${mode === 1 ? 'active' : ''}" onclick="renderPrice(1, this)">Июнь</button>
+                    <button class="filter-btn ${mode === 2 ? 'active' : ''}" onclick="renderPrice(2, this)">Июль</button>
+                    <button class="filter-btn ${mode === 3 ? 'active' : ''}" onclick="renderPrice(3, this)">Август</button>
+                </div>
+            `;
+
+            let html = `<table><thead><tr><th>Номер</th>`;
+            if (mode === 'all' || mode === 1) html += `<th>Июнь</th>`;
+            if (mode === 'all' || mode === 2) html += `<th>Июль</th>`;
+            if (mode === 'all' || mode === 3) html += `<th>Август</th>`;
+            html += `</tr></thead><tbody>`;
+
+            pricesData.forEach(row => {
+                html += `<tr><td><strong>${row.name}</strong></td>`;
+                if (mode === 'all' || mode === 1) html += `<td class="price-val">${row.june}</td>`;
+                if (mode === 'all' || mode === 2) html += `<td class="price-val">${row.july}</td>`;
+                if (mode === 'all' || mode === 3) html += `<td class="price-val">${row.august}</td>`;
+                html += `</tr>`;
+            });
+            html += `</tbody></table>`;
+
+            body.innerHTML = filtersHtml + html;
+        }
+
+        // Открытие одного модального окна с разным типом контента
+        function openDocsModal(type) {
+            const modal = document.getElementById('docsModal');
+            const title = document.getElementById('docsModalTitle');
+            const body = document.getElementById('docsModalBody');
+
+            if (type === 'rules') {
+                title.innerHTML = `<i class="fas fa-file-contract"></i> Правила проживания`;
+                body.innerHTML = 'Загрузка...';
+                loadRules();
+            } else if (type === 'price') {
+                title.innerHTML = `<i class="fas fa-tag"></i> Стоимость проживания`;
+                body.innerHTML = 'Загрузка...';
+                loadPrices();
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDocsModal() {
+            document.getElementById('docsModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Закрытие по клику на фон
+        document.getElementById('docsModal').addEventListener('click', e => {
+            if (e.target.id === 'docsModal') closeDocsModal();
+        });
+
+        // Закрытие по ESC
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeDocsModal();
+        });
+    </script>
+</body>
+</html>

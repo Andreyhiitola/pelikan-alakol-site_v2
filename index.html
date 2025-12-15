@@ -1114,6 +1114,48 @@ width: 100%;
   padding: 15px 10px;
   font-size: 0.9rem;
 }
+<head>
+    <!-- ... другие теги ... -->
+    <style>
+        /* ... тут уже есть много твоего CSS ... */
+        
+        /* ВСТАВЛЯЕШЬ СЮДА: */
+        
+        /* Светлая тема – явно задаём нормальные цвета */
+        #docsModal .modal-content {
+          background: #ffffff;
+          color: #222222;
+        }
+
+        #docsModalTitle,
+        #docsModalBody {
+          color: #222222;
+        }
+
+        /* ТЁМНАЯ ТЕМА */
+        body.dark-mode #docsModal .modal-content,
+        body.dark #docsModal .modal-content {
+          background: #1f2933 !important;
+          color: #f9fafb !important;
+        }
+
+        body.dark-mode #docsModalTitle,
+        body.dark #docsModalTitle,
+        body.dark-mode #docsModalBody,
+        body.dark #docsModalBody {
+          color: #f9fafb !important;
+        }
+
+        body.dark-mode #docsModalBody li,
+        body.dark #docsModalBody li,
+        body.dark-mode #docsModalBody p,
+        body.dark #docsModalBody p {
+          color: #f9fafb !important;
+        }
+
+    </style>
+</head>
+
 </style>
 </head>
 <body>
@@ -1135,10 +1177,10 @@ width: 100%;
     <a href="#infrastructure" class="header-btn" onclick="setActive(this)">
       <i class="fas fa-building"></i> Наши услуги
     <!-- Кнопка "Контакты" в меню -->
-    <a href="#" class="header-btn" onclick="openTextModal('price')">
+    <a href="#" class="header-btn" onclick="openDocsModal('price')">
         <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
     </a>
-    <a href="#" class="header-btn" onclick="openTextModal('rules')">
+    <a href="#" class="header-btn" onclick="openDocsModal('rules')">
         <i class="fas fa-book"></i> Правила проживания
     </a>
     <a href="#offers" class="header-btn" onclick="setActive(this)">
@@ -1182,15 +1224,16 @@ width: 100%;
       <i class="fas fa-gift"></i> Акции и Отзывы
     </a>
     
-    <!-- 6. Прайс -->
-    <a href="#" onclick="openTextModal('price'); closeMobileMenu(); return false;">
-      <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
-    </a>
-    
-    <!-- 7. Правила -->
-    <a href="#" onclick="openTextModal('rules'); closeMobileMenu(); return false;">
-      <i class="fas fa-book"></i> Правила проживания
-    </a>
+   <!-- Кнопка Прайс -->
+<a href="#" onclick="openDocsModal('price'); closeMobileMenu(); return false;">
+    <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
+</a>
+
+<!-- Кнопка Правила -->
+<a href="#" onclick="openDocsModal('rules'); closeMobileMenu(); return false;">
+    <i class="fas fa-book"></i> Правила проживания
+</a>
+
 
     <!-- 8. КОНТАКТЫ (Обязательно должны быть видны!) -->
     <a href="#" onclick="closeMobileMenu(); openContactsModal(); return false;" style="display: flex !important;">
@@ -2146,25 +2189,23 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="./js/infrastructure.js"></script>
 <script src="./js/main.js"></script>
 <script src="js/contacts.js?v=3" defer></script>
-<script>
-    (function() {
-        var script = document.createElement('script');
-        // Подставляем текущее время: js/info-modal.js?v=1731582000123
-        script.src = 'js/info-modal.js?v=' + new Date().getTime();
-        // Гарантируем, что скрипт выполнится корректно
-        document.body.appendChild(script);
-    })();
-</script>
+<script src="js/price_pravila.js?v=1"></script>
 
-<!-- Модальное окно для текстов (Прайс / Правила) -->
-<div class="modal" id="textModal">
-    <div class="modal-content" style="max-width: 800px;">
-        <button class="modal-close" onclick="closeTextModal()">&times;</button>
-        <h2 id="textModalTitle" style="color: #2d8659; margin-bottom: 20px;">Заголовок</h2>
-        <div id="textModalContent" style="line-height: 1.6; color: #333; white-space: pre-wrap;">
-            <!-- Текст загрузится сюда -->
-        </div>
+<!-- Модальное окно для Прайса и Правил -->
+<div class="modal" id="docsModal">
+  <div class="modal-content" style="max-width: 800px;">
+    <button class="modal-close" onclick="closeDocsModal()">&times;</button>
+    <!-- Правильные ID: docsModalTitle и docsModalBody -->
+    <h2 id="docsModalTitle" style="color: #2d8659; margin-bottom: 20px;"></h2>
+    <div id="docsModalBody" style="line-height: 1.6; color: #333; white-space: normal;">
+      Загрузка...
     </div>
+  </div>
+</div>
+
+      Загрузка...
+    </div>
+  </div>
 </div>
 </body>
 </html>

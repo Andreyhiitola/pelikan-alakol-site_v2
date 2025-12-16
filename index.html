@@ -1246,23 +1246,37 @@ width: 100%;
 <p>📍 <strong>озеро Алаколь, пос. Акши, Восточно-Казахстанская область</strong></p>
 <p>Семейный отдых на озере Алаколь — более 5000 деревьев, чистый пляж, комфортные домики и незабываемые впечатления для всей семьи!</p>
 </div>
-
 <!-- ========== MAXIBOOKING ВИДЖЕТ БРОНИРОВАНИЯ ========== -->
-<!-- ========== MAXIBOOKING: ФОРМА ПОИСКА ========== -->
-<div class="filter-section" style="display: flex; flex-direction: column; gap: 0;">
+<div class="filter-section">
+  <!-- Форма поиска -->
   <div id="mbh-form-wrapper">
     <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
   </div>
-</div>
-<script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-search-form"></script>
 
-<!-- ========== MAXIBOOKING: РЕЗУЛЬТАТЫ ПОИСКА ========== -->
-<div class="results-section" style="margin-top: 16px;">
-  <div id="mbh-results-wrapper">
-    <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+  <!-- Результаты поиска -->
+  <div class="results-section">
+    <div id="mbh-results-wrapper">
+      <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+    </div>
   </div>
 </div>
-<script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
+<style>
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .results-section {
+    max-height: 115px;
+    overflow: auto;
+  }
+
+  #mbh-results-wrapper ul {
+    margin: 0;
+    padding: 0;
+  }
+</style>
 
   <!-- Условия бронирования - отдельный блок на всю ширину -->
   <div style="background: var(--white); border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: var(--shadow);">

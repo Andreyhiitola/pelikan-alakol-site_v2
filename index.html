@@ -1246,38 +1246,20 @@ width: 100%;
 <p>📍 <strong>озеро Алаколь, пос. Акши, Восточно-Казахстанская область</strong></p>
 <p>Семейный отдых на озере Алаколь — более 5000 деревьев, чистый пляж, комфортные домики и незабываемые впечатления для всей семьи!</p>
 </div>
-<!-- ========== MAXIBOOKING ВИДЖЕТ БРОНИРОВАНИЯ ========== -->
-<div class="filter-section">
-  <!-- Форма поиска -->
-  <div id="mbh-form-wrapper">
-    <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
-  </div>
 
-  <!-- Результаты поиска -->
-  <div class="results-section">
+  <!-- ========== MAXIBOOKING ВИДЖЕТ БРОНИРОВАНИЯ ========== -->
+  <div class="filter-section" style="display: flex; flex-direction: column; gap: 0;">
+    <div id="mbh-form-wrapper">
+      <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+    </div>
+    <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-search-form"></script>
+    
     <div id="mbh-results-wrapper">
       <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
     </div>
+    <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
   </div>
-</div>
-<style>
-  .filter-section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .results-section {
-    max-height: 115px;
-    overflow: auto;
-  }
-
-  #mbh-results-wrapper ul {
-    margin: 0;
-    padding: 0;
-  }
-</style>
-
+  
   <!-- Условия бронирования - отдельный блок на всю ширину -->
   <div style="background: var(--white); border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: var(--shadow);">
     <div style="background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05)); border-radius: 12px; padding: 20px; border-left: 4px solid var(--secondary-green);">
@@ -2160,8 +2142,7 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
 <script src="js/contacts.js?v=3" defer></script>
 <script src="js/price_pravila.js?v=1"></script>
 <script src="./js/faq.js"></script>
-<script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/694120c37c96c125fe47326a/load-search-form"></script>
-<script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/694120c37c96c125fe47326a/load-result"></script>
+
 <!-- Модальное окно для Прайса и Правил -->
 <div class="modal" id="docsModal">
   <div class="modal-content" style="max-width: 800px;">
@@ -2179,4 +2160,4 @@ window.addEventListener('DOMContentLoaded', loadInfrastructure);
   </div>
 </div>
 </body>
-  </html>
+      </html>

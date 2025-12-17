@@ -19,7 +19,7 @@ async function loadJSON(filename) {
 
 async function initializeData() {
   console.log('🔄 Загружаю данные...');
-  
+
   window.data = {
     accommodation: await loadJSON('accommodation.json'),
     activities: await loadJSON('activities.json'),
@@ -27,7 +27,8 @@ async function initializeData() {
     gallery: await loadJSON('gallery.json'),
     reviews: await loadJSON('reviews.json'),
     contacts: await loadJSON('contacts.json'),
-    offer: await loadJSON('offer.json')
+    offer: await loadJSON('offer.json'),
+    booking: await loadJSON('booking.json')
   };
 
   console.log('✅ Все данные загружены:', window.data);
@@ -51,7 +52,21 @@ async function initializeData() {
   if (window.data.offer && window.renderOffers) {
     window.renderOffers(window.data.offer);
   }
+  if (window.data.booking && window.renderBookingConditions) {
+    window.renderBookingConditions(window.data.booking);
+  }
 }
+
+// Аккордеон для .faq-item (в том числе блока условий бронирования)
+document.addEventListener('click', (event) => {
+  const question = event.target.closest('.faq-question');
+  if (!question) return;
+
+  const item = question.closest('.faq-item');
+  if (!item) return;
+
+  item.classList.toggle('active');
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('📄 DOM загружен');

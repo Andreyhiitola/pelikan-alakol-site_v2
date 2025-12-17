@@ -1,0 +1,29 @@
+#bookingConditionsContainer .booking-block {
+  background: var(--white);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+}
+
+#bookingConditionsContainer .booking-inner {
+  background: linear-gradient(135deg, rgba(45, 134, 89, 0.05), rgba(0, 212, 255, 0.05));
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid var(--secondary-green);
+}
+
+.booking-warning-title {
+  text-align: center;
+  margin: 0 0 20px 0;
+  color: var(--primary-green);
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.booking-paragraph {
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: var(--text-dark);
+  margin: 10px 0;
+}

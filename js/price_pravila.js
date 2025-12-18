@@ -11,11 +11,10 @@ async function loadRulesJson() {
         if (!resp.ok) throw new Error('Файл rules.json не найден');
         const data = await resp.json();
         
-        console.log('Rules data:', data); // Для отладки
+        console.log('Rules data:', data);
 
         let html = '';
 
-        // Вариант 1: Если в JSON есть массив "sections"
         if (data.sections && Array.isArray(data.sections)) {
             data.sections.forEach(section => {
                 html += `<h3 style="color:#2d8659; margin-top:15px;">${section.title}</h3>`;
@@ -26,13 +25,11 @@ async function loadRulesJson() {
                 }
             });
         } 
-        // Вариант 2: Если просто массив строк (резервный)
         else if (Array.isArray(data)) {
             html += '<ul>';
             data.forEach(line => html += `<li>${line}</li>`);
             html += '</ul>';
         }
-        // Вариант 3: Если вообще пустой или странный формат
         else {
             html = '<p>Не удалось распознать формат правил.</p>';
         }
@@ -71,7 +68,6 @@ function renderPriceFromJson(mode) {
     const periods = priceJson.periods || [];
     const rooms = priceJson.rooms || [];
 
-    // Стили для кнопок фильтров
     const btnStyle = "padding:8px 15px; margin:5px; border:1px solid #2d8659; border-radius:5px; background:white; cursor:pointer;";
     const activeBtnStyle = "padding:8px 15px; margin:5px; border:1px solid #2d8659; border-radius:5px; background:#2d8659; color:white; cursor:pointer;";
 
@@ -90,10 +86,10 @@ function renderPriceFromJson(mode) {
     
     // Шапка таблицы
     html += `<thead><tr style="background:#f0f0f0;">`;
-    html += `<th style="padding:10px; border:1px solid #ddd;">Категория номера</th>`;
+    html += `<th style="padding:4px; border:1px solid #ddd; font-size:14px; font-weight:normal;">Категория номера</th>`;
     periods.forEach(p => {
         if (mode === 'all' || mode == p.id) {
-            html += `<th style="padding:10px; border:1px solid #ddd;">${p.label}</th>`;
+            html += `<th style="padding:4px; border:1px solid #ddd; font-size:14px; font-weight:normal;">${p.label}</th>`;
         }
     });
     html += `</tr></thead><tbody>`;
@@ -101,16 +97,15 @@ function renderPriceFromJson(mode) {
     // Тело таблицы
     rooms.forEach(room => {
         html += `<tr>`;
-        html += `<td style="padding:10px; border:1px solid #ddd;"><strong>${room.name}</strong></td>`;
+        html += `<td style="padding:4px; border:1px solid #ddd; font-size:14px;">${room.name}</td>`;
         
         periods.forEach(p => {
             if (mode === 'all' || mode == p.id) {
-                // Защита от отсутствующих цен
                 let val = '-';
                 if (room.prices && room.prices[p.id]) {
                     val = room.prices[p.id];
                 }
-                html += `<td style="padding:10px; border:1px solid #ddd; text-align:center; color:#e74c3c; font-weight:bold;">${val}</td>`;
+                html += `<td style="padding:4px; border:1px solid #ddd; text-align:center; color:#e74c3c; font-size:14px;">${val}</td>`;
             }
         });
         html += `</tr>`;
@@ -135,14 +130,14 @@ function openDocsModal(type) {
         return;
     }
 
-    modal.classList.add('active'); // Показываем окно
-    modal.style.display = 'flex';  // На всякий случай
+    modal.classList.add('active');
+    modal.style.display = 'flex';
 
     if (type === 'rules') {
         title.innerHTML = '<i class="fas fa-file-contract"></i> Правила проживания';
         loadRulesJson();
     } else if (type === 'price') {
-        title.innerHTML = '<i class="fas fa-tag"></i> Стоимость проживания';
+        title.innerHTML = '<i class="fas fa-tag"></i> Стоимость проживания <a href="price.pdf" target="_blank" style="font-size:14px; color:#0066cc; margin-left:15px; text-decoration:none;">Полный прайс в PDF <i class="fas fa-download"></i></a>';
         loadPriceJson();
     }
 }
@@ -155,11 +150,9 @@ function closeDocsModal() {
     }
 }
 
-// Глобальные обработчики
-window.renderPriceFromJson = renderPriceFromJson; // Делаем доступной для кнопок внутри HTML
+window.renderPriceFromJson = renderPriceFromJson;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Закрытие по клику вне окна
     const modal = document.getElementById('docsModal');
     if (modal) {
         modal.addEventListener('click', (e) => {

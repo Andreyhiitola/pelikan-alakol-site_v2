@@ -13,9 +13,6 @@ function renderAccommodation(data) {
       return;
     }
     
-    // Парсинг цены
-    const price = Number(room.price);
-    
     // Создаем карточку
     const card = document.createElement('div');
     card.className = 'scroll-item accommodation-card';
@@ -33,10 +30,12 @@ function renderAccommodation(data) {
       img.alt = room.name;
       img.style.height = '150px';
       img.style.objectFit = 'cover';
-      img.style.width = '100%'; // Исправил на 100% для красоты
+      img.style.width = '100%';
       img.style.borderRadius = '10px';
       img.onerror = () => {
-        img.src = './images/placeholder.jpg'; // Заглушка
+      img.onerror = () => {
+  img.style.display = 'none'; // Просто скрыть
+};
       };
       link.appendChild(img);
     }
@@ -55,7 +54,6 @@ function renderAccommodation(data) {
       p.style.fontSize = '0.9em';
       p.style.color = '#666';
       p.style.margin = '5px 0';
-      // Обрезка текста CSS-ом (если класс не работает)
       p.style.display = '-webkit-box';
       p.style.webkitLineClamp = '3';
       p.style.webkitBoxOrient = 'vertical';
@@ -63,17 +61,18 @@ function renderAccommodation(data) {
       link.appendChild(p);
     }
 
-    // Цена
+    // Цена (обновлённый блок)
     const pPrice = document.createElement('p');
     const strong = document.createElement('strong');
     strong.style.color = 'var(--primary-green, #2d8659)';
     strong.style.fontSize = '1.1em';
-    
-    // ВАЖНО: Вот тут исправленный текст "сутки"
-    strong.textContent = (isNaN(price) || price <= 0) 
-        ? 'Цена по запросу' 
-        : `от ${price} ₸ / сутки`;
-        
+
+    if (room.priceRange) {
+      strong.textContent = `от ${room.priceRange} ₸ / сутки`;
+    } else {
+      strong.textContent = 'Цена по запросу';
+    }
+
     pPrice.appendChild(strong);
     link.appendChild(pPrice);
 
@@ -104,7 +103,7 @@ function loadAccommodationData(url) {
     });
 }
 
-// ЗАПУСК (Самое важное!)
+// ЗАПУСК
 document.addEventListener('DOMContentLoaded', () => {
   loadAccommodationData('accommodation.json'); 
 });

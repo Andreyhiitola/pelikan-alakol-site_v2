@@ -8,7 +8,9 @@
       "phones": [
         { "label": "Городской", "number": "+77272927899", "display": "+7 (727) 292-78-99", "icon": "fas fa-phone" },
         { "label": "WhatsApp", "number": "+77017714733", "display": "+7 (701) 771 47 33", "icon": "fab fa-whatsapp" },
-        { "label": "WhatsApp", "number": "+77058067833", "display": "+7 (705) 806 78 33", "icon": "fab fa-whatsapp" }
+        { "label": "WhatsApp", "number": "+77058067833", "display": "+7 (705) 806 78 33", "icon": "fab fa-whatsapp" },
+        { "label": "Мобильный", "number": "+77017714733", "display": "+7 (701) 771 47 33", "icon": "fas fa-phone" },
+        { "label": "Мобильный", "number": "+77058067833", "display": "+7 (705) 806 78 33", "icon": "fas fa-phone" }
       ],
       "email": "pelikan-08@mail.ru"
     },
@@ -18,7 +20,8 @@
       "gps": "N 45° 57' 18\", E 81° 34' 17\"",
       "phones": [
         { "label": "Городской", "number": "+77283330002", "display": "+7 (72833) 30002", "icon": "fas fa-phone" },
-        { "label": "WhatsApp", "number": "+77767275841", "display": "+7 (776) 727 58 41", "icon": "fab fa-whatsapp" }
+        { "label": "WhatsApp", "number": "+77767275841", "display": "+7 (776) 727 58 41", "icon": "fab fa-whatsapp" },
+        { "label": "Мобильный", "number": "+77767275841", "display": "+7 (776) 727 58 41", "icon": "fas fa-phone" }
       ],
       "email": "pelikan-alakol@mail.ru"
     }

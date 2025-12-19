@@ -1,16 +1,27 @@
+// booking.js
+
+console.log('✅ booking.js загружен');
+
+// Рендер условий бронирования
 window.renderBookingConditions = function (data) {
   const container = document.getElementById('bookingConditionsContainer');
-  if (!container || !data) return;
+  if (!container || !data) {
+    console.warn('bookingConditionsContainer или данные для условий не найдены');
+    return;
+  }
 
+  // Очищаем контейнер
   container.innerHTML = '';
 
+  // Внешний блок
   const wrapper = document.createElement('div');
   wrapper.className = 'booking-block';
 
+  // Внутренний блок
   const inner = document.createElement('div');
   inner.className = 'booking-inner';
 
-  // Заголовок ВНИМАНИЕ сверху
+  // Заголовок "ВНИМАНИЕ"
   if (data.warningTitle) {
     const titleP = document.createElement('p');
     titleP.className = 'booking-warning-title';
@@ -18,7 +29,7 @@ window.renderBookingConditions = function (data) {
     inner.appendChild(titleP);
   }
 
-  // Абзацы
+  // Абзацы с условиями
   if (Array.isArray(data.paragraphs)) {
     data.paragraphs.forEach(text => {
       const p = document.createElement('p');

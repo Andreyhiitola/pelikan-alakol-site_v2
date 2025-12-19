@@ -751,7 +751,7 @@ color: var(--text-dark);
 }
 .faq-item.active .faq-answer {
 padding: 20px;
-max-height: 500px;
+ max-height: 2000px;  /* или max-height: none; */
 }
 .floating-buttons {
 position: fixed;
@@ -1260,13 +1260,14 @@ width: 100%;
     </div>
   </div>
 <!-- Условия бронирования - динамический блок -->
-<div class="faq-item booking-faq-item">
+<div class="faq-item booking-faq-item active">
   <div class="faq-question">
     <span>Условия бронирования</span>
     <span class="faq-icon">▼</span>
   </div>
   <div class="faq-answer">
-    <div id="bookingConditionsContainer"></div>
+   <div id="bookingConditionsContainer" style="overflow: visible !important; height: auto !important; max-height: none !important;"></div>
+
   </div>
 </div>
 

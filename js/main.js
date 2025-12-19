@@ -52,6 +52,7 @@ async function initializeData() {
   if (window.data.offer && window.renderOffers) {
     window.renderOffers(window.data.offer);
   }
+  // Рендер условий бронирования (данные в корне booking.json)
   if (window.data.booking && window.renderBookingConditions) {
     window.renderBookingConditions(window.data.booking);
   }

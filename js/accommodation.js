@@ -28,14 +28,9 @@ function renderAccommodation(data) {
       const img = document.createElement('img');
       img.src = imgSrc;
       img.alt = room.name;
-      img.style.height = '150px';
-      img.style.objectFit = 'cover';
-      img.style.width = '100%';
-      img.style.borderRadius = '10px';
+      // убрали height/width/object-fit/borderRadius — всё уедет в CSS
       img.onerror = () => {
-      img.onerror = () => {
-  img.style.display = 'none'; // Просто скрыть
-};
+        img.style.display = 'none'; // Просто скрыть
       };
       link.appendChild(img);
     }

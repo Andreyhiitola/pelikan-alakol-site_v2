@@ -1,75 +1,19 @@
-/* ============ УСЛОВИЯ БРОНИРОВАНИЯ ============ */
-
-/* Контейнер условий бронирования */
-#bookingConditionsContainer {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  padding: 0 15px;
-  margin: 20px auto;
+:root {
+  --primary-green: #2d8659;
+  --secondary-green: #4ca876;
+  --accent-blue: #0077b6;
+  --light-blue: #00d4ff;
+  --background-light: #f5faf8;
+  --white: #fff;
+  --text-dark: #2c3e50;
+  --shadow: 0 8px 24px rgba(45, 134, 89, 0.15);
+  --shadow-lg: 0 16px 40px rgba(45, 134, 89, 0.2);
+  --booking-bg: #fff7e6;          /* фон блока в светлой теме */
 }
 
-/* Сам блок предупреждения */
-#bookingConditionsContainer .booking-block {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  background: #fff7e6;
-  border: 1px solid #ffa726;
-  border-radius: 10px;
-  padding: 16px 14px;
-  margin-bottom: 16px;
-}
-
-#bookingConditionsContainer .booking-inner {
-  box-sizing: border-box;
-  width: 100%;
-  background: transparent;
-  border: none;
-  padding: 0;
-}
-
-.booking-warning-title {
-  margin: 0 0 10px 0;
-  font-weight: 700;
-  color: #e65100;
-  font-size: 1rem;
-}
-
-.booking-paragraph {
-  margin: 6px 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--text-dark, #2c3e50);
-}
-
-/* Мобильная адаптация */
-@media (max-width: 767px) {
-  #bookingConditionsContainer {
-    padding: 0 10px;
-    margin: 16px auto;
-  }
-
-  #bookingConditionsContainer .booking-block {
-    padding: 12px 10px;
-    margin-bottom: 12px;
-  }
-
-  .booking-warning-title {
-    font-size: 0.95rem;
-  }
-
-  .booking-paragraph {
-    font-size: 0.85rem;
-    line-height: 1.45;
-  }
-}
-
-/* Убираем возможные ограничения по высоте */
-#bookingConditionsContainer,
-#bookingConditionsContainer .booking-block,
-#bookingConditionsContainer .booking-inner {
-  height: auto !important;
-  max-height: none !important;
-  overflow: visible !important;
+body.dark-mode {
+  --background-light: #1a1a1a;
+  --white: #2a2a2a;
+  --text-dark: #e0e0e0;
+  --booking-bg: #2b2730;          /* фон блока в тёмной теме */
 }

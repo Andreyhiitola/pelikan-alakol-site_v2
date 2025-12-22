@@ -1,66 +1,114 @@
-// js/promo.js — управление плавающей кнопкой АКЦИИ
-// 
+// ========================================
+// ✅ js/offers.js — ПОДСВЕТКА КНОПОК + АВТОПЕРЕХОД В БЛОКИ АКЦИИ/ОТЗЫВЫ
+// ========================================
+//
 // ИНСТРУКЦИЯ:
-// 1. Чтобы ПОКАЗАТЬ кнопку: установи SHOW_PROMO_BUTTON = true
-// 2. Чтобы СКРЫТЬ кнопку: установи SHOW_PROMO_BUTTON = false
-// 3. Позиция и размер кнопки автоматически адаптируются под мобильные/десктоп
-// 4. Цвет кнопки: background:#ff4444 (красный), меняй в обоих блоках
-// 5. Текст кнопки: '🔥 АКЦИИ!!!' — меняй на своё
+// 1. ENABLE_PROMO_HIGHLIGHT = true  → ВКЛЮЧИТЬ подсветку + автопереход
+// 2. ENABLE_PROMO_HIGHLIGHT = false → ОТКЛЮЧИТЬ
+// ========================================
 
-const SHOW_PROMO_BUTTON = true; // ← ГЛАВНЫЙ ПЕРЕКЛЮЧАТЕЛЬ: true/false
+const ENABLE_PROMO_HIGHLIGHT = true;
 
-if (SHOW_PROMO_BUTTON) {
-    document.addEventListener('DOMContentLoaded', () => {
-        const btn = document.createElement('a');
-        btn.href = '#offers'; // ← Ссылка на раздел акций
-        btn.innerHTML = '🔥 АКЦИИ'; // ← Текст кнопки (короче для мобильных)
+// ✅ 1. ПОДСВЕТКА ТОЛЬКО КНОПОК "АКЦИИ" + "ОТЗЫВЫ"
+function highlightPromoButtons() {
+    if (!ENABLE_PROMO_HIGHLIGHT) return;
+    
+    document.querySelectorAll('a, li a, nav a, .menu a, .mobile-menu a').forEach(el => {
+        const text = el.textContent.toLowerCase();
+        const href = el.getAttribute('href') || '';
         
-        // Адаптивный размер кнопки
-        if (window.innerWidth < 768) {
-            // Мобильная версия: очень компактная, выше гамбургера
-            btn.style.cssText = `
-                position:fixed; 
-                top:15px; 
-                right:10px; 
-                background:#ff4444; 
-                color:white; 
-                padding:6px 12px; 
-                border-radius:20px; 
-                font-size:12px; 
-                font-weight:bold; 
-                text-decoration:none; 
-                box-shadow:0 2px 8px rgba(255,68,68,0.4); 
-                z-index:9999; 
-                animation:pulse 1.5s infinite;
-            `;
-        } else {
-            // Десктоп версия: полный размер
-            btn.style.cssText = `
-                position:fixed; 
-                top:80px; 
-                right:20px; 
-                background:#ff4444; 
-                color:white; 
-                padding:15px 25px; 
-                border-radius:50px; 
-                font-size:18px; 
-                font-weight:bold; 
-                text-decoration:none; 
-                box-shadow:0 4px 15px rgba(255,68,68,0.4); 
-                z-index:9999; 
-                animation:pulse 1.5s infinite;
-            `;
+        // 🔥 АКЦИИ
+        if ((text.includes('акци') || href.includes('offers')) && 
+            !el.classList.contains('promo-highlighted')) {
+            el.classList.add('promo-highlighted');
+            if (!el.innerHTML.startsWith('🔥')) el.innerHTML = '🔥 ' + el.innerHTML;
+            autoScrollToOffers(); // Автопереход
         }
         
-        document.body.appendChild(btn);
-        
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-            }
-        `;
-        document.head.appendChild(style);
+        // ⭐ ОТЗЫВЫ
+        if ((text.includes('отзыв') || href.includes('reviews')) && 
+            !el.classList.contains('promo-highlighted')) {
+            el.classList.add('promo-highlighted');
+            if (!el.innerHTML.startsWith('⭐')) el.innerHTML = '⭐ ' + el.innerHTML;
+            autoScrollToReviews(); // Автопереход
+        }
     });
 }
+
+// ✅ 2. АВТОПЕРЕХОД В БЛОК АКЦИИ
+function autoScrollToOffers() {
+    const offersSection = document.querySelector('#offers, [id*="offer"], .offers-section');
+    if (offersSection) {
+        offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// ✅ 3. АВТОПЕРЕХОД В БЛОК ОТЗЫВЫ
+function autoScrollToReviews() {
+    const reviewsSection = document.querySelector('#reviews, [id*="review"], .reviews-section');
+    if (reviewsSection) {
+        reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// ✅ CSS ДЛЯ ПОДСВЕТКИ КНОПОК
+if (!document.querySelector('#promo-style')) {
+    const style = document.createElement('style');
+    style.id = 'promo-style';
+    style.textContent = `
+        .promo-highlighted {
+            background: linear-gradient(135deg, #ff4444, #ff6b6b) !important;
+            color: white !important;
+            box-shadow: 0 0 25px rgba(255,68,68,0.8) !important;
+            border-radius: 15px !important;
+            padding: 12px 20px !important;
+            margin: 5px 0 !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            animation: glow 2s infinite alternate !important;
+            position: relative !important;
+            z-index: 1000 !important;
+        }
+        .promo-highlighted[href*="#reviews"],
+        .promo-highlighted:has([href*="#reviews"]) {
+            background: linear-gradient(135deg, #ffaa00, #ffdd44) !important;
+            box-shadow: 0 0 25px rgba(255,170,0,0.8) !important;
+        }
+        @keyframes glow {
+            0% { 
+                box-shadow: 0 0 20px rgba(255,68,68,0.7), 0 0 0 rgba(255,255,255,0.5);
+            }
+            100% { 
+                box-shadow: 0 0 30px rgba(255,68,68,1), 0 0 20px rgba(255,255,255,0.3);
+                transform: scale(1.05);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// ✅ ЗАПУСК ПРИ ЗАГРУЗКЕ
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(highlightPromoButtons, 500); // Ждем загрузки меню
+});
+
+// ✅ ГАМБУРГЕР МЕНЮ
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.hamburger, .menu-toggle, .mobile-menu-toggle')) {
+        setTimeout(highlightPromoButtons, 200);
+    }
+});
+
+// ✅ ОСНОВНАЯ ФУНКЦИЯ АКЦИЙ (ваш код)
+async function loadOffers() {
+    try {
+        const response = await fetch('offer.json');
+        if (!response.ok) throw new Error('Ошибка загрузки offer.json');
+        const data = await response.json();
+        console.log(`✅ Offers: загружено ${data.length} шт.`);
+    } catch (error) {
+        console.error('Ошибка акций:', error);
+    }
+}
+
+loadOffers();

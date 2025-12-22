@@ -1,5 +1,5 @@
 // ✅ ФИНАЛЬНАЯ ВЕРСИЯ JS/CONTACTS.JS
-// (Одинаковые иконки "Карта" для обоих кнопок)
+// (Поддержка whatsapp: true и whatsapp_url из JSON)
 
 async function loadContacts() {
     try {
@@ -34,17 +34,36 @@ function createLocationCard(info, iconClass) {
     const card = document.createElement('div');
     card.className = 'contact-card';
     
-    // 1. ТЕЛЕФОНЫ
+    // 1. ТЕЛЕФОНЫ (НОВАЯ ЛОГИКА ДЛЯ JSON)
     let phonesHtml = '';
     if(info.phones) {
         info.phones.forEach(p => {
-            let icon = p.isWhatsapp ? '<i class="fab fa-whatsapp" style="color:#25D366"></i>' : '<i class="fas fa-phone-alt"></i>';
-            let link = p.isWhatsapp ? `https://wa.me/${p.number.replace(/\D/g, '')}` : `tel:${p.number}`;
+            // ✅ Определяем WhatsApp по полю whatsapp ИЛИ иконке
+            const isWhatsapp = p.whatsapp || (p.icon && p.icon.includes('whatsapp'));
+            
+            // Иконка
+            let icon = isWhatsapp 
+                ? '<i class="fab fa-whatsapp" style="color:#25D366"></i>' 
+                : '<i class="fas fa-phone-alt"></i>';
+            
+            // Ссылка (приоритет whatsapp_url из JSON)
+            let link = '';
+            if (isWhatsapp && p.whatsapp_url) {
+                link = p.whatsapp_url; // https://api.whatsapp.com/send?phone=77017714733
+            } else if (isWhatsapp) {
+                link = `https://wa.me/${p.number.replace(/\D/g, '')}`;
+            } else {
+                link = `tel:${p.number}`;
+            }
+            
+            // Target и title
+            let target = isWhatsapp ? '_blank' : '_self';
+            let title = isWhatsapp ? 'Открыть WhatsApp' : 'Позвонить';
             
             phonesHtml += `
             <div class="phone-item">
                 <span class="phone-label">${icon} ${p.label}:</span> 
-                <a href="${link}" class="phone-number" target="${p.isWhatsapp ? '_blank' : '_self'}" title="Позвонить">
+                <a href="${link}" class="phone-number" target="${target}" title="${title}">
                     ${p.display}
                 </a>
             </div>`;
@@ -61,7 +80,6 @@ function createLocationCard(info, iconClass) {
     
     // Единый стиль и иконка для кнопок карты
     const mapBtnStyle = "background: linear-gradient(135deg, #4ECDC4, #44A08D);";
-    // ИСПОЛЬЗУЕМ ОДНУ И ТУ ЖЕ ИКОНКУ: fa-map-marked-alt (Карта с меткой)
     const mapIcon = '<i class="fas fa-map-marked-alt"></i>';
 
     if (iconClass === 'fa-umbrella-beach') {

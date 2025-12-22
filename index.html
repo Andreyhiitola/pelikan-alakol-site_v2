@@ -1176,32 +1176,53 @@ width: 100%;
   <div class="header-left">
     <img src="images/logo.svg" alt="Пеликан Алаколь" class="logo" />
   </div>
-  <div class="header-center">
-    <a href="#rooms" class="header-btn" onclick="setActive(this)">
-      <i class="fas fa-bed"></i> Номерной фонд
-    </a>
-    <a href="#activities" class="header-btn" onclick="setActive(this)">
-      <i class="fas fa-hiking"></i> Активности
-    </a>
-    <a href="#gallery" class="header-btn" onclick="setActive(this)">
-      <i class="fas fa-camera"></i> Галерея
-    </a>
-    <a href="#infrastructure" class="header-btn" onclick="setActive(this)">
-      <i class="fas fa-building"></i> Наши услуги
-    <!-- Кнопка "Контакты" в меню -->
-    <a href="#" class="header-btn" onclick="openDocsModal('price')">
-        <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
-    </a>
-    <a href="#" class="header-btn" onclick="openDocsModal('rules')">
-        <i class="fas fa-book"></i> Правила проживания
-    </a>
-    <a href="#offers" class="header-btn" onclick="setActive(this)">
-      <i class="fas fa-gift"></i> Акции и Отзывы
-    </a>  
-        <a href="#" class="header-btn" onclick="openContactsModal(); return false;">
+  <!-- ДЕСКТОПНЫЙ ХЕДЕР -->
+<div class="header-center">
+  <a href="#rooms" class="header-btn" onclick="setActive(this)">
+    <i class="fas fa-bed"></i> Номерной фонд
+  </a>
+  <a href="#infrastructure" class="header-btn" onclick="setActive(this)"><i class="fas fa-building"></i> Наши услуги</a>
+  
+  <a href="#" class="header-btn" onclick="openDocsModal('price')">
+    <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
+  </a>
+  
+  <a href="#" class="header-btn" onclick="openDocsModal('rules')">
+    <i class="fas fa-book"></i> Правила проживания
+  </a>
+  
+  <a href="#offers" class="header-btn" onclick="setActive(this)">
+    <i class="fas fa-gift"></i> Акции и Отзывы
+  </a>
+  
+  <a href="index_menu.html" class="header-btn menu-btn">
+    <i class="fas fa-utensils"></i> 🍽️ МЕНЮ
+  </a>
+  
+  <a href="#" class="header-btn" onclick="openContactsModal(); return false;">
     <i class="fas fa-phone-alt"></i> Контакты
-    </a>
- </div>
+  </a>
+</div>
+
+<!-- МОБИЛЬНОЕ МЕНЮ (УНИФОРМАЛЬНОЕ) -->
+<nav class="nav-mobile" id="navMobile">
+  <a href="#" onclick="openDocsModal('price'); closeMobileMenu()">
+    <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
+  </a>
+  <a href="#" onclick="openDocsModal('rules'); closeMobileMenu()">
+    <i class="fas fa-book"></i> Правила проживания
+  </a>
+  <a href="#offers" onclick="setActive(this); closeMobileMenu()">
+    <i class="fas fa-gift"></i> Акции и Отзывы
+  </a>
+  <a href="index_menu.html" onclick="closeMobileMenu()">
+    <i class="fas fa-utensils"></i> 🍽️ МЕНЮ
+  </a>
+  <a href="#" onclick="openContactsModal(); closeMobileMenu()">
+    <i class="fas fa-phone-alt"></i> Контакты
+  </a>
+</nav>
+
   <div class="header-right">
     <button class="theme-toggle" onclick="toggleDarkMode()" title="Переключить тему">
       <i class="fas fa-moon"></i>
@@ -1215,7 +1236,6 @@ width: 100%;
     <a href="#rooms" onclick="closeMobileMenu()">
       <i class="fas fa-bed"></i> Номерной фонд
     </a>
-    
     <!-- 2. Активности -->
     <a href="#activities" onclick="closeMobileMenu()">
       <i class="fas fa-hiking"></i> Активности
@@ -1228,14 +1248,30 @@ width: 100%;
     
     <!-- 4. Услуги -->
     <a href="#infrastructure" onclick="closeMobileMenu()">
-      <i class="fas fa-building"></i> Наши услуги
+      <a href="#infrastructure" class="header-btn" onclick="setActive(this)"><i class="fas fa-building"></i> Наши услуги</a>
     </a>
     
     <!-- 5. Акции и Отзывы -->
     <a href="#offers" onclick="closeMobileMenu()">
       <i class="fas fa-gift"></i> Акции и Отзывы
     </a>
-    
+          <a href="#infrastructure" class="header-btn" onclick="setActive(this)"><i class="fas fa-building"></i> Наши услуги</a>
+    <!-- Кнопка "Контакты" в меню -->
+    <a href="#" class="header-btn" onclick="openDocsModal('price')">
+        <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
+    </a>
+    <a href="#" class="header-btn" onclick="openDocsModal('rules')">
+        <i class="fas fa-book"></i> Правила проживания
+    </a>
+    <a href="#offers" class="header-btn" onclick="setActive(this)">
+      <i class="fas fa-gift"></i> Акции и Отзывы
+    <a href="index_menu.html" class="header-btn menu-btn">
+      <span>🍽️ МЕНЮ</span>
+    </a>
+        <a href="#" class="header-btn" onclick="openContactsModal(); return false;">
+    <i class="fas fa-phone-alt"></i> Контакты
+    </a>
+  
    <!-- Кнопка Прайс -->
 <a href="#" onclick="openDocsModal('price'); closeMobileMenu(); return false;">
     <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
@@ -1358,7 +1394,7 @@ width: 100%;
 <button class="scroll-nav-btn next" onclick="scrollItems('gallery', 1)">❯</button>
 </div>
 
-<h2 id="infrastructure"><i class="fas fa-building"></i> Наши услуги</h2>
+<h2 id="infrastructure"><a href="#infrastructure" class="header-btn" onclick="setActive(this)"><i class="fas fa-building"></i> Наши услуги</a></h2>
 <div class="scroll-wrapper">
   <div class="scroll-container" id="infrastructureContainer">
     <div class="scroll-item" style="display: flex; align-items: center; justify-content: center; min-height: 350px;">

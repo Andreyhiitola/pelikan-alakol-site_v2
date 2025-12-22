@@ -381,3 +381,81 @@
 .booking-rules::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, #3498db, #2980b9);
 }
+/* ========================================
+   🍽️ МЕНЮ КНОПКА В ХЕДЕРЕ
+   ======================================== */
+.menu-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e) !important;
+  color: white !important;
+  padding: 12px 28px !important;
+  border-radius: 25px !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(255,107,53,0.3) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.menu-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(255,107,53,0.5) !important;
+  background: linear-gradient(135deg, #f7931e, #ff6b35) !important;
+}
+
+.menu-btn::before {
+  content: '';
+  position: absolute !important;
+  top: 0 !important; 
+  left: -100% !important;
+  width: 100% !important; 
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent) !important;
+  transition: left 0.5s !important;
+}
+
+.menu-btn:hover::before { 
+  left: 100% !important; 
+}
+
+/* stolovay.svg ссылка */
+.infra-link {
+  display: inline-block !important;
+  transition: transform 0.3s ease !important;
+}
+.infra-link:hover img {
+  transform: scale(1.05) !important;
+  filter: drop-shadow(0 4px 8px rgba(255,107,53,0.3)) !important;
+}
+
+/* Мобильный */
+@media (max-width: 768px) {
+  .menu-btn { 
+    padding: 10px 20px !important; 
+    font-size: 0.95rem !important; 
+  }
+}
+/* 🏨 ИНФРАСТРУКТУРА Hover */
+.infra-link {
+  transition: all 0.3s ease !important;
+}
+.infra-link:hover {
+  transform: translateY(-8px) !important;
+}
+.infra-link:hover img {
+  transform: scale(1.15) !important;
+  filter: drop-shadow(0 8px 25px rgba(255,107,53,0.6)) !important;
+}
+.infra-grid img {
+  transition: all 0.3s ease !important;
+}
+.infra-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  gap: 2rem !important;
+  text-align: center !important;
+}

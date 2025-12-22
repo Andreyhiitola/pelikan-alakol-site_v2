@@ -1,4 +1,4 @@
-// js/faq.js - 100% РАБОЧИЙ FAQ с INLINE стилями
+// js/faq.js - 100% РАБОЧИЙ FAQ с INLINE стилями (ИСПРАВЛЕНО!)
 let faqData = null;
 
 async function loadFAQ() {
@@ -40,27 +40,39 @@ function closeFAQModal() {
     document.getElementById('faqModal').classList.remove('active');
 }
 
-// ✅ Event delegation с INLINE стилями
+// ✅ ИСПРАВЛЕННАЯ ЛОГИКА: ЗАКРЫВАЕМ ВСЕ → ОТКРЫВАЕМ 1
 document.addEventListener('click', function(e) {
     const question = e.target.closest('.faq-question');
     if (question) {
         const item = question.parentElement;
         const answer = item.querySelector('.faq-answer');
         const icon = item.querySelector('.faq-icon');
+        const isActive = answer.style.maxHeight !== '0px';
         
-        const isActive = item.classList.contains('active');
+        // ✅ 1. ЗАКРЫВАЕМ ВСЕ АККОРДЕОНЫ
+        document.querySelectorAll('.faq-item').forEach(faqItem => {
+            const faqAnswer = faqItem.querySelector('.faq-answer');
+            const faqIcon = faqItem.querySelector('.faq-icon');
+            const faqQuestion = faqItem.querySelector('.faq-question');
+            
+            faqAnswer.style.maxHeight = '0px';
+            faqAnswer.style.padding = '0 20px';
+            faqIcon.style.transform = 'rotate(0deg)';
+            faqQuestion.style.background = '#f8f9fa';
+            faqQuestion.style.color = '#2c3e50';
+            faqItem.classList.remove('active');
+        });
         
-        if (isActive) {
-            item.classList.remove('active');
-            answer.style.maxHeight = '0';
-            answer.style.padding = '0 20px';
-            icon.style.transform = 'rotate(0deg)';
-        } else {
-            item.classList.add('active');
-            answer.style.maxHeight = '500px';
+        // ✅ 2. ОТКРЫВАЕМ ТОЛЬКО НАЖАТЫЙ
+        if (!isActive) {
+            answer.style.maxHeight = answer.scrollHeight + 'px';
             answer.style.padding = '15px 20px';
             icon.style.transform = 'rotate(180deg)';
+            question.style.background = 'linear-gradient(135deg, #3498db, #2980b9)';
+            question.style.color = 'white';
+            item.classList.add('active');
         }
+        
         console.log('✅ FAQ toggled:', !isActive);
     }
 });

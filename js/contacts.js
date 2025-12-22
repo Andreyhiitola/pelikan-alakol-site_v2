@@ -1,5 +1,5 @@
 // ✅ ФИНАЛЬНАЯ ВЕРСИЯ JS/CONTACTS.JS
-// (Поддержка whatsapp: true и whatsapp_url из JSON)
+// (Крестик в одной строке со "Свяжитесь с нами" + WhatsApp поддержка)
 
 async function loadContacts() {
     try {
@@ -49,7 +49,7 @@ function createLocationCard(info, iconClass) {
             // Ссылка (приоритет whatsapp_url из JSON)
             let link = '';
             if (isWhatsapp && p.whatsapp_url) {
-                link = p.whatsapp_url; // https://api.whatsapp.com/send?phone=77017714733
+                link = p.whatsapp_url;
             } else if (isWhatsapp) {
                 link = `https://wa.me/${p.number.replace(/\D/g, '')}`;
             } else {
@@ -127,6 +127,48 @@ if (typeof window.closeContactsModal === 'undefined') {
     window.closeContactsModal = function() {
         const modal = document.getElementById('contactsModal');
         if(modal) modal.classList.remove('active');
+    };
+}
+
+// ✅ КРЕСТИК: добавляем в модалку при открытии
+if (typeof window.openContactsModal === 'undefined') {
+    window.openContactsModal = function() {
+        const modal = document.getElementById('contactsModal');
+        if(modal) {
+            modal.classList.add('active');
+            
+            // ✅ ДОБАВЛЯЕМ/ОБНОВЛЯЕМ КРЕСТИК в правом верхнем углу
+            let closeBtn = modal.querySelector('.modal-close-btn');
+            if (!closeBtn) {
+                closeBtn = document.createElement('button');
+                closeBtn.className = 'modal-close-btn';
+                closeBtn.innerHTML = '×';
+                closeBtn.style.cssText = `
+                    position: absolute !important;
+                    top: 28px !important;      /* ← В ОДНУ СТРОКУ со "Свяжитесь с нами" */
+                    right: 20px !important;
+                    width: 36px !important;
+                    height: 36px !important;
+                    background: rgba(255,255,255,0.95) !important;
+                    border: 2px solid #ddd !important;
+                    border-radius: 50% !important;
+                    font-size: 22px !important;
+                    font-weight: bold !important;
+                    color: #666 !important;
+                    cursor: pointer !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    z-index: 10001 !important;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+                    line-height: 1 !important;
+                `;
+                closeBtn.onclick = () => window.closeContactsModal();
+                modal.appendChild(closeBtn);
+            }
+            
+            loadContacts(); 
+        }
     };
 }
 

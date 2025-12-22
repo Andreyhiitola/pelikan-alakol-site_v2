@@ -224,3 +224,160 @@
     transform: rotate(180deg) !important;
 }
 
+/* ========================================
+   ✅ FAQ МОДАЛКА: АВТО ВЫСОТА ПО ТЕКСТУ!
+   ======================================== */
+#faqModal.active {
+    max-height: 95vh !important;     /* Максимум 95% экрана */
+    height: auto !important;         /* Авто по содержимому */
+    min-height: 400px !important;    /* Минимум 400px */
+    top: 2.5vh !important;
+    transform: translateY(-50%) !important;
+    width: 95vw !important;
+    max-width: 1000px !important;
+}
+
+#faqModal .modal-content {
+    max-height: 90vh !important;
+    height: auto !important;         /* ✅ АВТО ПО ТЕКСТУ */
+    overflow-y: auto !important;
+    padding: 1.5rem !important;
+}
+
+#faqContainer {
+    max-height: 85vh !important;     /* Максимум */
+    height: auto !important;         /* ✅ АВТО ПО ВОПРОСАМ */
+    overflow-y: auto !important;
+}
+
+/* ✅ Аккордеон — больше текста */
+.faq-item.active .faq-answer {
+    max-height: none !important;     /* ✅ Без ограничения */
+    padding: 20px !important;
+}
+
+/* ✅ Скроллбар только при переполнении */
+#faqModal::-webkit-scrollbar {
+    width: 8px;
+}
+#faqModal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+#faqModal::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 10px;
+}
+/* ========================================
+   ✅ FAQ МОДАЛКА: МОБИЛЬНАЯ + ДЕСКТОП
+   ======================================== */
+
+/* ✅ ДЕСКТОП (от 769px) */
+@media (min-width: 769px) {
+    #faqModal.active {
+        max-height: 700px !important;
+        width: 800px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+    #faqModal .modal-content {
+        max-height: 650px !important;
+    }
+    #faqContainer {
+        max-height: 550px !important;
+    }
+}
+
+/* ✅ МОБИЛЬНАЯ (до 768px) */
+@media (max-width: 768px) {
+    #faqModal.active {
+        max-height: 95vh !important;     /* Почти весь экран */
+        height: auto !important;
+        width: 98vw !important;          /* Почти вся ширина */
+        top: 2vh !important;             /* Почти сверху */
+        transform: none !important;      /* Без центрирования */
+        min-height: 80vh !important;
+    }
+    #faqModal .modal-content {
+        max-height: 90vh !important;
+        padding: 1rem !important;        /* Меньше отступов */
+    }
+    #faqContainer {
+        max-height: 80vh !important;
+        padding: 0 !important;
+    }
+    .faq-question {
+        padding: 12px 15px !important;   /* Компактнее */
+        font-size: 14px !important;
+    }
+}
+
+/* ✅ ОБЩИЕ СТИЛИ */
+.faq-item.active .faq-answer {
+    max-height: none !important;
+}
+
+#faqModal::-webkit-scrollbar {
+    width: 6px;  /* Тоньше на мобильных */
+}
+#faqModal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+#faqModal::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 10px;
+}
+/* ========================================
+   ✅ ПРАВИЛА БРОНИРОВАНИЯ — ВЕСЬ ТЕКСТ НА МОБИЛЬНОМ!
+   ======================================== */
+
+/* МОБИЛЬНЫЙ */
+@media (max-width: 768px) {
+    /* Правила бронирования */
+    .booking-rules,
+    .rules-section,
+    #price_pravila,
+    .pravila-section,
+    [class*="booking-rules"],
+    [class*="pravila"] {
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        padding: 1rem !important;
+        margin: 0 !important;
+    }
+    
+    /* Модалка правил */
+    #bookingRulesModal,
+    #pravilaModal,
+    .rules-modal {
+        max-height: 95vh !important;
+        width: 98vw !important;
+        top: 1vh !important;
+        transform: none !important;
+    }
+    
+    #bookingRulesModal .modal-content,
+    .rules-modal .modal-content {
+        max-height: 90vh !important;
+        padding: 1rem !important;
+    }
+}
+
+/* ДЕСКТОП */
+@media (min-width: 769px) {
+    .booking-rules,
+    #price_pravila {
+        max-height: 700px !important;
+        overflow-y: auto !important;
+    }
+}
+
+/* Скроллбар голубой */
+.booking-rules::-webkit-scrollbar,
+#price_pravila::-webkit-scrollbar {
+    width: 6px;
+}
+.booking-rules::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}

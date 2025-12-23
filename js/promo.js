@@ -39,7 +39,7 @@ function highlightPromoButtons() {
 function autoScrollToOffers() {
     const offersSection = document.querySelector('#offers, [id*="offer"], .offers-section');
     if (offersSection) {
-        offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//         offersSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
 
@@ -47,7 +47,7 @@ function autoScrollToOffers() {
 function autoScrollToReviews() {
     const reviewsSection = document.querySelector('#reviews, [id*="review"], .reviews-section');
     if (reviewsSection) {
-        reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+//         reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
 

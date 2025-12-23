@@ -68,8 +68,8 @@ function renderPriceFromJson(mode) {
     const periods = priceJson.periods || [];
     const rooms = priceJson.rooms || [];
 
-    const btnStyle = "padding:8px 15px; margin:5px; border:1px solid #2d8659; border-radius:5px; background:white; cursor:pointer;";
-    const activeBtnStyle = "padding:8px 15px; margin:5px; border:1px solid #2d8659; border-radius:5px; background:#2d8659; color:white; cursor:pointer;";
+    const btnStyle = "padding:8px 15px; margin:5px; border:1px solid #2d8659; border-radius:5px; background: var(--bg-secondary); color: var(--text-primary); cursor:pointer;";
+    const activeBtnStyle = "padding:8px 15px; margin:5px; border:1px solid #2d8659; border-radius:5px; background: #2d8659; color: white !important; cursor:pointer;";
 
     // 1. Фильтры
     let filtersHtml = `<div class="filters" style="text-align:center; margin-bottom:15px;">`;
@@ -85,7 +85,7 @@ function renderPriceFromJson(mode) {
     let html = `<table style="width:100%; border-collapse:collapse; margin-top:10px;">`;
     
     // Шапка таблицы
-    html += `<thead><tr style="background:#f0f0f0;">`;
+    html += `<thead><tr style="background: var(--bg-secondary); color: var(--text-primary);">`;
     html += `<th style="padding:4px; border:1px solid #ddd; font-size:14px; font-weight:normal;">Категория номера</th>`;
     periods.forEach(p => {
         if (mode === 'all' || mode == p.id) {
@@ -105,7 +105,7 @@ function renderPriceFromJson(mode) {
                 if (room.prices && room.prices[p.id]) {
                     val = room.prices[p.id];
                 }
-                html += `<td style="padding:4px; border:1px solid #ddd; text-align:center; color:#e74c3c; font-size:14px;">${val}</td>`;
+                html += `<td style="padding:4px; border:1px solid #ddd; text-align:center; color: #e74c3c !important; font-size:14px;">${val}</td>`;
             }
         });
         html += `</tr>`;
@@ -114,7 +114,7 @@ function renderPriceFromJson(mode) {
 
     // Примечание
     if (priceJson.note) {
-        html += `<p style="margin-top:20px; font-style:italic; color:#666;">${priceJson.note}</p>`;
+        html += `<p style="margin-top:20px; font-style:italic; color: var(--text-secondary);">${priceJson.note}</p>`;
     }
 
     body.innerHTML = filtersHtml + html;

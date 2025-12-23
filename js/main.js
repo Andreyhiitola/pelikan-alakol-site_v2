@@ -73,3 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('📄 DOM загружен');
   initializeData();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".faq-item.active").forEach(item => {
+    item.classList.remove("active");
+  });
+  console.log("✅ Аккордеоны закрыты");
+});
+

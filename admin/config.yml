@@ -2,20 +2,20 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images"
-public_folder: "/images"
+media_folder: "images"          # ✅ Ваша папка images/
+public_folder: "/images"        # ✅ Относительно корня сайта
 
-# Locale для русского интерфейса
 locale: "ru"
+publish_mode: editorial_workflow  # ✅ Черновики
 
 collections:
-  # Номера и размещение
+  # 🏨 НОМЕРА
   - name: "accommodation"
-    label: "Номера"
+    label: "🏨 Номера"
     files:
       - label: "Размещение"
         name: "accommodation"
-        file: "accommodation.json"
+        file: "accommodation.json"  # ✅ Корень проекта
         fields:
           - label: "Номера"
             name: "rooms"
@@ -24,20 +24,22 @@ collections:
               - {label: "ID", name: "id", widget: "string"}
               - {label: "Название", name: "title", widget: "string"}
               - {label: "Описание", name: "description", widget: "text"}
-              - {label: "Цена", name: "price", widget: "number"}
+              - {label: "Цена (₸)", name: "price", widget: "number"}
               - {label: "Вместимость", name: "capacity", widget: "number"}
               - label: "Изображения"
                 name: "images"
                 widget: "list"
-                field: {label: "Путь к фото", name: "path", widget: "image", media_folder: "/images/accommodation"}
+                fields:  # ✅ fields, НЕ field!
+                  - {label: "Путь к фото", name: "path", widget: "image", folder: "accommodation"}
               - label: "Удобства"
                 name: "amenities"
                 widget: "list"
-                field: {label: "Удобство", name: "amenity", widget: "string"}
+                fields:
+                  - {label: "Удобство", name: "amenity", widget: "string"}
 
-  # Цены
+  # 💰 ЦЕНЫ
   - name: "pricing"
-    label: "Цены"
+    label: "💰 Цены"
     files:
       - label: "Прайс-лист"
         name: "price"
@@ -49,13 +51,13 @@ collections:
             fields:
               - {label: "Категория", name: "category", widget: "string"}
               - {label: "Название", name: "name", widget: "string"}
-              - {label: "Цена", name: "price", widget: "number"}
-              - {label: "Единица измерения", name: "unit", widget: "string", required: false}
+              - {label: "Цена (₸)", name: "price", widget: "number"}
+              - {label: "Единица", name: "unit", widget: "string"}
               - {label: "Описание", name: "description", widget: "text", required: false}
 
-  # Галерея
+  # 📸 ГАЛЕРЕЯ
   - name: "gallery"
-    label: "Галерея"
+    label: "📸 Галерея"
     files:
       - label: "Фотогалерея"
         name: "gallery"
@@ -65,14 +67,14 @@ collections:
             name: "images"
             widget: "list"
             fields:
-              - {label: "Фото", name: "src", widget: "image", media_folder: "/images/gallery"}
-              - {label: "Название", name: "title", widget: "string", required: false}
-              - {label: "Описание", name: "alt", widget: "string", required: false}
-              - {label: "Категория", name: "category", widget: "string", required: false}
+              - {label: "Фото", name: "src", widget: "image", folder: "gallery"}
+              - {label: "Название", name: "title", widget: "string"}
+              - {label: "Описание", name: "alt", widget: "string"}
+              - {label: "Категория", name: "category", widget: "select", options: ["пляж", "бассейн", "территория", "номера"]}
 
-  # Активности
+  # 🎯 РАЗВЛЕЧЕНИЯ
   - name: "activities"
-    label: "Развлечения"
+    label: "🎯 Развлечения"
     files:
       - label: "Активности"
         name: "activities"
@@ -84,12 +86,12 @@ collections:
             fields:
               - {label: "Название", name: "title", widget: "string"}
               - {label: "Описание", name: "description", widget: "markdown"}
-              - {label: "Иконка/Фото", name: "image", widget: "image", media_folder: "/images/activities", required: false}
-              - {label: "Цена", name: "price", widget: "number", required: false}
+              - {label: "Фото", name: "image", widget: "image", folder: "activities"}
+              - {label: "Цена (₸)", name: "price", widget: "number"}
 
-  # Инфраструктура
+  # 🏗️ ИНФРАСТРУКТУРА
   - name: "infrastructure"
-    label: "Инфраструктура"
+    label: "🏗️ Инфраструктура"
     files:
       - label: "Инфраструктура"
         name: "infrastructure"
@@ -101,11 +103,11 @@ collections:
             fields:
               - {label: "Название", name: "title", widget: "string"}
               - {label: "Описание", name: "description", widget: "text"}
-              - {label: "Фото", name: "image", widget: "image", media_folder: "/images/infra", required: false}
+              - {label: "Фото", name: "image", widget: "image", folder: "infra"}
 
-  # Контакты
+  # 📞 КОНТАКТЫ
   - name: "contacts"
-    label: "Контакты"
+    label: "📞 Контакты"
     files:
       - label: "Контактная информация"
         name: "contacts"
@@ -114,112 +116,86 @@ collections:
           - {label: "Телефон", name: "phone", widget: "string"}
           - {label: "Email", name: "email", widget: "string"}
           - {label: "Адрес", name: "address", widget: "text"}
-          - {label: "WhatsApp", name: "whatsapp", widget: "string", required: false}
-          - {label: "Telegram", name: "telegram", widget: "string", required: false}
-          - {label: "Instagram", name: "instagram", widget: "string", required: false}
+          - {label: "WhatsApp", name: "whatsapp", widget: "string"}
+          - {label: "Telegram", name: "telegram", widget: "string"}
+          - {label: "Instagram", name: "instagram", widget: "string"}
           - label: "Координаты"
             name: "location"
             widget: "object"
             fields:
-              - {label: "Широта", name: "lat", widget: "number", value_type: "float"}
-              - {label: "Долгота", name: "lng", widget: "number", value_type: "float"}
+              - {label: "Широта", name: "lat", widget: "number"}
+              - {label: "Долгота", name: "lng", widget: "number"}
 
-  # FAQ
+  # Остальные коллекции (сокращённые)
   - name: "faq"
-    label: "Вопросы-ответы"
-    files:
-      - label: "FAQ"
-        name: "faq"
-        file: "faq.json"
+    label: "❓ FAQ"
+    file: "faq.json"
+    fields:
+      - label: "Вопросы"
+        name: "questions"
+        widget: "list"
         fields:
-          - label: "Вопросы"
-            name: "questions"
-            widget: "list"
-            fields:
-              - {label: "Вопрос", name: "question", widget: "string"}
-              - {label: "Ответ", name: "answer", widget: "markdown"}
+          - {label: "Вопрос", name: "question", widget: "string"}
+          - {label: "Ответ", name: "answer", widget: "markdown"}
 
-  # Отзывы
   - name: "reviews"
-    label: "Отзывы"
-    files:
-      - label: "Отзывы гостей"
+    label: "⭐ Отзывы"
+    file: "reviews.json"
+    fields:
+      - label: "Отзывы"
         name: "reviews"
-        file: "reviews.json"
+        widget: "list"
         fields:
-          - label: "Отзывы"
-            name: "reviews"
-            widget: "list"
-            fields:
-              - {label: "Имя", name: "name", widget: "string"}
-              - {label: "Текст отзыва", name: "text", widget: "text"}
-              - {label: "Рейтинг", name: "rating", widget: "number", min: 1, max: 5}
-              - {label: "Дата", name: "date", widget: "date", format: "DD.MM.YYYY"}
+          - {label: "Имя", name: "name", widget: "string"}
+          - {label: "Текст", name: "text", widget: "text"}
+          - {label: "Рейтинг", name: "rating", widget: "number", value: 5}
+          - {label: "Дата", name: "date", widget: "datetime"}
 
-  # Правила и условия
   - name: "rules"
-    label: "Правила"
-    files:
-      - label: "Правила проживания"
+    label: "📜 Правила"
+    file: "rules.json"
+    fields:
+      - label: "Правила"
         name: "rules"
-        file: "rules.json"
+        widget: "list"
         fields:
-          - label: "Правила"
-            name: "rules"
-            widget: "list"
-            fields:
-              - {label: "Заголовок", name: "title", widget: "string"}
-              - {label: "Текст", name: "content", widget: "markdown"}
+          - {label: "Заголовок", name: "title", widget: "string"}
+          - {label: "Текст", name: "content", widget: "markdown"}
 
-  # Спецпредложения
   - name: "offers"
-    label: "Спецпредложения"
-    files:
-      - label: "Акции"
+    label: "🎁 Акции"
+    file: "offer.json"
+    fields:
+      - label: "Предложения"
         name: "offers"
-        file: "offer.json"
+        widget: "list"
         fields:
-          - label: "Предложения"
-            name: "offers"
-            widget: "list"
-            fields:
-              - {label: "Название", name: "title", widget: "string"}
-              - {label: "Описание", name: "description", widget: "markdown"}
-              - {label: "Скидка (%)", name: "discount", widget: "number", required: false}
-              - {label: "Действительно до", name: "valid_until", widget: "date", required: false}
-              - {label: "Фото", name: "image", widget: "image", required: false}
+          - {label: "Название", name: "title", widget: "string"}
+          - {label: "Описание", name: "description", widget: "markdown"}
+          - {label: "Скидка (%)", name: "discount", widget: "number"}
+          - {label: "До", name: "valid_until", widget: "date"}
 
-  # Меню (если ресторан)
   - name: "menu"
-    label: "Меню"
-    files:
-      - label: "Меню ресторана"
-        name: "menu"
-        file: "menu.json"
+    label: "🍽️ Меню"
+    file: "menu.json"
+    fields:
+      - label: "Категории"
+        name: "categories"
+        widget: "list"
         fields:
-          - label: "Категории"
-            name: "categories"
+          - {label: "Категория", name: "category", widget: "string"}
+          - label: "Блюда"
+            name: "items"
             widget: "list"
             fields:
-              - {label: "Категория", name: "category", widget: "string"}
-              - label: "Блюда"
-                name: "items"
-                widget: "list"
-                fields:
-                  - {label: "Название", name: "name", widget: "string"}
-                  - {label: "Описание", name: "description", widget: "text", required: false}
-                  - {label: "Цена", name: "price", widget: "number"}
+              - {label: "Название", name: "name", widget: "string"}
+              - {label: "Описание", name: "description", widget: "text"}
+              - {label: "Цена (₸)", name: "price", widget: "number"}
 
-  # Бронирование (настройки)
   - name: "booking"
-    label: "Бронирование"
-    files:
-      - label: "Настройки бронирования"
-        name: "booking"
-        file: "booking.json"
-        fields:
-          - {label: "Минимальное кол-во дней", name: "min_nights", widget: "number", default: 1}
-          - {label: "Время заезда", name: "checkin_time", widget: "string", default: "14:00"}
-          - {label: "Время выезда", name: "checkout_time", widget: "string", default: "12:00"}
-          - {label: "Email для заявок", name: "booking_email", widget: "string"}
-# Вставьте YAML-конфиг выше
+    label: "🏠 Бронирование"
+    file: "booking.json"
+    fields:
+      - {label: "Мин. дней", name: "min_nights", widget: "number", default: 1}
+      - {label: "Заезд", name: "checkin_time", widget: "string", default: "14:00"}
+      - {label: "Выезд", name: "checkout_time", widget: "string", default: "12:00"}

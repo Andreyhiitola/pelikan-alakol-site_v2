@@ -1,0 +1,45 @@
+[build]
+  # Если используете сборщик (npm, webpack и т.п.), укажите команду
+  # Для чистого HTML оставьте пустым или закомментируйте
+  command = ""
+  
+  # Папка с готовым сайтом (обычно корень или dist/public)
+  publish = "."
+  
+  # Папка для Decap CMS админки (если добавите)
+  # functions = "functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Редиректы для SPA или переадресации
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+
+# Если есть старые URL, можно перенаправить
+# [[redirects]]
+#   from = "/staryj-nomer"
+#   to = "/nomera"
+#   status = 301
+
+# Кэширование статических файлов (изображения номеров, фото гостиницы)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"  # кэш на неделю
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"  # год для CSS/JS
+
+# Безопасность
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"

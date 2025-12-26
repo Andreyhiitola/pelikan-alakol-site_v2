@@ -1,24 +1,10 @@
 backend:
   name: test-repo
-  branch: main
-
-media_folder: "images"
-public_folder: "/images"
 
 collections:
-  - name: "accommodation"
-    label: "🏨 Номера (20 шт)"
+  - name: "data"
+    label: "📄 Редактировать JSON"
     files:
-      - label: "Номера"
-        name: "accommodation"
-        file: "accommodation.json"
-        fields:
-          - label: "Номера"
-            name: "rooms"              # ← ОБЯЗАТЕЛЬНО!
-            widget: "list"
-            fields:
-              - {label: "ID", name: "id", widget: "string"}
-              - {label: "Название", name: "name", widget: "string"}
-              - {label: "Цена", name: "priceRange", widget: "string"}
-              - {label: "Вместимость", name: "capacity", widget: "number"}
-              - {label: "Фото", name: "imageThumb", widget: "image", folder: "accommodation"}
+      - {label: "🏨 Номера", name: "accommodation", file: "accommodation.json", field: {label: "JSON", name: "body", widget: "markdown"}}
+      - {label: "💰 Цены", name: "price", file: "price.json", field: {label: "JSON", name: "body", widget: "markdown"}}
+      - {label: "📸 Галерея", name: "gallery", file: "gallery.json", field: {label: "JSON", name: "body", widget: "markdown"}}

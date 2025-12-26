@@ -1,121 +1,23 @@
 backend:
-  name: test-repo    # ← Публичный тест!
+  name: test-repo
   branch: main
 
 media_folder: "images"
 public_folder: "/images"
-locale: "ru"
-publish_mode: editorial_workflow
 
 collections:
-  # 🏨 НОМЕРА - accommodation.json
   - name: "accommodation"
-    label: "🏨 Номера"
+    label: "🏨 Номера (20 шт)"
     files:
       - label: "Номера"
         name: "accommodation"
         file: "accommodation.json"
         fields:
-          - label: "Список номеров"
-            name: "rooms"
+          - label: "Номера"
             widget: "list"
             fields:
               - {label: "ID", name: "id", widget: "string"}
-              - {label: "Иконка", name: "icon", widget: "string"}
               - {label: "Название", name: "name", widget: "string"}
-              - {label: "Описание", name: "description", widget: "text"}
               - {label: "Цена", name: "priceRange", widget: "string"}
               - {label: "Вместимость", name: "capacity", widget: "number"}
-              - {label: "Площадь", name: "area", widget: "number"}
-              - label: "Удобства"
-                name: "amenities"
-                widget: "list"
-                fields:
-                  - {label: "Удобство", name: "amenity", widget: "string"}
-              - {label: "Миниатюра", name: "imageThumb", widget: "image", folder: "accommodation"}
-              - {label: "Полное фото", name: "imageFull", widget: "image", folder: "accommodation"}
-
-  # 💰 ЦЕНЫ - price.json
-  - name: "price"
-    label: "💰 Цены"
-    files:
-      - label: "Прайс-лист"
-        name: "price"
-        file: "price.json"
-        fields:
-          - label: "Периоды"
-            name: "periods"
-            widget: "list"
-            fields:
-              - {label: "ID", name: "id", widget: "number"}
-              - {label: "Название", name: "label", widget: "string"}
-          - label: "Номера"
-            name: "rooms"
-            widget: "list"
-            fields:
-              - {label: "Название", name: "name", widget: "string"}
-              - label: "Цены по периодам"
-                name: "prices"
-                widget: "list"
-                fields:
-                  - {label: "Период 1", name: "1", widget: "string"}
-                  - {label: "Период 2", name: "2", widget: "string"}
-                  - {label: "Период 3", name: "3", widget: "string"}
-                  - {label: "Период 4", name: "4", widget: "string"}
-
-  # 📸 ГАЛЕРЕЯ
-  - name: "gallery"
-    label: "📸 Галерея"
-    files:
-      - label: "Галерея"
-        name: "gallery"
-        file: "gallery.json"
-        fields:
-          - label: "Фото"
-            name: "images"
-            widget: "list"
-            fields:
-              - {label: "ID", name: "id", widget: "string"}
-              - {label: "Название", name: "name", widget: "string"}
-              - {label: "Описание", name: "description", widget: "text"}
-              - {label: "Категория", name: "category", widget: "string"}
-              - {label: "Фото", name: "image", widget: "image", folder: "gallery"}
-
-  # 🎯 АКТИВНОСТИ
-  - name: "activities"
-    label: "🎯 Активности"
-    files:
-      - label: "Активности"
-        name: "activities"
-        file: "activities.json"
-        fields:
-          - label: "Список"
-            name: "activities"
-            widget: "list"
-            fields:
-              - {label: "ID", name: "id", widget: "string"}
-              - {label: "Иконка", name: "icon", widget: "string"}
-              - {label: "Название", name: "title", widget: "string"}
-              - {label: "Время", name: "time", widget: "string"}
-              - {label: "Описание", name: "description", widget: "text"}
-
-  # 📞 КОНТАКТЫ
-  - name: "contacts"
-    label: "📞 Контакты"
-    files:
-      - label: "Контакты"
-        name: "contacts"
-        file: "contacts.json"
-        fields:
-          - label: "Офис"
-            name: "office"
-            widget: "object"
-            fields:
-              - {label: "Название", name: "title", widget: "string"}
-              - {label: "Адрес", name: "address", widget: "text"}
-          - label: "Телефоны"
-            name: "phones"
-            widget: "list"
-            fields:
-              - {label: "Название", name: "label", widget: "string"}
-              - {label: "Номер", name: "number", widget: "string"}
+              - {label: "Фото", name: "imageThumb", widget: "image", folder: "accommodation"}

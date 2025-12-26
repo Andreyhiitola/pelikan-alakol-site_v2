@@ -9,17 +9,14 @@ collections:
     label: "🏨 Номера"
     files:
       - name: "accommodation"
-        label: "Номера"
+        label: "20 номеров"
         file: "accommodation.json"
         fields:
-          - label: "Номера"
-            name: "body"
-            widget: "object"
+          - label: "Номера (массив)"
+            name: "root"
+            widget: "list"
             fields:
-              - label: "Список номеров"
-                name: "rooms"
-                widget: "list"
-                fields:
-                  - {label: "ID", name: "id", widget: "string"}
-                  - {label: "Название", name: "name", widget: "string"}
-                  - {label: "Цена", name: "priceRange", widget: "string"}
+              - {label: "ID", name: "id", widget: "string"}
+              - {label: "Название", name: "name", widget: "string"}
+              - {label: "Цена", name: "priceRange", widget: "string"}
+              - {label: "Фото", name: "imageThumb", widget: "image"}

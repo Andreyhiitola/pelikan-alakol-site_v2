@@ -12,6 +12,13 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Настройки для локального сервера разработки
+[dev]
+  command = ""  # Для статического HTML оставьте пустым
+  port = 8888   # Порт для Netlify Dev (по умолчанию)
+  publish = "."
+  autoLaunch = true
+
 # Редиректы для SPA или переадресации
 [[redirects]]
   from = "/admin/*"

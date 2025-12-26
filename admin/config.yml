@@ -2,20 +2,20 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images"          # ✅ Ваша папка images/
-public_folder: "/images"        # ✅ Относительно корня сайта
+media_folder: "images"
+public_folder: "/images"
 
 locale: "ru"
-publish_mode: editorial_workflow  # ✅ Черновики
+publish_mode: editorial_workflow
 
 collections:
-  # 🏨 НОМЕРА
+  # 🏨 НОМЕРА (1-5)
   - name: "accommodation"
     label: "🏨 Номера"
     files:
       - label: "Размещение"
         name: "accommodation"
-        file: "accommodation.json"  # ✅ Корень проекта
+        file: "accommodation.json"
         fields:
           - label: "Номера"
             name: "rooms"
@@ -24,13 +24,13 @@ collections:
               - {label: "ID", name: "id", widget: "string"}
               - {label: "Название", name: "title", widget: "string"}
               - {label: "Описание", name: "description", widget: "text"}
-              - {label: "Цена (₸)", name: "price", widget: "number"}
+              - {label: "Цена", name: "price", widget: "number"}
               - {label: "Вместимость", name: "capacity", widget: "number"}
               - label: "Изображения"
                 name: "images"
                 widget: "list"
-                fields:  # ✅ fields, НЕ field!
-                  - {label: "Путь к фото", name: "path", widget: "image", folder: "accommodation"}
+                fields:
+                  - {label: "Фото", name: "path", widget: "image", folder: "accommodation"}
               - label: "Удобства"
                 name: "amenities"
                 widget: "list"
@@ -51,9 +51,8 @@ collections:
             fields:
               - {label: "Категория", name: "category", widget: "string"}
               - {label: "Название", name: "name", widget: "string"}
-              - {label: "Цена (₸)", name: "price", widget: "number"}
+              - {label: "Цена", name: "price", widget: "number"}
               - {label: "Единица", name: "unit", widget: "string"}
-              - {label: "Описание", name: "description", widget: "text", required: false}
 
   # 📸 ГАЛЕРЕЯ
   - name: "gallery"
@@ -70,7 +69,6 @@ collections:
               - {label: "Фото", name: "src", widget: "image", folder: "gallery"}
               - {label: "Название", name: "title", widget: "string"}
               - {label: "Описание", name: "alt", widget: "string"}
-              - {label: "Категория", name: "category", widget: "select", options: ["пляж", "бассейн", "территория", "номера"]}
 
   # 🎯 РАЗВЛЕЧЕНИЯ
   - name: "activities"
@@ -87,7 +85,6 @@ collections:
               - {label: "Название", name: "title", widget: "string"}
               - {label: "Описание", name: "description", widget: "markdown"}
               - {label: "Фото", name: "image", widget: "image", folder: "activities"}
-              - {label: "Цена (₸)", name: "price", widget: "number"}
 
   # 🏗️ ИНФРАСТРУКТУРА
   - name: "infrastructure"
@@ -126,76 +123,99 @@ collections:
               - {label: "Широта", name: "lat", widget: "number"}
               - {label: "Долгота", name: "lng", widget: "number"}
 
-  # Остальные коллекции (сокращённые)
+  # ❓ FAQ
   - name: "faq"
     label: "❓ FAQ"
-    file: "faq.json"
-    fields:
-      - label: "Вопросы"
-        name: "questions"
-        widget: "list"
+    files:
+      - label: "Вопросы-ответы"
+        name: "faq"
+        file: "faq.json"
         fields:
-          - {label: "Вопрос", name: "question", widget: "string"}
-          - {label: "Ответ", name: "answer", widget: "markdown"}
-
-  - name: "reviews"
-    label: "⭐ Отзывы"
-    file: "reviews.json"
-    fields:
-      - label: "Отзывы"
-        name: "reviews"
-        widget: "list"
-        fields:
-          - {label: "Имя", name: "name", widget: "string"}
-          - {label: "Текст", name: "text", widget: "text"}
-          - {label: "Рейтинг", name: "rating", widget: "number", value: 5}
-          - {label: "Дата", name: "date", widget: "datetime"}
-
-  - name: "rules"
-    label: "📜 Правила"
-    file: "rules.json"
-    fields:
-      - label: "Правила"
-        name: "rules"
-        widget: "list"
-        fields:
-          - {label: "Заголовок", name: "title", widget: "string"}
-          - {label: "Текст", name: "content", widget: "markdown"}
-
-  - name: "offers"
-    label: "🎁 Акции"
-    file: "offer.json"
-    fields:
-      - label: "Предложения"
-        name: "offers"
-        widget: "list"
-        fields:
-          - {label: "Название", name: "title", widget: "string"}
-          - {label: "Описание", name: "description", widget: "markdown"}
-          - {label: "Скидка (%)", name: "discount", widget: "number"}
-          - {label: "До", name: "valid_until", widget: "date"}
-
-  - name: "menu"
-    label: "🍽️ Меню"
-    file: "menu.json"
-    fields:
-      - label: "Категории"
-        name: "categories"
-        widget: "list"
-        fields:
-          - {label: "Категория", name: "category", widget: "string"}
-          - label: "Блюда"
-            name: "items"
+          - label: "Вопросы"
+            name: "questions"
             widget: "list"
             fields:
-              - {label: "Название", name: "name", widget: "string"}
-              - {label: "Описание", name: "description", widget: "text"}
-              - {label: "Цена (₸)", name: "price", widget: "number"}
+              - {label: "Вопрос", name: "question", widget: "string"}
+              - {label: "Ответ", name: "answer", widget: "markdown"}
 
+  # ⭐ ОТЗЫВЫ
+  - name: "reviews"
+    label: "⭐ Отзывы"
+    files:
+      - label: "Отзывы гостей"
+        name: "reviews"
+        file: "reviews.json"
+        fields:
+          - label: "Отзывы"
+            name: "reviews"
+            widget: "list"
+            fields:
+              - {label: "Имя", name: "name", widget: "string"}
+              - {label: "Текст", name: "text", widget: "text"}
+              - {label: "Рейтинг", name: "rating", widget: "number", min: 1, max: 5}
+              - {label: "Дата", name: "date", widget: "date"}
+
+  # 📜 ПРАВИЛА
+  - name: "rules"
+    label: "📜 Правила"
+    files:
+      - label: "Правила проживания"
+        name: "rules"
+        file: "rules.json"
+        fields:
+          - label: "Правила"
+            name: "rules"
+            widget: "list"
+            fields:
+              - {label: "Заголовок", name: "title", widget: "string"}
+              - {label: "Текст", name: "content", widget: "markdown"}
+
+  # 🎁 АКЦИИ
+  - name: "offers"
+    label: "🎁 Акции"
+    files:
+      - label: "Спецпредложения"
+        name: "offers"
+        file: "offer.json"
+        fields:
+          - label: "Предложения"
+            name: "offers"
+            widget: "list"
+            fields:
+              - {label: "Название", name: "title", widget: "string"}
+              - {label: "Описание", name: "description", widget: "markdown"}
+              - {label: "Скидка (%)", name: "discount", widget: "number"}
+              - {label: "До", name: "valid_until", widget: "date"}
+
+  # 🍽️ МЕНЮ
+  - name: "menu"
+    label: "🍽️ Меню"
+    files:
+      - label: "Меню ресторана"
+        name: "menu"
+        file: "menu.json"
+        fields:
+          - label: "Категории"
+            name: "categories"
+            widget: "list"
+            fields:
+              - {label: "Категория", name: "category", widget: "string"}
+              - label: "Блюда"
+                name: "items"
+                widget: "list"
+                fields:
+                  - {label: "Название", name: "name", widget: "string"}
+                  - {label: "Описание", name: "description", widget: "text"}
+                  - {label: "Цена", name: "price", widget: "number"}
+
+  # 🏠 БРОНИРОВАНИЕ
   - name: "booking"
     label: "🏠 Бронирование"
-    file: "booking.json"
-    fields:
-      - {label: "Мин. дней", name: "min_nights", widget: "number", default: 1}
-      - {label: "Заезд", name: "checkin_time", widget: "string", default: "14:00"}
-      - {label: "Выезд", name: "checkout_time", widget: "string", default: "12:00"}
+    files:
+      - label: "Настройки бронирования"
+        name: "booking"
+        file: "booking.json"
+        fields:
+          - {label: "Мин. дней", name: "min_nights", widget: "number", default: 1}
+          - {label: "Заезд", name: "checkin_time", widget: "string", default: "14:00"}
+          - {label: "Выезд", name: "checkout_time", widget: "string", default: "12:00"}

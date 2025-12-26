@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: Andreyhiitola/pelikan-alakol-site_v2
+  name: test-repo    # ← Публичный тест!
   branch: main
 
 media_folder: "images"

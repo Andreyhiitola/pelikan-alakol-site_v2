@@ -5,21 +5,21 @@ media_folder: "images"
 public_folder: "/images"
 
 collections:
-  - name: "data"
-    label: "📄 JSON файлы"
+  - name: "accommodation"
+    label: "🏨 Номера"
     files:
-      - label: "🏨 Номера"
-        name: "accommodation"
+      - name: "accommodation"
+        label: "Номера"
         file: "accommodation.json"
         fields:
-          - {label: "JSON", name: "body", widget: "markdown"}
-      - label: "💰 Цены"
-        name: "price"
-        file: "price.json"
-        fields:
-          - {label: "JSON", name: "body", widget: "markdown"}
-      - label: "📸 Галерея"
-        name: "gallery"
-        file: "gallery.json"
-        fields:
-          - {label: "JSON", name: "body", widget: "markdown"}
+          - label: "Номера"
+            name: "body"
+            widget: "object"
+            fields:
+              - label: "Список номеров"
+                name: "rooms"
+                widget: "list"
+                fields:
+                  - {label: "ID", name: "id", widget: "string"}
+                  - {label: "Название", name: "name", widget: "string"}
+                  - {label: "Цена", name: "priceRange", widget: "string"}

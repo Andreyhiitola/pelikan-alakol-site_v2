@@ -1,10 +1,25 @@
 backend:
   name: test-repo
 
+media_folder: "images"
+public_folder: "/images"
+
 collections:
   - name: "data"
-    label: "📄 Редактировать JSON"
+    label: "📄 JSON файлы"
     files:
-      - {label: "🏨 Номера", name: "accommodation", file: "accommodation.json", field: {label: "JSON", name: "body", widget: "markdown"}}
-      - {label: "💰 Цены", name: "price", file: "price.json", field: {label: "JSON", name: "body", widget: "markdown"}}
-      - {label: "📸 Галерея", name: "gallery", file: "gallery.json", field: {label: "JSON", name: "body", widget: "markdown"}}
+      - label: "🏨 Номера"
+        name: "accommodation"
+        file: "accommodation.json"
+        fields:
+          - {label: "JSON", name: "body", widget: "markdown"}
+      - label: "💰 Цены"
+        name: "price"
+        file: "price.json"
+        fields:
+          - {label: "JSON", name: "body", widget: "markdown"}
+      - label: "📸 Галерея"
+        name: "gallery"
+        file: "gallery.json"
+        fields:
+          - {label: "JSON", name: "body", widget: "markdown"}

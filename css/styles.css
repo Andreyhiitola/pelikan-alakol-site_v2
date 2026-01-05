@@ -459,3 +459,93 @@
   gap: 2rem !important;
   text-align: center !important;
 }
+
+/* ========================================
+   🎯 ИСПРАВЛЕНИЕ СТРЕЛОК СКРОЛЛИНГА
+   ======================================== */
+.mbh-scroll-arrow,
+[class*="scroll-arrow"],
+[class*="carousel-arrow"],
+.slick-arrow,
+.swiper-button-next,
+.swiper-button-prev {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 14px !important;
+    background: rgba(52, 152, 219, 0.7) !important;
+    opacity: 0.8 !important;
+    top: auto !important;
+    bottom: 10px !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    z-index: 10 !important;
+}
+
+.mbh-scroll-arrow:hover,
+[class*="scroll-arrow"]:hover,
+[class*="carousel-arrow"]:hover,
+.slick-arrow:hover,
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    opacity: 1 !important;
+    background: rgba(52, 152, 219, 0.95) !important;
+    transform: scale(1.1) !important;
+}
+
+.mbh-scroll-arrow.left,
+[class*="scroll-arrow"].left,
+[class*="arrow-left"],
+.slick-prev,
+.swiper-button-prev {
+    left: 10px !important;
+}
+
+.mbh-scroll-arrow.right,
+[class*="scroll-arrow"].right,
+[class*="arrow-right"],
+.slick-next,
+.swiper-button-next {
+    right: 10px !important;
+}
+
+@media (max-width: 768px) {
+    .mbh-scroll-arrow,
+    [class*="scroll-arrow"],
+    [class*="carousel-arrow"],
+    .slick-arrow,
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 12px !important;
+        bottom: 5px !important;
+    }
+}
+
+.back-btn {
+    background: rgba(52, 152, 219, 0.9) !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.back-btn:hover {
+    background: rgba(52, 152, 219, 1) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4) !important;
+}
+
+.back-btn i {
+    font-size: 12px !important;
+}

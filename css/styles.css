@@ -461,7 +461,7 @@
 }
 
 /* ========================================
-   🎯 ИСПРАВЛЕНИЕ СТРЕЛОК СКРОЛЛИНГА
+   🎯 ИСПРАВЛЕНИЕ СТРЕЛОК СКРОЛЛИНГА (прозрачные)
    ======================================== */
 .mbh-scroll-arrow,
 [class*="scroll-arrow"],
@@ -472,17 +472,18 @@
     width: 35px !important;
     height: 35px !important;
     font-size: 14px !important;
-    background: rgba(52, 152, 219, 0.7) !important;
+    background: transparent !important; /* ✅ Прозрачный фон */
     opacity: 0.8 !important;
     top: auto !important;
     bottom: 10px !important;
-    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border: 2px solid rgba(52, 152, 219, 0.8) !important; /* ✅ Голубая рамка */
     border-radius: 50% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     transition: all 0.3s ease !important;
     z-index: 10 !important;
+    color: rgba(52, 152, 219, 0.9) !important; /* ✅ Голубая иконка */
 }
 
 .mbh-scroll-arrow:hover,
@@ -492,8 +493,9 @@
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
     opacity: 1 !important;
-    background: rgba(52, 152, 219, 0.95) !important;
+    background: rgba(52, 152, 219, 0.15) !important; /* ✅ Лёгкая подсветка при наведении */
     transform: scale(1.1) !important;
+    border-color: rgba(52, 152, 219, 1) !important;
 }
 
 .mbh-scroll-arrow.left,
@@ -525,27 +527,93 @@
         bottom: 5px !important;
     }
 }
-
-.back-btn {
-    background: rgba(52, 152, 219, 0.9) !important;
-    color: white !important;
-    padding: 8px 16px !important;
-    border-radius: 20px !important;
-    text-decoration: none !important;
-    display: inline-flex !important;
+/* ========================================
+   🎯 scroll-nav-btn — ПРОЗРАЧНЫЙ КРУГ
+   ======================================== */
+.scroll-wrapper .scroll-nav-btn,
+.scroll-nav-btn.prev,
+.scroll-nav-btn.next {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 15px !important;
+    transform: none !important;
+    background: rgba(255, 255, 255, 0.1) !important;  /* ✅ Супер прозрачный */
+    color: rgba(45, 134, 89, 0.95) !important;       /* ✅ Зелёная стрелка */
+    border: 2px solid rgba(45, 134, 89, 0.3) !important;  /* ✅ Полупрозрачная рамка */
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;      /* ✅ Оставляем круг */
+    cursor: pointer !important;
+    font-size: 18px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;  /* ✅ Лёгкая тень */
+    transition: all 0.3s !important;
+    z-index: 10 !important;
+    display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
-    font-size: 14px !important;
-    transition: all 0.3s ease !important;
-    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    justify-content: center !important;
+    opacity: 0.85 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.back-btn:hover {
-    background: rgba(52, 152, 219, 1) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4) !important;
+.scroll-wrapper .scroll-nav-btn:hover,
+.scroll-nav-btn:hover {
+    background: rgba(45, 134, 89, 0.15) !important;  /* ✅ Лёгкая зелёная подсветка */
+    opacity: 1 !important;
+    transform: scale(1.08) !important;
+    border-color: rgba(45, 134, 89, 0.6) !important;
 }
 
-.back-btn i {
-    font-size: 12px !important;
+.scroll-nav-btn.prev { left: 10px !important; }
+.scroll-nav-btn.next { right: 10px !important; }
+
+/* ========================================
+   🎯 scroll-nav-btn — ПРОЗРАЧНЫЕ КРУГИ (ФИНАЛ)
+   ======================================== */
+.scroll-wrapper .scroll-nav-btn,
+.scroll-nav-btn.prev,
+.scroll-nav-btn.next {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 15px !important;
+    transform: none !important;
+    background: rgba(255, 255, 255, 0.08) !important;  /* Супер прозрачный */
+    color: rgba(45, 134, 89, 0.95) !important;         /* Яркая зелёная стрелка */
+    border: 2px solid rgba(45, 134, 89, 0.15) !important;  /* Призрачная рамка */
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    font-size: 18px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s !important;
+    z-index: 10 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.85 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.scroll-wrapper .scroll-nav-btn:hover,
+.scroll-nav-btn:hover {
+    background: rgba(45, 134, 89, 0.12) !important;
+    opacity: 1 !important;
+    transform: scale(1.08) !important;
+    border-color: rgba(45, 134, 89, 0.35) !important;
+}
+
+.scroll-nav-btn.prev { left: 10px !important; }
+.scroll-nav-btn.next { right: 10px !important; }
+
+@media (max-width: 768px) {
+    .scroll-wrapper .scroll-nav-btn,
+    .scroll-nav-btn.prev,
+    .scroll-nav-btn.next {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 16px !important;
+        bottom: 10px !important;
+    }
 }

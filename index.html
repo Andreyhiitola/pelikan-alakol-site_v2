@@ -366,15 +366,15 @@ opacity: 1;
   top: auto;
   bottom: 15px;
   transform: none;
-  background: rgba(45, 134, 89, 0.8);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: transparent;  /* ✅ Прозрачный фон */
+  color: rgba(45, 134, 89, 0.9);  /* ✅ Зелёная иконка */
+  border: 2px solid rgba(45, 134, 89, 0.8);  /* ✅ Зелёная рамка */
   width: 40px;
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
   font-size: 18px;
-  box-shadow: var(--shadow);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s;
   z-index: 10;
   display: flex;
@@ -382,11 +382,14 @@ opacity: 1;
   justify-content: center;
   opacity: 0.85;
 }
+
 .scroll-nav-btn:hover {
-transform: translateY(-50%) scale(1.1);
-}
-.scroll-nav-btn.prev {
-left: 0;
+  transform: scale(1.15);
+  background: rgba(45, 134, 89, 0.15);  /* ✅ Лёгкая зелёная подсветка */
+  opacity: 1;
+  border-color: rgba(45, 134, 89, 1);
+  color: rgba(45, 134, 89, 1);
+  box-shadow: 0 4px 15px rgba(45, 134, 89, 0.3);
 }
 .scroll-nav-btn.next {
 right: 0;

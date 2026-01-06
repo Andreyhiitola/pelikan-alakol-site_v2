@@ -2220,6 +2220,8 @@ closeMobileMenu();
 });
 </script>
 
+// Загрузить инфраструктуру при загрузке страницы
+window.addEventListener('DOMContentLoaded', loadInfrastructure);
 </script>
 
 <script src="./js/accommodation.js"></script>
@@ -2250,6 +2252,10 @@ closeMobileMenu();
   </div>
 </div>
 
+      Загрузка...
+    </div>
+  </div>
+</div>
 </body>
       </html>
 

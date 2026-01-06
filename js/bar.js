@@ -34,6 +34,7 @@ async function loadMenuData() {
             name: item.name,
             category: item.category,
             price: item.price,
+            image: item.image || 'img/placeholder.jpg',
             description: item.description || ''
         }));
         
@@ -100,19 +101,11 @@ function createDishCard(item) {
     const card = document.createElement('div');
     card.className = 'dish-card';
 
-    // Генерируем имя файла изображения из названия блюда
-    const imageName = item.name.toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-zа-яё0-9-]/g, '')
-        .replace(/^-+|-+$/g, '');
-    
-    const imageUrl = `img/${imageName}.jpg`;
-
     card.innerHTML = `
         <img 
-            src="${imageUrl}" 
+            src="${item.image || 'img/placeholder.jpg'}" 
             class="dish-img" 
-            alt="${item.name}"
+            alt="${item.name.replace(/"/g, '&quot;')}"
             onerror="this.src='img/placeholder.jpg'"
         >
         <div class="dish-info">
@@ -121,7 +114,7 @@ function createDishCard(item) {
             <p class="dish-price">${item.price.toLocaleString('ru-RU')} ₸</p>
             <button 
                 class="add-btn" 
-                onclick="addToCart('${item.id}', \`${item.name}\`, ${item.price})"
+               onclick="addToCart('${item.id}', '${item.name.replace(/'/g, "\\'")}', ${item.price})"
             >
                 <i class="fas fa-cart-plus"></i> Добавить
             </button>

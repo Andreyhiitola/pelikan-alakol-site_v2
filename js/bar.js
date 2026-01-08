@@ -4,8 +4,9 @@
 
 // Конфигурация
 const CONFIG = {
-    API_URL: 'https://bar.pelikan-alakol.kz/api/order', // URL вашего webhook сервера
+   // API_URL: 'https://bar.pelikan-alakol.kz/api/order', // URL вашего webhook сервера
     // Для локальной разработки используйте: 'http://localhost:8080/api/order'
+    API_URL: 'http://85.192.40.138:8080/api/order',
     MENU_JSON: 'barzakaz.json'
 };
 

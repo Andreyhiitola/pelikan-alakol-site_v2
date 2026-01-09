@@ -279,85 +279,6 @@ function loadCartFromLocalStorage() {
 /**
  * Обрабатывает отправку формы заказа
  */
-async function handleOrderSubmit(event) {
-    event.preventDefault();
-
-    if (cart.length === 0) {
-        showNotification('Корзина пуста! Добавьте блюда для заказа.', 'error');
-        return;
-    }
-
-    const form = event.target;
-    const formData = new FormData(form);
-
-    const orderData = {
-        orderId: Date.now().toString(),
-        name: formData.get('name').trim(),
-        room: formData.get('room').trim(),
-        telegram: formData.get('telegram').trim().replace('@', ''),
-        items: cart,
-        total: calculateTotal(),
-        timestamp: new Date().toLocaleString('ru-RU', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        })
-    };
-
-    // Валидация
-    if (!orderData.name || orderData.name.length < 2) {
-        showNotification('Пожалуйста, укажите ваше имя', 'error');
-        return;
-    }
-
-    if (!orderData.room || orderData.room.length < 1) {
-        showNotification('Пожалуйста, укажите номер комнаты', 'error');
-        return;
-    }
-
-    // Показываем индикатор загрузки
-    showLoading(true);
-
-    try {
-        const response = await fetch(CONFIG.API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderData)
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        if (result.status === 'ok') {
-            // Успешно
-            showSuccessMessage(result.order_id, orderData.telegram);
-            
-            // Очищаем форму и корзину
-            form.reset();
-            cart = [];
-            updateCart();
-            localStorage.removeItem('pelikan_cart');
-        } else {
-            throw new Error(result.message || 'Неизвестная ошибка');
-        }
-
-    } catch (error) {
-        console.error('Ошибка отправки заказа:', error);
-        showNotification(
-            'Ошибка при оформлении заказа. Пожалуйста, попробуйте ещё раз или свяжитесь с администратором.',
-            'error'
-        );
-    } finally {
-        showLoading(false);
-    }
-}
 
 /**
  * Показывает сообщение об успешном заказе
@@ -466,48 +387,6 @@ window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 window.updateQuantity = updateQuantity;
 window.clearCart = clearCart;
-async function handleOrderSubmit(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value.trim();
-    const room = document.getElementById('room').value.trim();
-    
-    if (!name || !room) {
-        alert('Пожалуйста, заполните все обязательные поля');
-        return;
-    }
-    
-    if (cart.length === 0) {
-        alert('Корзина пуста');
-        return;
-    }
-    
-    // Генерируем ID заказа
-    const orderId = 'ORD' + Date.now().toString().slice(-6);
-    
-    // Формируем заказ
-    const order = {
-        orderId: orderId,
-        name: name,
-        room: room,
-        items: cart,
-        total: calculateTotal()
-    };
-    
-    // Формируем текст для Telegram
-    const orderText = formatOrderForTelegram(order);
-    
-    // ===== ОПРЕДЕЛЯЕМ ОТКУДА ЗАПУЩЕН =====
-    const isTelegramApp = window.Telegram?.WebApp?.initData;
-    
-    if (isTelegramApp) {
-        // TELEGRAM MINI APP - отправка через WebApp API
-        sendOrderViaTelegram(order, orderText);
-    } else {
-        // БРАУЗЕР - модалка с выбором связи
-        showContactModal(order, orderText);
-    }
-}
 // ===== ОТПРАВКА ЧЕРЕЗ TELEGRAM MINI APP =====
 function sendOrderViaTelegram(order, orderText) {
     try {
@@ -571,7 +450,7 @@ function showContactModal(order, orderText) {
     }
     
     const encodedText = encodeURIComponent(orderText);
-    const whatsappUrl = `https://wa.me/77001234567?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/77283330002?text=${encodedText}`;
     const telegramUrl = `https://t.me/Pelican_alacol_hotel_bot?text=${encodedText}`;
     
     modal.innerHTML = `
@@ -598,11 +477,11 @@ function showContactModal(order, orderText) {
                     </div>
                 </a>
                 
-                <a href="tel:+77001234567" class="contact-button phone">
+                <a href="tel:+77283330002" class="contact-button phone">
                     <span style="font-size: 2em;">📞</span>
                     <div>
                         <div style="font-size: 1.2em; font-weight: bold;">Позвонить</div>
-                        <div style="font-size: 0.9em; opacity: 0.8;">+7 700 123 45 67</div>
+                        <div style="font-size: 0.9em; opacity: 0.8;">+7 (72833) 30002</div>
                     </div>
                 </a>
             </div>
@@ -615,6 +494,13 @@ function showContactModal(order, orderText) {
     
     modal.style.display = 'flex';
     window.currentOrderText = orderText;
+}
+
+function closeContactModal() {
+    const modal = document.getElementById('contactModal');
+    if (modal) modal.style.display = 'none';
+    cart = [];
+    updateCart();
 }
 
 function closeContactModal() {

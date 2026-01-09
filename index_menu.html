@@ -36,6 +36,53 @@ body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7f
     .dish-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #bdc3c7 !important; padding: 10px !important; margin-bottom: 10px; }
 }
 @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; gap: 15px; } .controls { flex-direction: column; width: 100%; } .search-box { width: 100%; } }
+
+/* Расписание столовой */
+.schedule-item {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+.schedule-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+.schedule-item.active {
+    border-color: #27ae60;
+    background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%);
+    box-shadow: 0 8px 25px rgba(39,174,96,0.3);
+}
+.schedule-item .emoji {
+    font-size: 2em;
+    display: block;
+    margin-bottom: 8px;
+}
+.schedule-item .meal-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+.schedule-item .time {
+    font-size: 0.95em;
+    color: #7f8c8d;
+}
+.schedule-item.active .meal-name {
+    color: #27ae60;
+}
+.schedule-item.active .time {
+    color: #229954;
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    .schedule-item {
+        padding: 12px 20px;
+    }
+}
 </style>
 </head>
 <body>
@@ -43,12 +90,27 @@ body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7f
 <div class="header">
     <h1>🍽️ Меню Пеликан-Алаколь</h1>
     <p>Свежая кухня | <span id="menuDate">Загрузка...</span></p>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
+    
+    <!-- Расписание работы -->
+    <div id="scheduleBlock" style="margin-top:20px;display:none;">
+        <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;max-width:800px;margin:0 auto;">
+            <div class="schedule-item" data-meal="breakfast">
+                <span class="emoji">🌅</span>
+                <div class="meal-name">Завтрак</div>
+                <div class="time">08:00 - 10:30</div>
+            </div>
+            <div class="schedule-item" data-meal="lunch">
+                <span class="emoji">🌞</span>
+                <div class="meal-name">Обед</div>
+                <div class="time">12:00 - 15:30</div>
+            </div>
+            <div class="schedule-item" data-meal="dinner">
+                <span class="emoji">🌙</span>
+                <div class="meal-name">Ужин</div>
+                <div class="time">17:30 - 20:00</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -170,6 +232,36 @@ a[href="index.html"]:hover {
 let currentCategory = 'Все';
 let globalMenuData = {};
 
+
+// Отображение и подсветка расписания
+function displaySchedule(schedule) {
+    const scheduleBlock = document.getElementById('scheduleBlock');
+    if (!scheduleBlock) return;
+    
+    // Показываем блок
+    scheduleBlock.style.display = 'block';
+    
+    // Определяем текущее время
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    
+    // Проверяем каждый прием пищи
+    Object.keys(schedule).forEach(mealKey => {
+        const meal = schedule[mealKey];
+        const [startH, startM] = meal.start.split(':').map(Number);
+        const [endH, endM] = meal.end.split(':').map(Number);
+        
+        const startTime = startH * 60 + startM;
+        const endTime = endH * 60 + endM;
+        
+        // Если сейчас время этого приема пищи - подсвечиваем
+        if (currentTime >= startTime && currentTime <= endTime) {
+            const item = document.querySelector(`[data-meal="${mealKey}"]`);
+            if (item) item.classList.add('active');
+        }
+    });
+}
+
 async function loadMenu() {
     try {
         // Обход кэша с помощью timestamp
@@ -178,6 +270,12 @@ async function loadMenu() {
         
         if (!response.ok) throw new Error('Файл menu.json не найден!');
         const jsonData = await response.json();
+
+        
+        // Обработка расписания
+        if (jsonData.schedule) {
+            displaySchedule(jsonData.schedule);
+        }
         
         // Нормализация данных (поддержка и {menu: [...]}, и просто [...])
         let dishesArray = [];

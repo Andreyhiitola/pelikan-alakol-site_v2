@@ -466,3 +466,271 @@ window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 window.updateQuantity = updateQuantity;
 window.clearCart = clearCart;
+async function handleOrderSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value.trim();
+    const room = document.getElementById('room').value.trim();
+    
+    if (!name || !room) {
+        alert('Пожалуйста, заполните все обязательные поля');
+        return;
+    }
+    
+    if (cart.length === 0) {
+        alert('Корзина пуста');
+        return;
+    }
+    
+    // Генерируем ID заказа
+    const orderId = 'ORD' + Date.now().toString().slice(-6);
+    
+    // Формируем заказ
+    const order = {
+        orderId: orderId,
+        name: name,
+        room: room,
+        items: cart,
+        total: calculateTotal()
+    };
+    
+    // Формируем текст для Telegram
+    const orderText = formatOrderForTelegram(order);
+    
+    // Показываем модалку с инструкциями
+    showTelegramOrderModal(order, orderText);
+}
+
+function formatOrderForTelegram(order) {
+    let text = `🛎️ Новый заказ из бара\n\n`;
+    text += `📋 Заказ #${order.orderId}\n`;
+    text += `👤 ${order.name}\n`;
+    text += `🏨 Комната: ${order.room}\n\n`;
+    text += `🍽️ Заказ:\n`;
+    
+    order.items.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        text += `• ${item.name} x${item.quantity} - ${itemTotal}₸\n`;
+    });
+    
+    text += `\n💰 Итого: ${order.total}₸`;
+    return text;
+}
+
+function showTelegramOrderModal(order, orderText) {
+    let modal = document.getElementById('telegramOrderModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'telegramOrderModal';
+        modal.className = 'modal';
+        document.body.appendChild(modal);
+    }
+    
+    const encodedText = encodeURIComponent(orderText);
+    const telegramUrl = `https://t.me/Pelican_alacol_hotel_bot?text=${encodedText}`;
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>✅ Заказ сформирован!</h2>
+            
+            <div class="order-info">
+                <p><strong>📋 Заказ #${order.orderId}</strong></p>
+                <p><strong>💰 Итого: ${order.total} ₸</strong></p>
+            </div>
+            
+            <div class="telegram-instructions">
+                <h3>📱 Завершите оформление в Telegram</h3>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Нажмите "Открыть Telegram"</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Откроется бот с готовым сообщением</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Нажмите "Отправить" в Telegram</div>
+                    </div>
+                </div>
+                
+                <a href="${telegramUrl}" class="telegram-button" target="_blank">
+                    📱 Открыть Telegram
+                </a>
+                
+                <div class="alternative-method">
+                    <p class="or-text">или</p>
+                    <button onclick="copyOrderText()" class="copy-button">
+                        📋 Скопировать текст
+                    </button>
+                    <p class="manual-hint">
+                        <a href="https://t.me/Pelican_alacol_hotel_bot" target="_blank">
+                            @Pelican_alacol_hotel_bot
+                        </a>
+                    </p>
+                </div>
+            </div>
+            
+            <button onclick="closeTelegramModal()" class="close-button">
+                Закрыть
+            </button>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    window.currentOrderText = orderText;
+}
+
+function copyOrderText() {
+    if (window.currentOrderText) {
+        navigator.clipboard.writeText(window.currentOrderText).then(() => {
+            alert('✅ Текст скопирован!\n\nОткройте Telegram и отправьте боту');
+        }).catch(() => {
+            prompt('Скопируйте текст:', window.currentOrderText);
+        });
+    }
+}
+
+function closeTelegramModal() {
+    const modal = document.getElementById('telegramOrderModal');
+    if (modal) modal.style.display = 'none';
+    cart = [];
+    updateCart();
+    document.getElementById('order-form').reset();
+}
+async function handleOrderSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value.trim();
+    const room = document.getElementById('room').value.trim();
+    
+    if (!name || !room) {
+        alert('Пожалуйста, заполните все обязательные поля');
+        return;
+    }
+    
+    if (cart.length === 0) {
+        alert('Корзина пуста');
+        return;
+    }
+    
+    // Генерируем ID заказа
+    const orderId = 'ORD' + Date.now().toString().slice(-6);
+    
+    // Формируем заказ
+    const order = {
+        orderId: orderId,
+        name: name,
+        room: room,
+        items: cart,
+        total: calculateTotal()
+    };
+    
+    // Формируем текст для Telegram
+    const orderText = formatOrderForTelegram(order);
+    
+    // Показываем модалку с инструкциями
+    showTelegramOrderModal(order, orderText);
+}
+
+function formatOrderForTelegram(order) {
+    let text = `🛎️ Новый заказ из бара\n\n`;
+    text += `📋 Заказ #${order.orderId}\n`;
+    text += `👤 ${order.name}\n`;
+    text += `🏨 Комната: ${order.room}\n\n`;
+    text += `🍽️ Заказ:\n`;
+    
+    order.items.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        text += `• ${item.name} x${item.quantity} - ${itemTotal}₸\n`;
+    });
+    
+    text += `\n💰 Итого: ${order.total}₸`;
+    return text;
+}
+
+function showTelegramOrderModal(order, orderText) {
+    let modal = document.getElementById('telegramOrderModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'telegramOrderModal';
+        modal.className = 'modal';
+        document.body.appendChild(modal);
+    }
+    
+    const encodedText = encodeURIComponent(orderText);
+    const telegramUrl = `https://t.me/Pelican_alacol_hotel_bot?text=${encodedText}`;
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>✅ Заказ сформирован!</h2>
+            
+            <div class="order-info">
+                <p><strong>📋 Заказ #${order.orderId}</strong></p>
+                <p><strong>💰 Итого: ${order.total} ₸</strong></p>
+            </div>
+            
+            <div class="telegram-instructions">
+                <h3>📱 Завершите оформление в Telegram</h3>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Нажмите "Открыть Telegram"</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Откроется бот с готовым сообщением</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Нажмите "Отправить" в Telegram</div>
+                    </div>
+                </div>
+                
+                <a href="${telegramUrl}" class="telegram-button" target="_blank">
+                    📱 Открыть Telegram
+                </a>
+                
+                <div class="alternative-method">
+                    <p class="or-text">или</p>
+                    <button onclick="copyOrderText()" class="copy-button">
+                        📋 Скопировать текст
+                    </button>
+                    <p class="manual-hint">
+                        <a href="https://t.me/Pelican_alacol_hotel_bot" target="_blank">
+                            @Pelican_alacol_hotel_bot
+                        </a>
+                    </p>
+                </div>
+            </div>
+            
+            <button onclick="closeTelegramModal()" class="close-button">
+                Закрыть
+            </button>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    window.currentOrderText = orderText;
+}
+
+function copyOrderText() {
+    if (window.currentOrderText) {
+        navigator.clipboard.writeText(window.currentOrderText).then(() => {
+            alert('✅ Текст скопирован!\n\nОткройте Telegram и отправьте боту');
+        }).catch(() => {
+            prompt('Скопируйте текст:', window.currentOrderText);
+        });
+    }
+}
+
+function closeTelegramModal() {
+    const modal = document.getElementById('telegramOrderModal');
+    if (modal) modal.style.display = 'none';
+    cart = [];
+    updateCart();
+    document.getElementById('order-form').reset();
+}

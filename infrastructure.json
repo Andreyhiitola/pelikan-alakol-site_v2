@@ -1,17 +1,17 @@
 [
   {
     "title": "СТОЛОВАЯ",
-    "description": "Полноценное трёхразовое питание",
+    "description": "Полноценное трёхразовое питание. ",
     "icon": "images/infra/stolovay.svg"
   },
   {
-    "title": "Блюда на заказ",
-    "description": "Онлайн заказ",
+    "title": "РЕСТОРАН \"ЩИ-БОРЩИ\"",
+    "description": null,
     "icon": "images/infra/restoran.svg"
   },
   {
     "title": "Магазин/Бар",
-    "description": "Магазин Бар",
+    "description": null,
     "icon": "images/infra/magazin.svg"
   },
   {

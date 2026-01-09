@@ -497,9 +497,134 @@ async function handleOrderSubmit(e) {
     // Формируем текст для Telegram
     const orderText = formatOrderForTelegram(order);
     
-    // Показываем модалку с инструкциями
-    showTelegramOrderModal(order, orderText);
+    // ===== ОПРЕДЕЛЯЕМ ОТКУДА ЗАПУЩЕН =====
+    const isTelegramApp = window.Telegram?.WebApp?.initData;
+    
+    if (isTelegramApp) {
+        // TELEGRAM MINI APP - отправка через WebApp API
+        sendOrderViaTelegram(order, orderText);
+    } else {
+        // БРАУЗЕР - модалка с выбором связи
+        showContactModal(order, orderText);
+    }
 }
+// ===== ОТПРАВКА ЧЕРЕЗ TELEGRAM MINI APP =====
+function sendOrderViaTelegram(order, orderText) {
+    try {
+        // Отправляем данные боту через WebApp API
+        window.Telegram.WebApp.sendData(JSON.stringify(order));
+        
+        // Показываем успешное сообщение
+        showSuccessNotification(order.orderId);
+        
+        // Очищаем корзину
+        cart = [];
+        updateCart();
+        
+    } catch (error) {
+        console.error('Ошибка отправки через Telegram:', error);
+        alert('Ошибка отправки заказа. Попробуйте через модалку.');
+        showContactModal(order, orderText);
+    }
+}
+
+function showSuccessNotification(orderId) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #27ae60, #229954);
+        color: white;
+        padding: 30px 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        z-index: 10000;
+        text-align: center;
+        animation: slideIn 0.3s ease;
+    `;
+    
+    notification.innerHTML = `
+        <div style="font-size: 4em; margin-bottom: 15px;">✅</div>
+        <h2 style="margin-bottom: 10px; font-size: 1.5em;">Заказ принят!</h2>
+        <p style="font-size: 1.1em;">Заказ #${orderId}</p>
+        <p style="margin-top: 15px; opacity: 0.9;">Мы уведомим вас когда заказ будет готов</p>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// ===== МОДАЛКА С ВЫБОРОМ СВЯЗИ (ДЛЯ БРАУЗЕРА) =====
+function showContactModal(order, orderText) {
+    let modal = document.getElementById('contactModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'contactModal';
+        modal.className = 'modal';
+        document.body.appendChild(modal);
+    }
+    
+    const encodedText = encodeURIComponent(orderText);
+    const whatsappUrl = `https://wa.me/77001234567?text=${encodedText}`;
+    const telegramUrl = `https://t.me/Pelican_alacol_hotel_bot?text=${encodedText}`;
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>📋 Заказ #${order.orderId}</h2>
+            <p style="font-size: 1.2em; margin: 15px 0;"><strong>Итого: ${order.total}₸</strong></p>
+            
+            <h3 style="margin: 25px 0 20px;">Выберите способ связи:</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <a href="${whatsappUrl}" class="contact-button whatsapp" target="_blank">
+                    <span style="font-size: 2em;">📱</span>
+                    <div>
+                        <div style="font-size: 1.2em; font-weight: bold;">WhatsApp</div>
+                        <div style="font-size: 0.9em; opacity: 0.8;">Отправить заказ</div>
+                    </div>
+                </a>
+                
+                <a href="${telegramUrl}" class="contact-button telegram" target="_blank">
+                    <span style="font-size: 2em;">✈️</span>
+                    <div>
+                        <div style="font-size: 1.2em; font-weight: bold;">Telegram</div>
+                        <div style="font-size: 0.9em; opacity: 0.8;">Открыть бота</div>
+                    </div>
+                </a>
+                
+                <a href="tel:+77001234567" class="contact-button phone">
+                    <span style="font-size: 2em;">📞</span>
+                    <div>
+                        <div style="font-size: 1.2em; font-weight: bold;">Позвонить</div>
+                        <div style="font-size: 0.9em; opacity: 0.8;">+7 700 123 45 67</div>
+                    </div>
+                </a>
+            </div>
+            
+            <button onclick="closeContactModal()" class="close-button" style="margin-top: 25px;">
+                Закрыть
+            </button>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    window.currentOrderText = orderText;
+}
+
+function closeContactModal() {
+    const modal = document.getElementById('contactModal');
+    if (modal) modal.style.display = 'none';
+    cart = [];
+    updateCart();
+}
+
+
 
 function formatOrderForTelegram(order) {
     let text = `🛎️ Новый заказ из бара\n\n`;
@@ -631,8 +756,16 @@ async function handleOrderSubmit(e) {
     // Формируем текст для Telegram
     const orderText = formatOrderForTelegram(order);
     
-    // Показываем модалку с инструкциями
-    showTelegramOrderModal(order, orderText);
+    // ===== ОПРЕДЕЛЯЕМ ОТКУДА ЗАПУЩЕН =====
+    const isTelegramApp = window.Telegram?.WebApp?.initData;
+    
+    if (isTelegramApp) {
+        // TELEGRAM MINI APP - отправка через WebApp API
+        sendOrderViaTelegram(order, orderText);
+    } else {
+        // БРАУЗЕР - модалка с выбором связи
+        showContactModal(order, orderText);
+    }
 }
 
 function formatOrderForTelegram(order) {

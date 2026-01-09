@@ -477,7 +477,70 @@
                 margin-bottom: 20px;
             }
         }
-    </style>
+    
+        /* Кнопки выбора связи */
+        .contact-button {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 25px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .contact-button.whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+        
+        .contact-button.telegram {
+            background: linear-gradient(135deg, #0088cc, #0066aa);
+        }
+        
+        .contact-button.phone {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        /* Анимации */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+        }
+        
+        /* Адаптация для мобильных */
+        @media (max-width: 768px) {
+            .contact-button {
+                padding: 15px 20px;
+                gap: 15px;
+            }
+        }
+</style>
+    <!-- Telegram WebApp API -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">

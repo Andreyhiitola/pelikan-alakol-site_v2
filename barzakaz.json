@@ -1,100 +1,19 @@
 [
   {
-    "id": "burger-black",
-    "category": "FAST-FOOD",
-    "name": "Бургер \"Черный\" (комбо)",
-    "price": 3900,
-    "description": "Сочный говяжий бургер с черной булочкой, картофель фри и напиток",
-    "image": "img/burger-black.jpg",
+    "id": "belderim",
+    "category": "БЛЮДА НА КОМПАНИЮ ПО ПРЕДЗАКАЗУ",
+    "name": "Бельдерим из конины (большая тарелка на 5-6 чел)",
+    "price": 18000,
+    "description": "Традиционное казахское блюдо из конины. Требуется предзаказ за 2 часа",
+    "image": "img/beshparmak.jpg",
     "Столбец 7": null
   },
   {
-    "id": "burger-devon",
-    "category": "FAST-FOOD",
-    "name": "Бургер \"Девонй\" (комбо)",
-    "price": 4100,
-    "description": "Двойной бургер с беконом, картофель фри и напиток",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "harreci",
-    "category": "FAST-FOOD",
-    "name": "Харреци с соусом",
-    "price": 2100,
-    "description": "Хрустящие куриные крылышки с фирменным соусом",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "fries",
-    "category": "FAST-FOOD",
-    "name": "Фри с соусом",
-    "price": 900,
-    "description": "Золотистый картофель фри с соусом на выбор",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "potato-cheese",
-    "category": "FAST-FOOD",
-    "name": "Картофельные палочки с сыром",
-    "price": 1500,
-    "description": "Хрустящие картофельные палочки с расплавленным сыром",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "cheese-sticks",
-    "category": "FAST-FOOD",
-    "name": "Сырные палочки",
-    "price": 2100,
-    "description": "Моцарелла в хрустящей панировке",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "chicken-sticks",
-    "category": "FAST-FOOD",
-    "name": "Куриные палочки",
-    "price": 2400,
-    "description": "Нежное куриное филе в панировке",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "strips",
-    "category": "FAST-FOOD",
-    "name": "Стрипсы",
-    "price": 2500,
-    "description": "Куриные стрипсы с соусом барбекю",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "hotdog",
-    "category": "FAST-FOOD",
-    "name": "Хот-дог говяжий",
-    "price": 2400,
-    "description": "Сочная говяжья сосиска с овощами и соусами",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "pizza-pepperoni",
-    "category": "FAST-FOOD",
-    "name": "Пицца \"Пепперони\"",
-    "price": 3500,
-    "description": "Классическая пицца с пепперони и моцареллой",
-    "image": "img/piza_peperony.jpg",
-    "Столбец 7": null
-  },
-  {
-    "id": "pizza-margarita",
-    "category": "FAST-FOOD",
-    "name": "Пицца \"Маргарита\"",
-    "price": 2800,
-    "description": "Традиционная итальянская пицца с томатами и базиликом",
+    "id": "adayskiy",
+    "category": "БЛЮДА НА КОМПАНИЮ ПО ПРЕДЗАКАЗУ",
+    "name": "Адайский с курицей (большая тарелка на 5-6 чел)",
+    "price": 14000,
+    "description": "Праздничное блюдо с курицей на компанию. Требуется предзаказ за 2 часа",
     "image": "img/placeholder.jpg",
     "Столбец 7": null
   }

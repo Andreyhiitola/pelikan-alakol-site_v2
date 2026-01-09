@@ -1,0 +1,732 @@
+// ============================================
+// PELIKAN DATABASE: Google Sheets ↔ GitHub JSON
+// ============================================
+
+const CONFIG = {
+  get GITHUB_TOKEN() {
+    return PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
+  },
+  GITHUB_OWNER: 'Andreyhiitola',
+  GITHUB_REPO: 'pelikan-alakol-site_v2',
+  GITHUB_BRANCH: 'main',
+  JSON_FILES: ['price.json', 'contacts.json', 'accommodation.json', 'activities.json', 'infrastructure.json', 'gallery.json', 'rules.json', 'menu.json', 'offer.json', 'booking.json']
+};
+
+// ============================================
+// ОСНОВНЫЕ ФУНКЦИИ (импорт/экспорт)
+// ============================================
+function importFromGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  // Убираем .json из отображаемого списка
+  const fileList = CONFIG.JSON_FILES.map(f => f.replace('.json', '')).join('\n');
+  const response = ui.prompt('Импорт', `Файлы:\n${fileList}\n\nВведи имя (без .json):`, ui.ButtonSet.OK_CANCEL);
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+  
+  const filename = response.getResponseText().trim() + '.json';
+  try {
+    const url = `https://raw.githubusercontent.com/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/${filename}`;
+    const resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    if (resp.getResponseCode() !== 200) throw new Error('Файл не найден');
+    
+    const data = JSON.parse(resp.getContentText());
+    const sheetName = filename.replace('.json', '');
+    writeJSONToSheet(data, sheetName);
+    ui.alert(`✅ ${data.length || Object.keys(data).length} записей`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+
+function exportToGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const sheetName = sheet.getName();
+  
+  const response = ui.alert('Экспорт', `Лист "${sheetName}" → ${sheetName}.json?`, ui.ButtonSet.YES_NO);
+  if (response !== ui.Button.YES) return;
+  
+  try {
+    const data = sheet.getDataRange().getValues();
+    const jsonData = sheetsToJSON(data);
+    saveToGitHub(`${sheetName}.json`, jsonData, `Update ${sheetName}`);
+    ui.alert(`✅ ${jsonData.length} записей`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function saveToGitHub(filename, jsonData, message) {
+  const getUrl = `https://api.github.com/repos/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/contents/${filename}`;
+  let sha = null;
+  
+  try {
+    const getResp = UrlFetchApp.fetch(getUrl, {
+      headers: { 'Authorization': `token ${CONFIG.GITHUB_TOKEN}` },
+      muteHttpExceptions: true
+    });
+    if (getResp.getResponseCode() === 200) sha = JSON.parse(getResp.getContentText()).sha;
+  } catch (e) {}
+  
+  const content = Utilities.base64Encode(JSON.stringify(jsonData, null, 2), Utilities.Charset.UTF_8);
+  const payload = { message, content, branch: CONFIG.GITHUB_BRANCH };
+  if (sha) payload.sha = sha;
+  
+  UrlFetchApp.fetch(getUrl, {
+    method: 'PUT',
+    headers: { 
+      'Authorization': `token ${CONFIG.GITHUB_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    payload: JSON.stringify(payload)
+  });
+}
+
+// ============================================
+// PRICE.JSON
+// ============================================
+
+function importPriceFromGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  if (ui.alert('price.json', 'Импортировать?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const url = `https://raw.githubusercontent.com/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/price.json`;
+    const data = JSON.parse(UrlFetchApp.fetch(url).getContentText());
+    writePriceToSheet(data);
+    ui.alert(`✅ ${data.rooms.length} номеров`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function writePriceToSheet(data) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('price') || ss.insertSheet('price');
+  
+  const periods = data.periods.map(p => p.label);
+  const headers = ['name', ...periods, 'title', 'note'];
+  const rows = [headers];
+  
+  data.rooms.forEach(room => {
+    rows.push([room.name, room.prices['1'], room.prices['2'], room.prices['3'], room.prices['4'], data.title, data.note]);
+  });
+  
+  sheet.clear();
+  sheet.getRange(1,1,rows.length,headers.length).setValues(rows);
+  sheet.getRange(1,1,1,headers.length).setBackground('#667eea').setFontColor('white').setFontWeight('bold');
+  sheet.getRange(2,2,rows.length-1,4).setNumberFormat('# ###');
+  sheet.autoResizeColumns(1,headers.length);
+  sheet.setFrozenRows(1);
+}
+
+function exportPriceToGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('price');
+  if (!sheet || ui.alert('price.json', 'Экспортировать?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const data = sheet.getDataRange().getValues();
+    const jsonData = sheetToPriceJSON(data);
+    saveToGitHub('price.json', jsonData, 'Update price');
+    ui.alert(`✅ ${jsonData.rooms.length} номеров`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function sheetToPriceJSON(data) {
+  const headers = data[0];
+  const periods = [{id:1,label:headers[1]||''},{id:2,label:headers[2]||''},{id:3,label:headers[3]||''},{id:4,label:headers[4]||''}];
+  const rooms = [];
+  
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i], name = row[0];
+    if (!name) continue;
+    rooms.push({
+      name,
+      prices: { '1':row[1], '2':row[2], '3':row[3], '4':row[4] }
+    });
+  }
+  
+  return {
+    title: data[1][5] || '',
+    note: data[1][6] || '',
+    periods,
+    rooms
+  };
+}
+
+// ============================================
+// CONTACTS.JSON
+// ============================================
+
+function importContactsFromGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  if (ui.alert('contacts.json', '2 листа?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const url = `https://raw.githubusercontent.com/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/contacts.json`;
+    const data = JSON.parse(UrlFetchApp.fetch(url).getContentText());
+    writeContactsToSheets(data);
+    ui.alert('✅ 2 офиса + телефоны');
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function writeContactsToSheets(data) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  let offices = ss.getSheetByName('contacts-offices') || ss.insertSheet('contacts-offices');
+  const officeRows = [
+    ['title','address','gps','schedule','email'],
+    [data.contacts.office.title,data.contacts.office.address,data.contacts.office.gps,data.contacts.office.schedule,data.contacts.office.email],
+    [data.contacts.resort.title,data.contacts.resort.address,data.contacts.resort.gps,'',data.contacts.resort.email]
+  ];
+  offices.clear();
+  offices.getRange(1,1,3,5).setValues(officeRows);
+  offices.autoResizeColumns(1,5);
+  
+  let phones = ss.getSheetByName('contacts-phones') || ss.insertSheet('contacts-phones');
+  const phoneHeaders = ['office','label','display','number','whatsapp','whatsapp_url'];
+  const phoneRows = [phoneHeaders];
+  
+  data.contacts.office.phones.forEach(p => phoneRows.push(['office',p.label,p.display,p.number,p.whatsapp||false,p.whatsapp_url||'']));
+  data.contacts.resort.phones.forEach(p => phoneRows.push(['resort',p.label,p.display,p.number,p.whatsapp||false,p.whatsapp_url||'']));
+  
+  phones.clear();
+  phones.getRange(1,1,phoneRows.length,6).setValues(phoneRows);
+  phones.autoResizeColumns(1,6);
+}
+
+function exportContactsToGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const offices = ss.getSheetByName('contacts-offices');
+  const phones = ss.getSheetByName('contacts-phones');
+  if (!offices || !phones || ui.alert('contacts.json', 'Экспорт?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const jsonData = sheetsToContactsJSON(offices.getDataRange().getValues(), phones.getDataRange().getValues());
+    saveToGitHub('contacts.json', jsonData, 'Update contacts');
+    ui.alert('✅ Готово!');
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function sheetsToContactsJSON(officesData, phonesData) {
+  const officePhones = [], resortPhones = [];
+  phonesData.slice(1).forEach(([office,label,display,number,whatsapp,whatsapp_url]) => {
+    const phone = {label,display,number,icon:whatsapp?'fab fa-whatsapp':'fas fa-phone'};
+    if (whatsapp) { phone.whatsapp = true; phone.whatsapp_url = whatsapp_url; }
+    else phone.type = 'phone';
+    (office === 'office' ? officePhones : resortPhones).push(phone);
+  });
+  
+  return {
+    contacts: {
+      office: {
+        title: officesData[1][0], address: officesData[1][1],
+        gps: officesData[1][2], schedule: officesData[1][3],
+        email: officesData[1][4], phones: officePhones
+      },
+      resort: {
+        title: officesData[2][0], address: officesData[2][1],
+        gps: officesData[2][2], email: officesData[2][4],
+        phones: resortPhones
+      }
+    }
+  };
+}
+
+// ============================================
+// RULES.JSON
+// ============================================
+
+function importRulesFromGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  if (ui.alert('rules.json', 'Импортировать правила?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const url = `https://raw.githubusercontent.com/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/rules.json`;
+    const resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    if (resp.getResponseCode() !== 200) throw new Error('Файл не найден');
+    
+    const data = JSON.parse(resp.getContentText());
+    writeRulesToSheet(data);
+    ui.alert(`✅ ${data.sections ? data.sections.length : 0} разделов импортировано`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function writeRulesToSheet(data) {
+  if (!data || !data.sections || !Array.isArray(data.sections)) {
+    SpreadsheetApp.getUi().alert('❌ Ошибка: неверная структура rules.json');
+    return;
+  }
+  
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('rules') || ss.insertSheet('rules');
+  
+  const headers = ['section', 'sectionTitle', 'itemText'];
+  const rows = [headers];
+  
+  data.sections.forEach((section, sectionIndex) => {
+    const sectionNum = sectionIndex + 1;
+    const sectionTitle = section.title || '';
+    
+    if (section.items && Array.isArray(section.items)) {
+      section.items.forEach(item => {
+        rows.push([sectionNum, sectionTitle, item]);
+      });
+    }
+  });
+  
+  sheet.clear();
+  sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+  
+  sheet.getRange(1, 1, 1, headers.length)
+    .setBackground('#667eea')
+    .setFontColor('white')
+    .setFontWeight('bold');
+  
+  sheet.setColumnWidth(1, 80);
+  sheet.setColumnWidth(2, 250);
+  sheet.setColumnWidth(3, 600);
+  
+  sheet.getRange(2, 3, rows.length - 1, 1).setWrap(true);
+  sheet.setFrozenRows(1);
+  
+  if (data.title) {
+    let metaSheet = ss.getSheetByName('rules-meta') || ss.insertSheet('rules-meta');
+    metaSheet.clear();
+    metaSheet.getRange(1, 1).setValue('title');
+    metaSheet.getRange(1, 2).setValue(data.title);
+    metaSheet.getRange(1, 1, 1, 2).setFontWeight('bold').setBackground('#667eea').setFontColor('white');
+    metaSheet.autoResizeColumns(1, 2);
+  }
+}
+
+function exportRulesToGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('rules');
+  
+  if (!sheet) {
+    ui.alert('❌ Лист "rules" не найден');
+    return;
+  }
+  
+  if (ui.alert('rules.json', 'Экспортировать правила?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const data = sheet.getDataRange().getValues();
+    const metaSheet = ss.getSheetByName('rules-meta');
+    let title = 'Правила проживания в гостинице «Центр семейного отдыха Пеликан»';
+    
+    if (metaSheet) {
+      const metaData = metaSheet.getDataRange().getValues();
+      if (metaData.length > 1 && metaData[1][1]) {
+        title = metaData[1][1];
+      }
+    }
+    
+    const jsonData = sheetToRulesJSON(data, title);
+    saveToGitHub('rules.json', jsonData, 'Update rules');
+    ui.alert(`✅ ${jsonData.sections.length} разделов экспортировано`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function sheetToRulesJSON(data, title) {
+  const headers = data[0];
+  const sections = {};
+  
+  for (let i = 1; i < data.length; i++) {
+    const [sectionNum, sectionTitle, itemText] = data[i];
+    
+    if (!sectionNum || !itemText) continue;
+    
+    const sectionKey = `section_${sectionNum}`;
+    
+    if (!sections[sectionKey]) {
+      sections[sectionKey] = {
+        title: sectionTitle || '',
+        items: []
+      };
+    }
+    
+    sections[sectionKey].items.push(itemText);
+  }
+  
+  const sectionsArray = Object.keys(sections)
+    .sort()
+    .map(key => sections[key]);
+  
+  return {
+    title: title,
+    sections: sectionsArray
+  };
+}
+
+// ============================================
+// MENU.JSON
+// ============================================
+
+function importMenuFromGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  if (ui.alert('menu.json', 'Импортировать меню ресторана?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const url = `https://raw.githubusercontent.com/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/menu.json`;
+    const resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    if (resp.getResponseCode() !== 200) throw new Error('Файл не найден');
+    
+    const data = JSON.parse(resp.getContentText());
+    writeMenuToSheet(data);
+    ui.alert(`✅ ${data.length || 0} блюд импортировано`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function writeMenuToSheet(data) {
+  if (!data || !Array.isArray(data)) {
+    SpreadsheetApp.getUi().alert('❌ Ошибка: menu.json должен быть массивом');
+    return;
+  }
+  
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('menu') || ss.insertSheet('menu');
+  
+  const headers = ['category', 'name', 'weight', 'price'];
+  const rows = [headers];
+  
+  data.forEach(item => {
+    rows.push([
+      item.category || item.id || '',
+      item.name || item.title || '',
+      item.weight || item.link || '',
+      item.price || item.icon || ''
+    ]);
+  });
+  
+  sheet.clear();
+  sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+  
+  sheet.getRange(1, 1, 1, headers.length)
+    .setBackground('#667eea')
+    .setFontColor('white')
+    .setFontWeight('bold');
+  
+  sheet.setColumnWidth(1, 120);
+  sheet.setColumnWidth(2, 300);
+  sheet.setColumnWidth(3, 120);
+  sheet.setColumnWidth(4, 100);
+  
+  sheet.setFrozenRows(1);
+  
+  let currentCategory = '';
+  for (let i = 2; i <= rows.length; i++) {
+    const category = sheet.getRange(i, 1).getValue();
+    if (category && category !== currentCategory) {
+      currentCategory = category;
+      sheet.getRange(i, 1, 1, headers.length).setBackground('#e8eaf6');
+    }
+  }
+}
+
+function exportMenuToGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('menu');
+  
+  if (!sheet) {
+    ui.alert('❌ Лист "menu" не найден');
+    return;
+  }
+  
+  if (ui.alert('menu.json', 'Экспортировать меню ресторана?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const data = sheet.getDataRange().getValues();
+    const jsonData = sheetToMenuJSON(data);
+    saveToGitHub('menu.json', jsonData, 'Update restaurant menu');
+    ui.alert(`✅ ${jsonData.length} блюд экспортировано`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function sheetToMenuJSON(data) {
+  if (data.length === 0) return [];
+  
+  const jsonData = [];
+  
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const name = row[1];
+    
+    if (!name) continue;
+    
+    const item = {
+      category: row[0] || '',
+      name: row[1] || '',
+      weight: row[2] || '',
+      price: row[3] || ''
+    };
+    
+    if (typeof item.price === 'string' && !item.price.includes('/')) {
+      const numPrice = parseFloat(item.price);
+      if (!isNaN(numPrice)) {
+        item.price = numPrice;
+      }
+    }
+    
+    jsonData.push(item);
+  }
+  
+  return jsonData;
+}
+
+// ============================================
+// ACCOMMODATION.JSON
+// ============================================
+
+function importAccommodationFromGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  if (ui.alert('accommodation.json', 'Импортировать размещение?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const url = `https://raw.githubusercontent.com/${CONFIG.GITHUB_OWNER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/accommodation.json`;
+    const resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    if (resp.getResponseCode() !== 200) throw new Error('Файл не найден');
+    
+    const data = JSON.parse(resp.getContentText());
+    writeAccommodationToSheet(data);
+    ui.alert(`✅ ${data.length} номеров импортировано`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function writeAccommodationToSheet(data) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('accommodation') || ss.insertSheet('accommodation');
+  
+  const headers = ['id', 'icon', 'name', 'description', 'amenities', 'priceRange', 'capacity', 'area', 'bathroom', 'imageThumb', 'imageFull'];
+  const rows = [headers];
+  
+  data.forEach(room => {
+    rows.push([
+      room.id || '',
+      room.icon || '',
+      room.name || '',
+      room.description || '',
+      room.amenities || '',
+      room.priceRange || '',
+      room.capacity || '',
+      room.area || '',
+      room.bathroom || '',
+      room.imageThumb || '',
+      room.imageFull || ''
+    ]);
+  });
+  
+  sheet.clear();
+  sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+  
+  sheet.getRange(1, 1, 1, headers.length)
+    .setBackground('#667eea')
+    .setFontColor('white')
+    .setFontWeight('bold');
+  
+  sheet.setColumnWidth(1, 250);
+  sheet.setColumnWidth(2, 50);
+  sheet.setColumnWidth(3, 250);
+  sheet.setColumnWidth(4, 400);
+  sheet.setColumnWidth(5, 150);
+  sheet.setColumnWidth(6, 120);
+  sheet.setColumnWidth(7, 80);
+  sheet.setColumnWidth(8, 80);
+  sheet.setColumnWidth(9, 100);
+  sheet.setColumnWidth(10, 300);
+  sheet.setColumnWidth(11, 300);
+  
+  sheet.getRange(2, 4, rows.length - 1, 1).setWrap(true);
+  sheet.setFrozenRows(1);
+}
+
+function exportAccommodationToGitHub() {
+  const ui = SpreadsheetApp.getUi();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('accommodation');
+  
+  if (!sheet) {
+    ui.alert('❌ Лист "accommodation" не найден');
+    return;
+  }
+  
+  if (ui.alert('accommodation.json', 'Экспортировать размещение?', ui.ButtonSet.YES_NO) !== ui.Button.YES) return;
+  
+  try {
+    const data = sheet.getDataRange().getValues();
+    const jsonData = sheetToAccommodationJSON(data);
+    saveToGitHub('accommodation.json', jsonData, 'Update accommodation');
+    ui.alert(`✅ ${jsonData.length} номеров экспортировано`);
+  } catch (e) {
+    ui.alert(`❌ ${e}`);
+  }
+}
+
+function sheetToAccommodationJSON(data) {
+  const jsonData = [];
+  
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    if (!row[0]) continue;
+    
+    const room = {
+      id: row[0] || '',
+      icon: row[1] || '',
+      name: row[2] || '',
+      description: row[3] || '',
+      amenities: row[4] || null,
+      priceRange: row[5] || '',
+      capacity: row[6] || 0,
+      area: row[7] || 0,
+      bathroom: row[8] || '',
+      imageThumb: row[9] || '',
+      imageFull: row[10] || ''
+    };
+    
+    jsonData.push(room);
+  }
+  
+  return jsonData;
+}
+
+// ============================================
+// УНИВЕРСАЛЬНЫЕ ФУНКЦИИ
+// ============================================
+
+function writeJSONToSheet(jsonData, sheetName) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(sheetName) || ss.insertSheet(sheetName);
+  
+  if (!Array.isArray(jsonData)) {
+    jsonData = [jsonData];
+  }
+  
+  const allKeys = new Set();
+  jsonData.forEach(obj => {
+    if (obj && typeof obj === 'object') {
+      Object.keys(obj).forEach(k => allKeys.add(k));
+    }
+  });
+  
+  const headers = Array.from(allKeys);
+  const rows = [headers];
+  
+  jsonData.forEach(item => {
+    const row = headers.map(header => {
+      const value = item[header];
+      if (value === null || value === undefined) return '';
+      if (typeof value === 'object') return JSON.stringify(value);
+      return value;
+    });
+    rows.push(row);
+  });
+  
+  sheet.clear();
+  sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+  
+  sheet.getRange(1, 1, 1, headers.length)
+    .setBackground('#667eea')
+    .setFontColor('white')
+    .setFontWeight('bold');
+  
+  sheet.setFrozenRows(1);
+  sheet.autoResizeColumns(1, headers.length);
+}
+
+function sheetsToJSON(data) {
+  if (data.length === 0) return [];
+  const headers = data[0];
+  const jsonData = [];
+  for (let i = 1; i < data.length; i++) {
+    const row = {};
+    headers.forEach((header, j) => {
+      let value = data[i][j];
+      if (value === 'true') value = true;
+      else if (value === 'false') value = false;
+      else if (!value) value = null;
+      row[header] = value;
+    });
+    if (Object.values(row).some(v => v !== null)) jsonData.push(row);
+  }
+  return jsonData;
+}
+
+// ============================================
+// МЕНЮ
+// ============================================
+
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu('🔄 Pelikan Sync')
+    .addItem('⬇️ Import menu.json', 'importMenuFromGitHub')
+    .addItem('⬆️ Export menu.json', 'exportMenuToGitHub')
+    .addSeparator()
+    .addItem('⬇️ Import price.json', 'importPriceFromGitHub')
+    .addItem('⬆️ Export price.json', 'exportPriceToGitHub')
+    .addSeparator()
+    .addItem('⬇️ Import contacts.json', 'importContactsFromGitHub')
+    .addItem('⬆️ Export contacts.json', 'exportContactsToGitHub')
+    .addSeparator()
+    .addItem('⬇️ Import rules.json', 'importRulesFromGitHub')
+    .addItem('⬆️ Export rules.json', 'exportRulesToGitHub')
+    .addSeparator()
+    .addItem('⬇️ Import accommodation.json', 'importAccommodationFromGitHub')
+    .addItem('⬆️ Export accommodation.json', 'exportAccommodationToGitHub')
+    .addSeparator()
+    .addItem('⬇️ Import (любой файл)', 'importFromGitHub')
+    .addItem('⬆️ Export (активный лист)', 'exportToGitHub')
+    .addSeparator()
+    .addItem('🖼️ Вставить изображения', 'insertImagesFromURLs')
+    .addToUi();
+}
+
+function insertImagesFromURLs() {
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const data = sheet.getDataRange().getValues();
+  const imageCol = 10;
+  
+  for (let i = 1; i < data.length; i++) {
+    const imageUrl = data[i][imageCol - 1];
+    
+    if (imageUrl && /^https?:\/\//.test(imageUrl)) {
+      try {
+        const range = sheet.getRange(i + 1, imageCol);
+        const image = SpreadsheetApp
+          .newCellImage()
+          .setSourceUrl(imageUrl)
+          .setAltTextTitle('Thumbnail')
+          .build();
+        range.setValue(image);
+      } catch (e) {
+        Logger.log(`Ошибка в строке ${i + 1}: ${e}`);
+      }
+    }
+  }
+  
+  SpreadsheetApp.getUi().alert(`✅ Обработано ${data.length - 1} строк`);
+}
+
+
+

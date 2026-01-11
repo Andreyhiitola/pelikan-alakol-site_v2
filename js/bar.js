@@ -6,7 +6,11 @@
 // Конфигурация API и меню
 const CONFIG = {
     // URL воркера (API)
-    API_URL: 'https://pelikan-api-worker.9624294.workers.dev/api/order',
+   const CONFIG = {
+    API_URL: 'https://pelican-alacol.kz/api/order', // уже конечный боевой домен
+    MENU_JSON: 'barzakaz.json'
+};
+
     // JSON с меню бара
     MENU_JSON: 'barzakaz.json'
 };

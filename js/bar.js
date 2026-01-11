@@ -5,9 +5,8 @@
 
 // Конфигурация API и меню
 const CONFIG = {
-    // Боевой backend
-    API_URL: 'http://85.192.40.138:8080/api/order',
-
+    // URL воркера (API)
+    API_URL: 'https://pelikan-api-worker.9624294.workers.dev/api/order',
     // JSON с меню бара
     MENU_JSON: 'barzakaz.json'
 };
@@ -15,6 +14,7 @@ const CONFIG = {
 // Состояние корзины и меню
 let cart = [];
 let menuData = [];
+
 
 // ===================== TELEGRAM MINI APP DETECT =====================
 

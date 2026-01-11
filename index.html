@@ -2219,9 +2219,6 @@ closeMobileMenu();
 }
 });
 </script>
-
-</script>
-
 <script src="./js/accommodation.js"></script>
 <script src="./js/activities.js"></script>
 <script src="./js/menu.js"></script>
@@ -2249,50 +2246,27 @@ closeMobileMenu();
     </div>
   </div>
 </div>
-
-</body>
-      </html>
-
-<style>
-#faqModal .faq-item {
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-#faqModal .faq-question {
-    padding: 15px 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    color: #2c3e50;
-    background: #f8f9fa;
-}
-#faqModal .faq-question:hover { background: #e9ecef; }
-#faqModal .faq-answer {
-    max-height: 0;
-    overflow: hidden;
-    padding: 0 20px;
-    color: #555;
-    line-height: 1.6;
-    transition: all 0.3s ease;
-}
-#faqModal .faq-item.active .faq-answer { max-height: 500px; padding: 15px 20px; }
-#faqModal .faq-icon { transition: transform 0.3s; color: #3498db; }
-#faqModal .faq-item.active .faq-icon { transform: rotate(180deg); }
-</style>
-
 <script>
-document.addEventListener('click', e => {
-    if (e.target.closest('#faqModal .faq-question')) {
-        const question = e.target.closest('#faqModal .faq-question');
-        question.parentElement.classList.toggle('active');
+  document.addEventListener('DOMContentLoaded', function () {
+    // безопасно читаем query-параметры
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var tab = params.get('tab'); // например, ?tab=price или ?tab=rules
+
+      // Проверяем, что есть функция openDocsModal
+      if (typeof window.openDocsModal !== 'function') {
+        return;
+      }
+
+      if (tab === 'price') {
+        window.openDocsModal('price');
+      } else if (tab === 'rules') {
+        window.openDocsModal('rules');
+      }
+    } catch (e) {
+      console.error('Ошибка обработки параметра tab:', e);
     }
-});
+  });
 </script>
 </body>
 </html>

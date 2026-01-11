@@ -424,6 +424,14 @@ async function handleOrderSubmit(e) {
 
 async function handleMiniAppOrder(order, orderText) {
     const tg = getTelegramWebApp();
+        // ✅ ДОБАВЛЯЕМ telegram_user_id и telegram_username
+    const user = tg?.initDataUnsafe?.user;
+    const telegram_user_id = user?.id || null;
+    const telegram_username = user?.username || null;
+    
+    // Добавляем в order
+    order.telegram_user_id = telegram_user_id;
+    order.telegram_username = telegram_username;
 
     // 1. Отправляем данные боту через WebApp API (необязательно, но полезно)
     if (tg) {
@@ -436,10 +444,13 @@ async function handleMiniAppOrder(order, orderText) {
 
     // 2. Отправляем заказ на backend с initData / user (как было)
     const payload = {
-        ...order,
-        telegramInitData: tg?.initData || null,
-        telegramUser: tg?.initDataUnsafe?.user || null
-    };
+    ...order,
+    telegram_user_id: telegram_user_id,
+    telegram_username: telegram_username,
+    telegramInitData: tg?.initData || null,
+    telegramUser: tg?.initDataUnsafe?.user || null
+};
+
 
     const response = await fetch(CONFIG.API_URL, {
         method: 'POST',

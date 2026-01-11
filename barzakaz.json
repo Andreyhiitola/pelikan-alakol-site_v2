@@ -2,7 +2,7 @@
   {
     "id": "burger-black",
     "category": "FAST-FOOD",
-    "name": "Бургер \"Черный\" (комбо)",
+    "name": "Бургер (комбо)",
     "price": 3900,
     "description": "Сочный говяжий бургер с черной булочкой, картофель фри и напиток",
     "image": "img/burger-black.jpg",
@@ -11,7 +11,7 @@
   {
     "id": "burger-devon",
     "category": "FAST-FOOD",
-    "name": "Бургер \"Девонй\" (комбо)",
+    "name": "Бургер Девонй (комбо)",
     "price": 4100,
     "description": "Двойной бургер с беконом, картофель фри и напиток",
     "image": "img/placeholder.jpg",

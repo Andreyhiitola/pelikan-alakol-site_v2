@@ -5,12 +5,11 @@
 
 // Конфигурация API и меню
 const CONFIG = {
-    API_URL: 'https://pelican-alacol.kz/api/order', // уже конечный боевой домен
-    MENU_JSON: 'barzakaz.json'
-};
+  // URL воркера (API)
+  API_URL: 'https://api.pelican-alacol.kz/api/order', // уже конечный боевой домен
 
-    // JSON с меню бара
-    MENU_JSON: 'barzakaz.json'
+  // JSON с меню бара
+  MENU_JSON: 'barzakaz.json',
 };
 
 // Состояние корзины и меню

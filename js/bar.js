@@ -20,7 +20,7 @@ let menuData = [];
 // ===================== TELEGRAM MINI APP DETECT =====================
 
 function isInsideTelegramMiniApp() {
-    return !!window.Telegram?.WebApp?.initDataUnsafe?.user;
+    return !!window.Telegram?.WebApp?.initData;
 }
 
 function getTelegramWebApp() {

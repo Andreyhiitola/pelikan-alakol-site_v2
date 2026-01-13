@@ -167,6 +167,16 @@
                     `<h2>❌ Ошибка загрузки</h2><p>${error.message}</p>`;
             }
         }
+                
+                const order = await response.json();
+                displayReceipt(order);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').innerHTML = 
+                    `<h2>❌ Ошибка загрузки</h2><p>${error.message}</p>`;
+            }
+        }
         
         function displayReceipt(order) {
             const date = new Date(order.timestamp);

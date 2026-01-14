@@ -338,45 +338,27 @@ function showContactModal(order, orderText) {
             </div>
         `;
     } else {
-        // Полная версия для обычного сайта
+        // Версия для обычного сайта
         modal.innerHTML = `
             <div class="modal-content">
-                <h2>Заказ #${order.orderId}</h2>
-                <p style="font-size: 1.2em; margin: 15px 0;">
-                    Сумма: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
-                </p>
-                <h3 style="margin: 25px 0 20px;">📞 Связь с баром</h3>
-                <div style="display: flex; flex-direction: column; gap: 15px;">
-                    <a href="${whatsappUrl}" class="contact-button whatsapp" target="_blank">
-                        <span style="font-size: 2em;">🟢</span>
-                        <div>
-                            <div style="font-size: 1.2em; font-weight: bold;">WhatsApp</div>
-                            <div style="font-size: 0.9em; opacity: 0.8;">Отправить заказ</div>
-                        </div>
-                    </a>
-                    <a href="${telegramUrl}" class="contact-button telegram" target="_blank">
-                        <span style="font-size: 2em;">🔵</span>
-                        <div>
-                            <div style="font-size: 1.2em; font-weight: bold;">Telegram</div>
-                            <div style="font-size: 0.9em; opacity: 0.8;">Открыть бота (авто-уведомления ✨)</div>
-                        </div>
-                    </a>
-                    <a href="${phoneUrl}" class="contact-button phone">
-                        <span style="font-size: 2em;">📞</span>
-                        <div>
-                            <div style="font-size: 1.2em; font-weight: bold;">Позвонить</div>
-                            <div style="font-size: 0.9em; opacity: 0.8;">+7 728 33 30002</div>
-                        </div>
-                    </a>
-                </div>
-                <div style="background: rgba(255, 215, 0, 0.1); border-left: 4px solid #FFD700; padding: 15px; border-radius: 8px; margin-top: 20px;">
-                    <p style="margin: 0; font-size: 0.9em; line-height: 1.5;">
-                        💡 Используйте Telegram бота для автоматических уведомлений о статусе
+                <div style="text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 20px;">✅</div>
+                    <h2>Заказ #${order.orderId}</h2>
+                    <p style="font-size: 1.2em; margin: 15px 0;">
+                        Сумма: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
                     </p>
+                    <h3 style="margin: 25px 0 20px; color: #FFD700;">📞 Для уточнения статуса заказа</h3>
+                    <a href="${phoneUrl}" class="contact-button phone" style="text-decoration: none; width: 100%; max-width: 400px; margin: 0 auto;">
+                        <span style="font-size: 2.5em;">📞</span>
+                        <div>
+                            <div style="font-size: 1.4em; font-weight: bold;">Позвонить в бар</div>
+                            <div style="font-size: 1.1em; opacity: 0.9;">+7 728 33 30002</div>
+                        </div>
+                    </a>
+                    <button onclick="closeContactModal()" class="close-button" style="margin-top: 30px; width: 100%; max-width: 400px;">
+                        Закрыть
+                    </button>
                 </div>
-                <button onclick="closeContactModal()" class="close-button" style="margin-top: 25px;">
-                    Закрыть
-                </button>
             </div>
         `;
     }

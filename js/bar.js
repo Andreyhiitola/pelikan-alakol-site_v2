@@ -306,43 +306,117 @@ function showContactModal(order, orderText) {
     const telegramUrl = `https://t.me/Pelicanalacolhotelbot?text=${encodedText}`;
     const phoneUrl = 'tel:+77283330002';
 
-    modal.innerHTML = `
-        <div class="modal-content">
-            <h2>Заказ #${order.orderId}</h2>
-            <p style="font-size: 1.2em; margin: 15px 0;">
-                Сумма: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
-            </p>
-
-            <h3 style="margin: 25px 0 20px;">Выберите способ связи</h3>
-
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <a href="${whatsappUrl}" class="contact-button whatsapp" target="_blank">
-                    <span style="font-size: 2em;">🟢</span>
-                    <div>
-                        <div style="font-size: 1.2em; font-weight: bold;">WhatsApp</div>
-                        <div style="font-size: 0.9em; opacity: 0.8;">Отправить заказ администратору</div>
+    // Проверяем откуда открыто
+    const isTelegramMiniApp = window.Telegram?.WebApp;
+    
+    if (isTelegramMiniApp) {
+        // Упрощенная версия для Telegram Mini App
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div style="text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 20px;">✅</div>
+                    <h2>Заказ принят!</h2>
+                    <p style="font-size: 1.5em; color: #FFD700; margin: 20px 0;">
+                        #${order.orderId}
+                    </p>
+                    <p style="font-size: 1.2em; margin: 15px 0;">
+                        Сумма: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
+                    </p>
+                    <div style="background: rgba(76, 175, 80, 0.15); border-left: 4px solid #4CAF50; padding: 20px; border-radius: 10px; margin: 25px 0; text-align: left;">
+                        <p style="margin: 0; line-height: 1.6;">
+                            📱 <strong>Вы получите уведомления</strong> о статусе заказа:<br>
+                            • Принят ✅<br>
+                            • Готовится ⏳<br>
+                            • Готов 🔔<br>
+                            • Выдан 🎉
+                        </p>
                     </div>
-                </a>
-
-                <a href="${telegramUrl}" class="contact-button telegram" target="_blank">
-                    <span style="font-size: 2em;">🔵</span>
-                    <div>
-                        <div style="font-size: 1.2em; font-weight: bold;">Telegram</div>
-                        <div style="font-size: 0.9em; opacity: 0.8;">Открыть бота отеля</div>
-                    </div>
-                </a>
-
-                <a href="${phoneUrl}" class="contact-button phone">
-                    <span style="font-size: 2em;">📞</span>
-                    <div>
-                        <div style="font-size: 1.2em; font-weight: bold;">Позвонить</div>
-                        <div style="font-size: 0.9em; opacity: 0.8;">+7 728 33 30002</div>
-                    </div>
-                </a>
+                    <button onclick="closeContactModal()" class="close-button" style="margin-top: 15px;">
+                        Понятно
+                    </button>
+                </div>
             </div>
-
-            <button onclick="closeContactModal()" class="close-button" style="margin-top: 25px;">
-                Закрыть
+        `;
+    } else {
+        // Полная версия для обычного сайта
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2>Заказ #${order.orderId}</h2>
+                <p style="font-size: 1.2em; margin: 15px 0;">
+                    Сумма: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
+                </p>
+                <h3 style="margin: 25px 0 20px;">📞 Связь с баром</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <a href="${whatsappUrl}" class="contact-button whatsapp" target="_blank">
+                        <span style="font-size: 2em;">🟢</span>
+                        <div>
+                            <div style="font-size: 1.2em; font-weight: bold;">WhatsApp</div>
+                            <div style="font-size: 0.9em; opacity: 0.8;">Отправить заказ</div>
+                        </div>
+                    </a>
+                    <a href="${telegramUrl}" class="contact-button telegram" target="_blank">
+                        <span style="font-size: 2em;">🔵</span>
+                        <div>
+                            <div style="font-size: 1.2em; font-weight: bold;">Telegram</div>
+                            <div style="font-size: 0.9em; opacity: 0.8;">Открыть бота (авто-уведомления ✨)</div>
+                        </div>
+                    </a>
+                    <a href="${phoneUrl}" class="contact-button phone">
+                        <span style="font-size: 2em;">📞</span>
+                        <div>
+                            <div style="font-size: 1.2em; font-weight: bold;">Позвонить</div>
+                            <div style="font-size: 0.9em; opacity: 0.8;">+7 728 33 30002</div>
+                        </div>
+                    </a>
+                </div>
+                <div style="background: rgba(255, 215, 0, 0.1); border-left: 4px solid #FFD700; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <p style="margin: 0; font-size: 0.9em; line-height: 1.5;">
+                        💡 Используйте Telegram бота для автоматических уведомлений о статусе
+                    </p>
+                </div>
+                <button onclick="closeContactModal()" class="close-button" style="margin-top: 25px;">
+                    Закрыть
+                </button>
+            </div>
+        `;
+    }
+                    Сумма: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
+                </p>
+                <h3 style="margin: 25px 0 20px;">📞 Связь с баром</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <a href="${whatsappUrl}" class="contact-button whatsapp" target="_blank">
+                        <span style="font-size: 2em;">🟢</span>
+                        <div>
+                            <div style="font-size: 1.2em; font-weight: bold;">WhatsApp</div>
+                            <div style="font-size: 0.9em; opacity: 0.8;">Отправить заказ</div>
+                        </div>
+                    </a>
+                    <a href="${telegramUrl}" class="contact-button telegram" target="_blank">
+                        <span style="font-size: 2em;">🔵</span>
+                        <div>
+                            <div style="font-size: 1.2em; font-weight: bold;">Telegram</div>
+                            <div style="font-size: 0.9em; opacity: 0.8;">Открыть бота (авто-уведомления ✨)</div>
+                        </div>
+                    </a>
+                    <a href="${phoneUrl}" class="contact-button phone">
+                        <span style="font-size: 2em;">📞</span>
+                        <div>
+                            <div style="font-size: 1.2em; font-weight: bold;">Позвонить</div>
+                            <div style="font-size: 0.9em; opacity: 0.8;">+7 728 33 30002</div>
+                        </div>
+                    </a>
+                </div>
+                <div style="background: rgba(255, 215, 0, 0.1); border-left: 4px solid #FFD700; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <p style="margin: 0; font-size: 0.9em; line-height: 1.5;">
+                        💡 Используйте Telegram бота для автоматических уведомлений о статусе
+                    </p>
+                </div>
+                <button onclick="closeContactModal()" class="close-button" style="margin-top: 25px;">
+                    Закрыть
+                </button>
+            </div>
+        `;
+    }
             </button>
         </div>
     `;

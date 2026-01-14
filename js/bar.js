@@ -324,13 +324,7 @@ function showContactModal(order, orderText) {
                     </p>
                     <div style="background: rgba(76, 175, 80, 0.15); border-left: 4px solid #4CAF50; padding: 20px; border-radius: 10px; margin: 25px 0; text-align: left;">
                         <p style="margin: 0; line-height: 1.6;">
-                            📱 <strong>Вы получите уведомления</strong> о статусе заказа:<br>
-                            • Принят ✅<br>
-                            • Готовится ⏳<br>
-                            • Готов 🔔<br>
-                            • Выдан 🎉
-                        </p>
-                    </div>
+                            
                     <button onclick="closeContactModal()" class="close-button" style="margin-top: 15px;">
                         Понятно
                     </button>

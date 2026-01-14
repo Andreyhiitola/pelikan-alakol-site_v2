@@ -647,3 +647,21 @@
     <script src="js/bar.js"></script>
 </body>
 </html>
+
+<script>
+// Адаптация для Telegram Mini App
+if (window.Telegram?.WebApp) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    
+    // Скрываем навигацию
+    const backBtn = document.querySelector('.back-btn');
+    if (backBtn) {
+        backBtn.style.display = 'none';
+    }
+    
+    // Применяем тему Telegram
+    document.body.style.background = tg.themeParams.bg_color || '#000';
+}
+</script>

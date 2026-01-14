@@ -478,3 +478,20 @@ loadMenu();
 
 </body>
 </html>
+
+<script>
+// Адаптация для Telegram Mini App
+if (window.Telegram?.WebApp?.initData) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    
+    // Скрываем ВСЕ крестики (ссылки на главную)
+    document.querySelectorAll('a[href="index.html"]').forEach(link => {
+        link.style.display = 'none';
+    });
+    
+    // Применяем тему Telegram
+    document.body.style.background = tg.themeParams.bg_color || '#fff';
+}
+</script>

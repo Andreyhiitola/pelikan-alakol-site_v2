@@ -309,15 +309,23 @@ position: relative;
 box-shadow: var(--shadow);
 transform: translateY(-5px);
 }
+/* Общий стиль для всех изображений (номера, активности, галерея) */
 .scroll-item img {
-width: 100%;
-border-radius: 10px;
-margin: 0 auto 15px auto;
-height: auto;          /* было 250px — убираем фикс */
-object-fit: contain;   /* если хочешь видеть картинку целиком */
-transition: all 0.3s;
+    width: 100%;
+    border-radius: 10px;
+    margin: 0 auto 15px auto;
+    height: 250px;
+    object-fit: cover;
+    transition: all 0.3s;
 }
 
+/* ✅ ТОЛЬКО для блока "Наши услуги" - с padding */
+#infrastructureContainer .scroll-item img {
+    height: 280px;
+    object-fit: contain;
+    padding: 50px;
+    background: #ffffff;
+}
 width: 100%;
 border-radius: 10px;
 margin: 0 auto 15px auto;

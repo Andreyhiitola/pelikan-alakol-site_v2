@@ -6,7 +6,7 @@
 // Конфигурация API и меню
 const CONFIG = {
   // URL воркера (API)
-  API_URL: 'https://api.pelican-alacol.kz/api/order', // уже конечный боевой домен
+  API_URL: 'https://apitelegram.parkpelikan-alakol.kz/api/order', // уже конечный боевой домен
 
   // JSON с меню бара
   MENU_JSON: 'barzakaz.json',

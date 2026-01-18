@@ -216,15 +216,6 @@
     "image": "img/kofe.jpg",
     "Столбец 7": null
   },
-{
-    "id": "pizza-",
-    "category": "FAST-FOOD",
-    "name": "Пицца \"Маргарита\"",
-    "price": 2800,
-    "description": "Традиционная итальянская пицца с томатами и базиликом",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
-  },  
   {
     "id": "tea",
     "category": "Напитки",

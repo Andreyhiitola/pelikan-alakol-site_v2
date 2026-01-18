@@ -196,5 +196,15 @@
     "description": "Запеченный хлеб с сырной начинкой",
     "image": "img/placeholder.jpg",
     "Столбец 7": null
+  },
+  
+  {
+    "id": "[hachepury_adjarskiy",
+    "category": "ГОРЯЧИЕ БЛЮДА",
+    "name": "",
+    "price": 1000,
+    "description": "hachapury_adjarskiy.jpg",
+    "image": "img/placeholder.jpg",
+    "Столбец 7": null
   }
 ]

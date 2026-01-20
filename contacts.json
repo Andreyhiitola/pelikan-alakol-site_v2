@@ -48,7 +48,7 @@
     },
     "resort": {
       "title": "Ресепшн ЦСО «Пеликан» (оз. Алаколь)",
-      "address": "Жетісу обл., Алакольский р-он, с. Акши, график работы:  с июня по сентябрь",
+      "address": "Жетісу обл., Алакольский р-он, с. Акши, график работы: с июня по сентябрь",
       "gps": "N 45° 57' 18\", E 81° 34' 17\"",
       "phones": [
         { 
@@ -65,6 +65,14 @@
           "icon": "fab fa-whatsapp",
           "whatsapp": true,
           "whatsapp_url": "https://api.whatsapp.com/send?phone=77767275841"
+        },
+        { 
+          "label": "Telegram", 
+          "number": "+77767275841", 
+          "display": "+7 (776) 727 58 41", 
+          "icon": "fab fa-telegram",
+          "telegram": true,
+          "telegram_url": "https://t.me/+77767275841"
         },
         { 
           "label": "Мобильный", 

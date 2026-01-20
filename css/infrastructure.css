@@ -186,3 +186,51 @@ body.dark-mode .read-more-btn {
 body.dark-mode .read-more-btn:hover {
     color: #ff5252;
 }
+/* ========================================
+   ✅ ВЫРАВНИВАНИЕ КАРТОЧЕК ИНФРАСТРУКТУРЫ
+   ======================================== */
+
+/* Карточки одинаковой высоты с распределением контента */
+#infrastructureContainer .scroll-item,
+.infra-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important; /* распределить контент */
+    align-items: center !important;
+    min-height: 380px !important; /* фиксированная высота */
+    padding: 20px !important;
+}
+
+/* Иконка прижата к верху */
+#infrastructureContainer .infra-img-wrapper {
+    margin-bottom: 15px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Заголовок сразу после иконки */
+#infrastructureContainer .scroll-item h3 {
+    margin: 10px 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Текст растягивается по центру */
+#infrastructureContainer .scroll-item p {
+    flex-grow: 1 !important;
+    display: flex !important;
+    align-items: center !important; /* центр по вертикали */
+    text-align: center !important;
+    margin: 15px 0 !important;
+}
+
+/* Кнопка прижата к низу */
+#infrastructureContainer .infra-action-btn {
+    margin-top: auto !important;
+    flex-shrink: 0 !important;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    #infrastructureContainer .scroll-item {
+        min-height: 320px !important;
+    }
+}

@@ -13,7 +13,6 @@ function renderGallery(data) {
     card.className = 'scroll-item';
     card.style.cursor = 'pointer';
     
-    // ✅ ЛОГИКА: галерея или одиночное фото
     let imgSrc = photo.image;
     let iconClass = 'fa-expand';
     let isGallery = false;
@@ -34,7 +33,6 @@ function renderGallery(data) {
       <p>${photo.description || ''}</p>
     `;
     
-    // ✅ ОБРАБОТЧИК КЛИКА
     card.addEventListener('click', () => {
       if (isGallery) {
         openGalleryCarousel(photo.image.replace('/*', ''), photo);
@@ -49,7 +47,6 @@ function renderGallery(data) {
   console.log('✅ Gallery загружена (галереи + одиночные)');
 }
 
-// ✅ КАРУСЕЛЬ ГАЛЕРЕИ (ПОЛНОЭКРАННАЯ)
 function openGalleryCarousel(folder, photoData) {
   const galleryImages = [
     `${folder}/01.jpg`,
@@ -57,7 +54,7 @@ function openGalleryCarousel(folder, photoData) {
     `${folder}/03.jpg`,
     `${folder}/04.jpg`,
     `${folder}/05.jpg`
-  ].filter(img => img); // убираем undefined
+  ].filter(img => img);
   
   if (galleryImages.length === 0) {
     alert('❌ Изображения галереи не найдены!');
@@ -67,15 +64,17 @@ function openGalleryCarousel(folder, photoData) {
   openLightboxCarousel(galleryImages, photoData.name, photoData.description);
 }
 
-// ✅ ПОЛНОЭКРАННАЯ КАРУСЕЛЬ
+// ✅ ПОЛНОЭКРАННАЯ КАРУСЕЛЬ (100VW/100VH)
 function openLightboxCarousel(images, title, description = '') {
   const lightbox = document.createElement('div');
   lightbox.id = 'galleryLightbox';
   lightbox.style.cssText = `
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
-    background: rgba(0,0,0,0.95); z-index: 9999; 
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px;
+    position: fixed; top: 0; left: 0; 
+    width: 100vw; height: 100vh; 
+    background: rgba(0,0,0,0.95); 
+    z-index: 9999; 
+    display: flex; 
+    padding: 0;
   `;
   
   let currentIndex = 0;
@@ -87,6 +86,7 @@ function openLightboxCarousel(images, title, description = '') {
       color: white; font-size: 28px; cursor: pointer; 
       width: 50px; height: 50px; border-radius: 50%; 
       display: flex; align-items: center; justify-content: center;
+      z-index: 10001;
     ">×</button>
     
     <button id="prevBtn" style="
@@ -94,17 +94,21 @@ function openLightboxCarousel(images, title, description = '') {
       background: rgba(0,0,0,0.7); border: none; color: white; 
       font-size: 40px; cursor: pointer; width: 60px; height: 60px; 
       border-radius: 50%; display: flex; align-items: center; 
-      justify-content: center; z-index: 10000;
+      justify-content: center; z-index: 10001;
     ">‹</button>
     
     <img id="carouselImg" 
          src="${images[0]}" 
          style="
-           max-width: 95vw; max-height: 95vh; 
-           width: auto; height: auto; 
-           object-fit: contain; 
-           margin: 0 auto; display: block;
-           box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100vw;
+           height: 100vh;
+           object-fit: contain;
+           z-index: 10000;
+           margin: 0;
+           padding: 0;
          ">
     
     <button id="nextBtn" style="
@@ -112,7 +116,7 @@ function openLightboxCarousel(images, title, description = '') {
       background: rgba(0,0,0,0.7); border: none; color: white; 
       font-size: 40px; cursor: pointer; width: 60px; height: 60px; 
       border-radius: 50%; display: flex; align-items: center; 
-      justify-content: center; z-index: 10000;
+      justify-content: center; z-index: 10001;
     ">›</button>
     
     <div id="infoBar" style="
@@ -120,7 +124,7 @@ function openLightboxCarousel(images, title, description = '') {
       transform: translateX(-50%); 
       background: rgba(0,0,0,0.8); padding: 15px 25px; 
       border-radius: 25px; color: white; font-size: 16px;
-      text-align: center; min-width: 200px;
+      text-align: center; min-width: 200px; z-index: 10001;
     ">
       ${title} (${currentIndex + 1}/${images.length})
     </div>
@@ -128,7 +132,6 @@ function openLightboxCarousel(images, title, description = '') {
   
   document.body.appendChild(lightbox);
   
-  // ✅ НАВИГАЦИЯ
   const img = document.getElementById('carouselImg');
   const infoBar = document.getElementById('infoBar');
   
@@ -149,18 +152,15 @@ function openLightboxCarousel(images, title, description = '') {
     infoBar.textContent = `${title} (${currentIndex + 1}/${images.length})`;
   }
   
-  // ✅ КЛАВИАТУРА + СВАЙП
   document.onkeydown = (e) => {
     if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
     if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
     if (e.key === 'Escape') closeLightbox();
   };
   
-  // ✅ КЛИК ПО КАРТИНКЕ = следующая
   img.onclick = () => document.getElementById('nextBtn').click();
 }
 
-// ✅ ПРОСТОЙ ЛАЙТБОКС для одиночных фото
 function openLightbox(imageSrc, title, description) {
   const lightbox = document.createElement('div');
   lightbox.id = 'simpleLightbox';
@@ -168,16 +168,18 @@ function openLightbox(imageSrc, title, description) {
     <div style="
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
       background: rgba(0,0,0,0.95); z-index: 9999; 
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: center; justify-content: center; padding: 0;
     ">
       <button onclick="closeLightbox()" style="
         position: absolute; top: 20px; right: 30px; 
-        background: none; border: none; color: white; font-size: 30px;
+        background: none; border: none; color: white; font-size: 30px; z-index: 10001;
       ">×</button>
       <img src="${imageSrc}" style="
-        max-width: 90vw; max-height: 90vh; object-fit: contain;
+        position: fixed; top: 0; left: 0;
+        width: 100vw; height: 100vh; 
+        object-fit: contain; z-index: 10000;
       ">
-      <div style="position: absolute; bottom: 30px; color: white; text-align: center;">
+      <div style="position: absolute; bottom: 30px; color: white; z-index: 10001;">
         ${title}
       </div>
     </div>
@@ -189,7 +191,6 @@ function openLightbox(imageSrc, title, description) {
   };
 }
 
-// ✅ ЗАКРЫТИЕ ЛАЙТБОКСА
 function closeLightbox() {
   const lightbox = document.getElementById('galleryLightbox') || 
                    document.getElementById('simpleLightbox');

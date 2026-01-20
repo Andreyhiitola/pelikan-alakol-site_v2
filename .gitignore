@@ -154,3 +154,86 @@ coverage/
 # ✅ *.md (документация)
 # ✅ *.pdf (прайс-листы)
 # ✅ start-server*.sh (скрипты запуска)
+# ========================================
+# 🔒 ЗАЩИТА ОТ УТЕЧЕК (Security)
+# ========================================
+
+# API ключи и токены
+*.token
+*_token.txt
+api_keys.json
+credentials.json
+auth.json
+.credentials/
+
+# GitHub и Git токены
+.git-credentials
+.netrc
+
+# SSH ключи
+id_rsa
+id_rsa.pub
+*.ppk
+known_hosts
+
+# Сертификаты и приватные ключи
+*.crt
+*.cer
+*.ca-bundle
+*.p7b
+*.p7s
+*.pfx
+certificate.pem
+private-key.pem
+
+# Cloudflare Workers secrets
+wrangler.toml
+.dev.vars
+workers-site/
+
+# Docker и контейнеры
+docker-compose.override.yml
+.dockerignore
+
+# Базы данных
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+database.json
+db_backup/
+
+# Приватные конфиги
+config.private.js
+settings.local.json
+.secrets/
+
+# Telegram bot токены
+bot_token.txt
+telegram_config.json
+
+# Maxi-Booking API (если есть)
+maxibooking_key.json
+
+# Email credentials
+smtp_config.json
+email_credentials.json
+
+# Backup файлы с данными
+backup_*.tar.gz
+backup_*.zip
+db_dump_*.sql
+
+# Временные загрузки
+uploads/
+temp_uploads/
+
+# ========================================
+# 🚫 НИКОГДА НЕ КОММИТИТЬ
+# ========================================
+# - Пароли базы данных
+# - API ключи Google Maps, OpenWeather
+# - Токены GitHub, Cloudflare
+# - Приватные SSH ключи
+# - Сертификаты SSL
+# - Email/SMTP пароли

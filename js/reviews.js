@@ -41,29 +41,45 @@ async function loadReviews() {
 // ===================== СТАТИСТИКА =====================
 
 function updateStatistics() {
+    const totalElem = document.getElementById('total-reviews');
+    const avgElem = document.getElementById('avg-score');
+    const recommendElem = document.getElementById('recommend-percent');
+    
+    // ✅ ПРОВЕРКА НА NULL
+    if (!totalElem || !avgElem || !recommendElem) {
+        console.warn('⚠️ Элементы статистики отзывов не найдены в DOM');
+        return;
+    }
+    
     const totalReviews = allReviews.length;
-    document.getElementById('total-reviews').textContent = totalReviews;
+    totalElem.textContent = totalReviews;
     
     if (totalReviews === 0) {
-        document.getElementById('avg-score').textContent = '0.0';
-        document.getElementById('recommend-percent').textContent = '0%';
+        avgElem.textContent = '0.0';
+        recommendElem.textContent = '0%';
         return;
     }
     
     // Средняя оценка
     const avgScore = allReviews.reduce((sum, r) => sum + r.avg_score, 0) / totalReviews;
-    document.getElementById('avg-score').textContent = avgScore.toFixed(1);
+    avgElem.textContent = avgScore.toFixed(1);
     
     // Процент рекомендаций (оценка >= 8)
     const recommend = allReviews.filter(r => r.avg_score >= 8).length;
     const percent = Math.round((recommend / totalReviews) * 100);
-    document.getElementById('recommend-percent').textContent = `${percent}%`;
+    recommendElem.textContent = `${percent}%`;
 }
 
 // ===================== РЕНДЕРИНГ =====================
 
 function renderReviews() {
     const container = document.getElementById('reviews-container');
+    
+    // ✅ ПРОВЕРКА НА NULL
+    if (!container) {
+        console.warn('⚠️ reviews-container не найден в DOM');
+        return;
+    }
     
     if (allReviews.length === 0) {
         container.innerHTML = `
@@ -185,7 +201,6 @@ function escapeHtml(text) {
 }
 
 function adjustColor(color, amount) {
-    // Простая функция для осветления/затемнения цвета
     return '#' + color.replace(/^#/, '').replace(/../g, color => 
         ('0' + Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2)
     );
@@ -193,6 +208,13 @@ function adjustColor(color, amount) {
 
 function showError() {
     const container = document.getElementById('reviews-container');
+    
+    // ✅ ПРОВЕРКА НА NULL
+    if (!container) {
+        console.error('❌ reviews-container не найден, невозможно показать ошибку');
+        return;
+    }
+    
     container.innerHTML = `
         <div class="empty-state">
             <i class="fas fa-exclamation-triangle" style="color: #ff9800;"></i>
@@ -208,19 +230,13 @@ function showError() {
 // ===================== СОБЫТИЯ =====================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Загрузка отзывов
     loadReviews();
     
-    // Обработчики сортировки
-    document.querySelectorAll('.sort-btn').forEach(btn => {
+    const sortButtons = document.querySelectorAll('.sort-btn');
+    sortButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Убираем active у всех
-            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-            
-            // Добавляем active к текущей
+            sortButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
-            // Обновляем сортировку
             currentSort = btn.dataset.sort;
             renderReviews();
         });

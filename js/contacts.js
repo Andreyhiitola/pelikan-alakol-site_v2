@@ -91,7 +91,7 @@ function createLocationCard(info, iconClass) {
     }
     
     // Telegram Бот (общая кнопка)
-    buttonsHtml += `<a href="https://t.me/pelikanalacol" target="_blank" class="contact-btn" style="margin-top: 10px; background: linear-gradient(135deg, #0088cc, #005f8f);"><i class="fab fa-telegram-plane"></i> Telegram бот</a>`;
+    buttonsHtml += `<a href="https://t.me/Pelican_alacol_hotel_bot" target="_blank" class="contact-btn" style="margin-top: 10px; background: linear-gradient(135deg, #0088cc, #005f8f);"><i class="fab fa-telegram-plane"></i> Telegram бот</a>`;
 
     // Сборка
     card.innerHTML = `

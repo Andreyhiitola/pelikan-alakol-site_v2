@@ -4,6 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Меню Пеликан-Алаколь</title>
+
+<!-- ✅ TELEGRAM MINI APP DETECTION - СРАЗУ В HEAD -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+// Адаптация для Telegram Mini App - выполняется ДО отрисовки страницы
+if (window.Telegram?.WebApp?.initData) {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    
+    // Добавляем CSS для скрытия крестиков
+    const style = document.createElement('style');
+    style.textContent = 'a[href="index.html"] { display: none !important; }';
+    document.head.appendChild(style);
+    
+    // Применяем тему Telegram
+    window.addEventListener('DOMContentLoaded', () => {
+        document.body.style.background = tg.themeParams.bg_color || '#fff';
+    });
+}
+</script>
+
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 20px; }
@@ -29,13 +51,24 @@ body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7f
 .dish-price { font-size: 1.9em; font-weight: bold; color: #e74c3c; text-shadow: 1px 1px 2px rgba(231,76,60,0.2); margin-top: auto; }
 .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #7f8c8d; }
 .empty-state h2 { font-size: 2em; margin-bottom: 15px; }
-@media print {
-    body { background: white !important; padding: 0 !important; }
-    .controls, .category-filter { display: none !important; }
-    .menu-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
-    .dish-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #bdc3c7 !important; padding: 10px !important; margin-bottom: 10px; }
+
+/* Крестик закрытия */
+.close-button {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 10000;
+    color: #333;
+    font-size: 32px;
+    font-weight: 900;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
-@media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; gap: 15px; } .controls { flex-direction: column; width: 100%; } .search-box { width: 100%; } }
+.close-button:hover {
+    color: #ef4444;
+    transform: scale(1.3) rotate(90deg);
+}
 
 /* Расписание столовой */
 .schedule-item {
@@ -78,14 +111,26 @@ body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7f
     color: #229954;
     font-weight: bold;
 }
-@media (max-width: 768px) {
-    .schedule-item {
-        padding: 12px 20px;
-    }
+
+@media print {
+    body { background: white !important; padding: 0 !important; }
+    .controls, .category-filter, .close-button { display: none !important; }
+    .menu-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
+    .dish-card { break-inside: avoid; box-shadow: none !important; border: 1px solid #bdc3c7 !important; padding: 10px !important; margin-bottom: 10px; }
+}
+
+@media (max-width: 768px) { 
+    .menu-grid { grid-template-columns: 1fr; gap: 15px; } 
+    .controls { flex-direction: column; width: 100%; } 
+    .search-box { width: 100%; }
+    .schedule-item { padding: 12px 20px; }
 }
 </style>
 </head>
 <body>
+
+<!-- ✅ ОДИН КРЕСТИК -->
+<a href="index.html" class="close-button" title="На главную">✕</a>
 
 <div class="header">
     <h1>🍽️ Меню Пеликан-Алаколь</h1>
@@ -113,33 +158,9 @@ body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #f5f7f
     </div>
 </div>
 
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
-</div>
-
 <div class="controls">
     <button class="btn btn-primary" onclick="window.print()">🖨️ Печать меню</button>
     <input type="text" class="search-box" id="searchBox" placeholder="🔍 Поиск блюда..." oninput="filterMenu()">
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
 </div>
 
 <div class="category-filter">
@@ -147,105 +168,28 @@ a[href="index.html"]:hover {
     <button class="category-btn" onclick="filterByCategory('Завтрак', this)">🌅 Завтрак</button>
     <button class="category-btn" onclick="filterByCategory('Обед', this)">🍲 Обед</button>
     <button class="category-btn" onclick="filterByCategory('Ужин', this)">🌙 Ужин</button>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
 </div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
-</div>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
-</div>
-
-<!-- ⚪ ПРОСТОЙ КРЕСТИК -->
-</a>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.2) rotate(90deg);
-}
-</style>
-
-<div id="menuContainer">
 
 <div id="menuContainer">
     <div class="empty-state">
         <p>Загрузка меню...</p>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
     </div>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
 </div>
 
 <script>
 let currentCategory = 'Все';
 let globalMenuData = {};
 
-
 // Отображение и подсветка расписания
 function displaySchedule(schedule) {
     const scheduleBlock = document.getElementById('scheduleBlock');
     if (!scheduleBlock) return;
     
-    // Показываем блок
     scheduleBlock.style.display = 'block';
     
-    // Определяем текущее время
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
     
-    // Проверяем каждый прием пищи
     Object.keys(schedule).forEach(mealKey => {
         const meal = schedule[mealKey];
         const [startH, startM] = meal.start.split(':').map(Number);
@@ -254,7 +198,6 @@ function displaySchedule(schedule) {
         const startTime = startH * 60 + startM;
         const endTime = endH * 60 + endM;
         
-        // Если сейчас время этого приема пищи - подсвечиваем
         if (currentTime >= startTime && currentTime <= endTime) {
             const item = document.querySelector(`[data-meal="${mealKey}"]`);
             if (item) item.classList.add('active');
@@ -264,20 +207,16 @@ function displaySchedule(schedule) {
 
 async function loadMenu() {
     try {
-        // Обход кэша с помощью timestamp
         const timestamp = new Date().getTime();
         const response = await fetch('menu.json?v=' + timestamp);
         
         if (!response.ok) throw new Error('Файл menu.json не найден!');
         const jsonData = await response.json();
-
         
-        // Обработка расписания
         if (jsonData.schedule) {
             displaySchedule(jsonData.schedule);
         }
         
-        // Нормализация данных (поддержка и {menu: [...]}, и просто [...])
         let dishesArray = [];
         if (Array.isArray(jsonData)) {
             dishesArray = jsonData;
@@ -289,7 +228,6 @@ async function loadMenu() {
 
         if (!dishesArray.length) throw new Error('Меню пустое');
 
-        // Разбиваем плоский список на категории
         globalMenuData = {
             'Завтрак': dishesArray.filter(d => d.category === 'Завтрак'),
             'Обед': dishesArray.filter(d => d.category === 'Обед'),
@@ -305,21 +243,6 @@ async function loadMenu() {
             <div class="empty-state">
                 <h2>❌ Ошибка загрузки меню</h2>
                 <p>${err.message}</p>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
             </div>
         `;
     }
@@ -335,8 +258,6 @@ function renderMenu() {
 
     categoriesToShow.forEach(category => {
         let dishes = globalMenuData[category] || [];
-        
-        // Фильтрация поиском
         dishes = dishes.filter(dish => dish.name.toLowerCase().includes(searchTerm));
         
         if (dishes.length === 0) return;
@@ -351,86 +272,11 @@ function renderMenu() {
             <div class="menu-grid">
                 ${dishes.map(dish => `
                     <div class="dish-card">
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
                         <div class="dish-name">${dish.name}</div>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
                         <div class="dish-weight">${dish.weight}</div>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
                         <div class="dish-price">${dish.price} ₸</div>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
                     </div>
                 `).join('')}
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
             </div>
         `;
         container.appendChild(section);
@@ -441,21 +287,6 @@ a[href="index.html"]:hover {
             <div class="empty-state">
                 <h2>🍽️ Блюда не найдены</h2>
                 <p>Попробуйте изменить запрос или выбрать другую категорию</p>
-
-<!-- ✕ КРЕСТИК (100% КЛИКАЕТСЯ) -->
-<div style="position:fixed;top:15px;right:15px;z-index:10000;padding:15px;pointer-events:auto;">
-  <a href="index.html" style="color:#333;font-size:32px;font-weight:900;text-decoration:none;display:inline-block;transition:all 0.3s ease;pointer-events:auto;" title="На главную">
-    ✕
-  </a>
-</div>
-
-<style>
-a[href="index.html"]:hover {
-  color:#ef4444 !important;
-  transform:scale(1.3) rotate(90deg);
-}
-</style>
-
             </div>
         `;
     }
@@ -472,26 +303,8 @@ function filterMenu() {
     renderMenu();
 }
 
-// Инициализация
 loadMenu();
 </script>
 
 </body>
 </html>
-
-<script>
-// Адаптация для Telegram Mini App
-if (window.Telegram?.WebApp?.initData) {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-    
-    // Скрываем ВСЕ крестики (ссылки на главную)
-    document.querySelectorAll('a[href="index.html"]').forEach(link => {
-        link.style.display = 'none';
-    });
-    
-    // Применяем тему Telegram
-    document.body.style.background = tg.themeParams.bg_color || '#fff';
-}
-</script>

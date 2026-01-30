@@ -111,25 +111,46 @@ function createDishCard(item) {
     const card = document.createElement('div');
     card.className = 'dish-card';
 
-    card.innerHTML = `
-        <img 
-            src="${item.image || 'img/placeholder.jpg'}" 
-            class="dish-img" 
-            alt="${item.name.replace(/"/g, '&quot;')}"
-            onerror="this.src='img/placeholder.jpg'"
-        >
-        <div class="dish-info">
-            <h3 class="dish-name">${item.name}</h3>
-            ${item.description ? `<p class="dish-description">${item.description}</p>` : ''}
-            <p class="dish-price">${item.price.toLocaleString('ru-RU')} ₸</p>
-            <button 
-                class="add-btn" 
-                onclick="addToCart('${item.id}', '${item.name.replace(/'/g, "\\'")}', ${item.price})"
-            >
-                <i class="fas fa-cart-plus"></i> Добавить
-            </button>
-        </div>
-    `;
+    // ✅ ИСПРАВЛЕНИЕ: создаем элементы через DOM вместо innerHTML с onclick
+    const img = document.createElement('img');
+    img.src = item.image || 'img/placeholder.jpg';
+    img.className = 'dish-img';
+    img.alt = item.name;
+    img.onerror = function() { this.src = 'img/placeholder.jpg'; };
+
+    const dishInfo = document.createElement('div');
+    dishInfo.className = 'dish-info';
+
+    const dishName = document.createElement('h3');
+    dishName.className = 'dish-name';
+    dishName.textContent = item.name;
+
+    dishInfo.appendChild(dishName);
+
+    if (item.description) {
+        const dishDesc = document.createElement('p');
+        dishDesc.className = 'dish-description';
+        dishDesc.textContent = item.description;
+        dishInfo.appendChild(dishDesc);
+    }
+
+    const dishPrice = document.createElement('p');
+    dishPrice.className = 'dish-price';
+    dishPrice.textContent = `${item.price.toLocaleString('ru-RU')} ₸`;
+    dishInfo.appendChild(dishPrice);
+
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-btn';
+    addBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Добавить';
+    
+    // ✅ ИСПРАВЛЕНИЕ: используем addEventListener вместо onclick в HTML
+    addBtn.addEventListener('click', () => {
+        addToCart(item.id, item.name, item.price);
+    });
+
+    dishInfo.appendChild(addBtn);
+    card.appendChild(img);
+    card.appendChild(dishInfo);
 
     return card;
 }
@@ -200,28 +221,60 @@ function updateCart() {
         return;
     }
 
-    cartItems.innerHTML = cart.map(item => `
-        <li>
-            <div class="cart-item-info">
-                <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">
-                    ${item.price.toLocaleString('ru-RU')} ₸ × ${item.quantity}
-                </div>
-            </div>
-            <div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <button class="btn-quantity" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">−</button>
-                    <span style="min-width: 30px; text-align: center; font-weight: bold;">
-                        ${item.quantity}
-                    </span>
-                    <button class="btn-quantity" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
-                    <button class="remove-btn" onclick="removeFromCart('${item.id}')" title="Удалить из заказа">
-                        ×
-                    </button>
-                </div>
-            </div>
-        </li>
-    `).join('');
+    // ✅ ИСПРАВЛЕНИЕ: создаем элементы через DOM вместо innerHTML с onclick
+    cartItems.innerHTML = '';
+    
+    cart.forEach(item => {
+        const li = document.createElement('li');
+        
+        const itemInfo = document.createElement('div');
+        itemInfo.className = 'cart-item-info';
+        
+        const itemName = document.createElement('div');
+        itemName.className = 'cart-item-name';
+        itemName.textContent = item.name;
+        
+        const itemPrice = document.createElement('div');
+        itemPrice.className = 'cart-item-price';
+        itemPrice.textContent = `${item.price.toLocaleString('ru-RU')} ₸ × ${item.quantity}`;
+        
+        itemInfo.appendChild(itemName);
+        itemInfo.appendChild(itemPrice);
+        
+        const controls = document.createElement('div');
+        const controlsInner = document.createElement('div');
+        controlsInner.style.cssText = 'display: flex; gap: 10px; align-items: center;';
+        
+        const btnMinus = document.createElement('button');
+        btnMinus.className = 'btn-quantity';
+        btnMinus.textContent = '−';
+        btnMinus.addEventListener('click', () => updateQuantity(item.id, item.quantity - 1));
+        
+        const quantity = document.createElement('span');
+        quantity.style.cssText = 'min-width: 30px; text-align: center; font-weight: bold;';
+        quantity.textContent = item.quantity;
+        
+        const btnPlus = document.createElement('button');
+        btnPlus.className = 'btn-quantity';
+        btnPlus.textContent = '+';
+        btnPlus.addEventListener('click', () => updateQuantity(item.id, item.quantity + 1));
+        
+        const btnRemove = document.createElement('button');
+        btnRemove.className = 'remove-btn';
+        btnRemove.textContent = '×';
+        btnRemove.title = 'Удалить из заказа';
+        btnRemove.addEventListener('click', () => removeFromCart(item.id));
+        
+        controlsInner.appendChild(btnMinus);
+        controlsInner.appendChild(quantity);
+        controlsInner.appendChild(btnPlus);
+        controlsInner.appendChild(btnRemove);
+        controls.appendChild(controlsInner);
+        
+        li.appendChild(itemInfo);
+        li.appendChild(controls);
+        cartItems.appendChild(li);
+    });
 
     const total = calculateTotal();
     totalElement.textContent = total.toLocaleString('ru-RU');
@@ -324,7 +377,9 @@ function showContactModal(order, orderText) {
                     </p>
                     <div style="background: rgba(76, 175, 80, 0.15); border-left: 4px solid #4CAF50; padding: 20px; border-radius: 10px; margin: 25px 0; text-align: left;">
                         <p style="margin: 0; line-height: 1.6;">
-                            
+                            Вы получите уведомление о статусе заказа в этом чате
+                        </p>
+                    </div>
                     <button onclick="closeContactModal()" class="close-button" style="margin-top: 15px;">
                         Понятно
                     </button>
@@ -434,7 +489,7 @@ async function handleOrderSubmit(e) {
 
 async function handleMiniAppOrder(order, orderText) {
     const tg = getTelegramWebApp();
-        // ✅ ДОБАВЛЯЕМ telegram_user_id и telegram_username
+    // ✅ ДОБАВЛЯЕМ telegram_user_id и telegram_username
     const user = tg?.initDataUnsafe?.user;
     const telegram_user_id = user?.id || null;
     const telegram_username = user?.username || null;
@@ -454,18 +509,18 @@ async function handleMiniAppOrder(order, orderText) {
 
     // 2. Отправляем заказ на backend с initData / user (как было)
     const payload = {
-    ...order,
-    telegram_user_id: telegram_user_id,
-    telegram_username: telegram_username,
-    telegramInitData: tg?.initData || null,
-    telegramUser: tg?.initDataUnsafe?.user || null
-};
+        ...order,
+        telegram_user_id: telegram_user_id,
+        telegram_username: telegram_username,
+        telegramInitData: tg?.initData || null,
+        telegramUser: tg?.initDataUnsafe?.user || null
+    };
 
-
+    // ✅ ИСПРАВЛЕНИЕ: явно указываем charset=utf-8
     const response = await fetch(CONFIG.API_URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
         },
         body: JSON.stringify(payload)
     });
@@ -481,10 +536,11 @@ async function handleMiniAppOrder(order, orderText) {
 // ===================== БРАУЗЕР: HTTP + МОДАЛКА =====================
 
 async function handleBrowserOrder(order, orderText) {
+    // ✅ ИСПРАВЛЕНИЕ: явно указываем charset=utf-8
     const response = await fetch(CONFIG.API_URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
         },
         body: JSON.stringify(order)
     });

@@ -1,21 +1,16 @@
 // ============================================================================
 // bar.js - Бар "Пеликан Алаколь"
 // Меню + корзина + заказ с сайта и Telegram Mini App
+// + Paybox оплата картой (debug-режим)
 // ============================================================================
 
-// Конфигурация API и меню
 const CONFIG = {
-  // URL воркера (API)
-  API_URL: 'https://apitelegram.parkpelikan-alakol.kz/api/order', // уже конечный боевой домен
-
-  // JSON с меню бара
+  API_URL: 'https://apitelegram.parkpelikan-alakol.kz/api/order',
   MENU_JSON: 'barzakaz.json',
 };
 
-// Состояние корзины и меню
 let cart = [];
 let menuData = [];
-
 
 // ===================== TELEGRAM MINI APP DETECT =====================
 
@@ -39,13 +34,9 @@ function getTelegramWebApp() {
 async function loadMenuData() {
     try {
         const response = await fetch(CONFIG.MENU_JSON);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         menuData = await response.json();
-
-        // Нормализуем данные
         menuData = menuData.map((item, index) => ({
             id: item.id || `dish-${index}`,
             name: item.name,
@@ -76,10 +67,8 @@ async function loadMenuData() {
 function renderMenu(data) {
     const container = document.getElementById('menu');
     if (!container) return;
-
     container.innerHTML = '';
 
-    // Группируем по категориям
     const categories = data.reduce((acc, item) => {
         if (!acc[item.category]) acc[item.category] = [];
         acc[item.category].push(item);
@@ -96,11 +85,7 @@ function renderMenu(data) {
 
         const grid = document.createElement('div');
         grid.className = 'menu-grid';
-
-        categories[category].forEach(item => {
-            const card = createDishCard(item);
-            grid.appendChild(card);
-        });
+        categories[category].forEach(item => grid.appendChild(createDishCard(item)));
 
         categoryDiv.appendChild(grid);
         container.appendChild(categoryDiv);
@@ -111,7 +96,6 @@ function createDishCard(item) {
     const card = document.createElement('div');
     card.className = 'dish-card';
 
-    // ✅ ИСПРАВЛЕНИЕ: создаем элементы через DOM вместо innerHTML с onclick
     const img = document.createElement('img');
     img.src = item.image || 'img/placeholder.jpg';
     img.className = 'dish-img';
@@ -124,7 +108,6 @@ function createDishCard(item) {
     const dishName = document.createElement('h3');
     dishName.className = 'dish-name';
     dishName.textContent = item.name;
-
     dishInfo.appendChild(dishName);
 
     if (item.description) {
@@ -142,16 +125,11 @@ function createDishCard(item) {
     const addBtn = document.createElement('button');
     addBtn.className = 'add-btn';
     addBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Добавить';
-    
-    // ✅ ИСПРАВЛЕНИЕ: используем addEventListener вместо onclick в HTML
-    addBtn.addEventListener('click', () => {
-        addToCart(item.id, item.name, item.price);
-    });
+    addBtn.addEventListener('click', () => addToCart(item.id, item.name, item.price));
 
     dishInfo.appendChild(addBtn);
     card.appendChild(img);
     card.appendChild(dishInfo);
-
     return card;
 }
 
@@ -162,12 +140,7 @@ function addToCart(id, name, price) {
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({
-            id,
-            name,
-            price,
-            quantity: 1
-        });
+        cart.push({ id, name, price, quantity: 1 });
     }
     updateCart();
     saveCartToLocalStorage();
@@ -183,7 +156,6 @@ function removeFromCart(id) {
 function updateQuantity(id, newQuantity) {
     const item = cart.find(i => i.id === id);
     if (!item) return;
-
     if (newQuantity <= 0) {
         removeFromCart(id);
     } else {
@@ -196,7 +168,6 @@ function updateQuantity(id, newQuantity) {
 function clearCart() {
     if (cart.length === 0) return;
     if (!confirm('Очистить корзину?')) return;
-
     cart = [];
     updateCart();
     localStorage.removeItem('pelikan_cart');
@@ -221,56 +192,54 @@ function updateCart() {
         return;
     }
 
-    // ✅ ИСПРАВЛЕНИЕ: создаем элементы через DOM вместо innerHTML с onclick
     cartItems.innerHTML = '';
-    
     cart.forEach(item => {
         const li = document.createElement('li');
-        
+
         const itemInfo = document.createElement('div');
         itemInfo.className = 'cart-item-info';
-        
+
         const itemName = document.createElement('div');
         itemName.className = 'cart-item-name';
         itemName.textContent = item.name;
-        
+
         const itemPrice = document.createElement('div');
         itemPrice.className = 'cart-item-price';
         itemPrice.textContent = `${item.price.toLocaleString('ru-RU')} ₸ × ${item.quantity}`;
-        
+
         itemInfo.appendChild(itemName);
         itemInfo.appendChild(itemPrice);
-        
+
         const controls = document.createElement('div');
         const controlsInner = document.createElement('div');
         controlsInner.style.cssText = 'display: flex; gap: 10px; align-items: center;';
-        
+
         const btnMinus = document.createElement('button');
         btnMinus.className = 'btn-quantity';
         btnMinus.textContent = '−';
         btnMinus.addEventListener('click', () => updateQuantity(item.id, item.quantity - 1));
-        
+
         const quantity = document.createElement('span');
         quantity.style.cssText = 'min-width: 30px; text-align: center; font-weight: bold;';
         quantity.textContent = item.quantity;
-        
+
         const btnPlus = document.createElement('button');
         btnPlus.className = 'btn-quantity';
         btnPlus.textContent = '+';
         btnPlus.addEventListener('click', () => updateQuantity(item.id, item.quantity + 1));
-        
+
         const btnRemove = document.createElement('button');
         btnRemove.className = 'remove-btn';
         btnRemove.textContent = '×';
         btnRemove.title = 'Удалить из заказа';
         btnRemove.addEventListener('click', () => removeFromCart(item.id));
-        
+
         controlsInner.appendChild(btnMinus);
         controlsInner.appendChild(quantity);
         controlsInner.appendChild(btnPlus);
         controlsInner.appendChild(btnRemove);
         controls.appendChild(controlsInner);
-        
+
         li.appendChild(itemInfo);
         li.appendChild(controls);
         cartItems.appendChild(li);
@@ -278,7 +247,6 @@ function updateCart() {
 
     const total = calculateTotal();
     totalElement.textContent = total.toLocaleString('ru-RU');
-
     if (submitButton) submitButton.disabled = false;
 }
 
@@ -289,7 +257,6 @@ function saveCartToLocalStorage() {
 function loadCartFromLocalStorage() {
     const saved = localStorage.getItem('pelikan_cart');
     if (!saved) return;
-
     try {
         cart = JSON.parse(saved) || [];
         updateCart();
@@ -303,9 +270,7 @@ function loadCartFromLocalStorage() {
 
 function showLoading(show) {
     const loader = document.getElementById('loading-overlay');
-    if (loader) {
-        loader.style.display = show ? 'flex' : 'none';
-    }
+    if (loader) loader.style.display = show ? 'flex' : 'none';
 
     const submitBtn = document.querySelector('#order-form button[type="submit"]');
     if (submitBtn) {
@@ -319,31 +284,238 @@ function showNotification(message, type = 'success') {
     notification.className = `notification ${type}`;
     notification.textContent = message;
     document.body.appendChild(notification);
-
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s forwards';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
 
-// ===================== ТЕКСТ ЗАКАЗА ДЛЯ МЕССЕНДЖЕРОВ =====================
+// ===================== ТЕКСТ ЗАКАЗА =====================
 
 function formatOrderText(order) {
     let text = `Заказ #${order.orderId}\n`;
     text += `Гость: ${order.name}\n`;
     text += `Комната: ${order.room}\n\n`;
     text += 'Позиции:\n';
-
     order.items.forEach(item => {
         const sum = item.price * item.quantity;
         text += `• ${item.name} x${item.quantity} — ${sum.toLocaleString('ru-RU')} ₸\n`;
     });
-
     text += `\nИтого: ${order.total.toLocaleString('ru-RU')} ₸`;
     return text;
 }
 
-// ===================== МОДАЛКА ДЛЯ САЙТА (WhatsApp / Telegram / Звонок) =====================
+// ===================== PAYBOX: МОДАЛКА ВЫБОРА ОПЛАТЫ =====================
+
+function showPaymentModal(order, orderText) {
+    // Удаляем старую модалку если есть
+    document.getElementById('paymentModal')?.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'paymentModal';
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+
+    const content = document.createElement('div');
+    content.className = 'modal-content';
+    content.style.cssText = 'max-width: 420px; width: 100%;';
+
+    // Заголовок
+    const title = document.createElement('div');
+    title.style.cssText = 'text-align: center; margin-bottom: 24px;';
+    title.innerHTML = `
+        <div style="font-size: 2.5em; margin-bottom: 12px;">💳</div>
+        <h2 style="margin: 0 0 8px;">Способ оплаты</h2>
+        <p style="margin: 0; color: #FFD700; font-size: 1.2em;">
+            Итого: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
+        </p>
+    `;
+    content.appendChild(title);
+
+    // Кнопка — Картой (Paybox)
+    const btnCard = document.createElement('button');
+    btnCard.style.cssText = `
+        display: flex; align-items: center; gap: 16px;
+        width: 100%; padding: 18px 20px; margin-bottom: 14px;
+        border: none; border-radius: 14px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: #fff; font-size: 1.05em; cursor: pointer; text-align: left;
+    `;
+    btnCard.innerHTML = `
+        <span style="font-size: 1.8em;">💳</span>
+        <div>
+            <div style="font-weight: bold; font-size: 1.1em;">Оплатить картой</div>
+            <div style="opacity: 0.85; font-size: 0.9em;">Visa / MasterCard (Paybox)</div>
+        </div>
+    `;
+    btnCard.addEventListener('click', () => {
+        modal.remove();
+        submitOrderWithPayment(order, orderText, 'card');
+    });
+    content.appendChild(btnCard);
+
+    // Кнопка — Наличными
+    const btnCash = document.createElement('button');
+    btnCash.style.cssText = `
+        display: flex; align-items: center; gap: 16px;
+        width: 100%; padding: 18px 20px; margin-bottom: 14px;
+        border: 2px solid rgba(255,255,255,0.2); border-radius: 14px;
+        background: rgba(255,255,255,0.05); color: #fff;
+        font-size: 1.05em; cursor: pointer; text-align: left;
+    `;
+    btnCash.innerHTML = `
+        <span style="font-size: 1.8em;">💵</span>
+        <div>
+            <div style="font-weight: bold; font-size: 1.1em;">Наличными при получении</div>
+            <div style="opacity: 0.7; font-size: 0.9em;">Оплата в баре</div>
+        </div>
+    `;
+    btnCash.addEventListener('click', () => {
+        modal.remove();
+        submitOrderWithPayment(order, orderText, 'cash');
+    });
+    content.appendChild(btnCash);
+
+    // Отмена
+    const btnCancel = document.createElement('button');
+    btnCancel.style.cssText = `
+        width: 100%; padding: 12px; border: none; background: none;
+        color: rgba(255,255,255,0.45); font-size: 0.95em; cursor: pointer;
+    `;
+    btnCancel.textContent = 'Отмена';
+    btnCancel.addEventListener('click', () => modal.remove());
+    content.appendChild(btnCancel);
+
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+}
+
+// ===================== ОТПРАВКА ЗАКАЗА С МЕТОДОМ ОПЛАТЫ =====================
+
+async function submitOrderWithPayment(order, orderText, paymentMethod) {
+    showLoading(true);
+
+    try {
+        const tg = getTelegramWebApp();
+        const user = tg?.initDataUnsafe?.user;
+
+        const payload = {
+            ...order,
+            payment_method: paymentMethod,
+            telegram_user_id: user?.id || order.telegram_user_id || null,
+            telegram_username: user?.username || order.telegram_username || null,
+            telegramInitData: tg?.initData || null,
+            telegramUser: user || null,
+        };
+
+        // Если Mini App — сначала шлём sendData боту
+        if (tg && isInsideTelegramMiniApp()) {
+            try { tg.sendData(JSON.stringify(order)); } catch (e) { console.warn('sendData:', e); }
+        }
+
+        const response = await fetch(CONFIG.API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error(`API error: ${response.status}`);
+
+        const result = await response.json();
+        showLoading(false);
+
+        if (result.status !== 'ok') {
+            showNotification('Ошибка оформления заказа', 'error');
+            return;
+        }
+
+        if (paymentMethod === 'card' && result.payment_url) {
+            // Открываем страницу Paybox
+            showPayboxRedirectModal(order, result.payment_url);
+        } else {
+            // Наличные или fallback (нет ссылки)
+            if (paymentMethod === 'card' && !result.payment_url) {
+                console.warn('Paybox URL не получен, fallback на наличные');
+            }
+            showContactModal(order, orderText);
+        }
+
+        // Очистка
+        cart = [];
+        updateCart();
+        localStorage.removeItem('pelikan_cart');
+        const form = document.getElementById('order-form');
+        if (form) form.reset();
+
+    } catch (error) {
+        showLoading(false);
+        console.error('Ошибка оформления заказа:', error);
+        showNotification('Ошибка оформления заказа. Попробуйте ещё раз.', 'error');
+    }
+}
+
+// ===================== PAYBOX: МОДАЛКА РЕДИРЕКТА =====================
+
+function showPayboxRedirectModal(order, paymentUrl) {
+    document.getElementById('payboxRedirectModal')?.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'payboxRedirectModal';
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+
+    const content = document.createElement('div');
+    content.className = 'modal-content';
+    content.style.cssText = 'max-width: 420px; width: 100%; text-align: center;';
+
+    content.innerHTML = `
+        <div style="font-size: 3em; margin-bottom: 16px;">✅</div>
+        <h2 style="margin: 0 0 8px;">Заказ #${order.orderId} создан!</h2>
+        <p style="color: #FFD700; font-size: 1.2em; margin: 0 0 20px;">
+            ${order.total.toLocaleString('ru-RU')} ₸
+        </p>
+        <div style="
+            background: rgba(37,99,235,0.15); border-left: 4px solid #2563eb;
+            padding: 16px; border-radius: 10px; margin-bottom: 24px; text-align: left;
+        ">
+            <p style="margin: 0; line-height: 1.6; font-size: 0.95em;">
+                Нажмите кнопку ниже для перехода на страницу оплаты. 
+                После оплаты вернитесь в Telegram — мы пришлём уведомление.
+            </p>
+        </div>
+    `;
+
+    // Кнопка перехода к оплате
+    const btnPay = document.createElement('button');
+    btnPay.className = 'add-btn';
+    btnPay.style.cssText = 'width: 100%; padding: 16px; font-size: 1.1em; margin-bottom: 12px;';
+    btnPay.textContent = '💳 Перейти к оплате';
+    btnPay.addEventListener('click', () => {
+        const tg = window.Telegram?.WebApp;
+        if (tg?.openLink) {
+            tg.openLink(paymentUrl);
+        } else {
+            window.open(paymentUrl, '_blank');
+        }
+        modal.remove();
+    });
+    content.appendChild(btnPay);
+
+    // Закрыть без оплаты
+    const btnClose = document.createElement('button');
+    btnClose.style.cssText = `
+        width: 100%; padding: 12px; border: none; background: none;
+        color: rgba(255,255,255,0.45); font-size: 0.9em; cursor: pointer;
+    `;
+    btnClose.textContent = 'Закрыть (оплачу позже)';
+    btnClose.addEventListener('click', () => modal.remove());
+    content.appendChild(btnClose);
+
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+}
+
+// ===================== МОДАЛКА ДЛЯ САЙТА (наличные / звонок) =====================
 
 function showContactModal(order, orderText) {
     let modal = document.getElementById('contactModal');
@@ -354,16 +526,10 @@ function showContactModal(order, orderText) {
         document.body.appendChild(modal);
     }
 
-    const encodedText = encodeURIComponent(orderText);
-    const whatsappUrl = `https://wa.me/77283330002?text=${encodedText}`;
-    const telegramUrl = `https://t.me/Pelicanalacolhotelbot?text=${encodedText}`;
     const phoneUrl = 'tel:+77283330002';
-
-    // Проверяем откуда открыто
     const isTelegramMiniApp = window.Telegram?.WebApp;
-    
+
     if (isTelegramMiniApp) {
-        // Упрощенная версия для Telegram Mini App
         modal.innerHTML = `
             <div class="modal-content">
                 <div style="text-align: center;">
@@ -377,7 +543,8 @@ function showContactModal(order, orderText) {
                     </p>
                     <div style="background: rgba(76, 175, 80, 0.15); border-left: 4px solid #4CAF50; padding: 20px; border-radius: 10px; margin: 25px 0; text-align: left;">
                         <p style="margin: 0; line-height: 1.6;">
-                            Вы получите уведомление о статусе заказа в этом чате
+                            Вы получите уведомление о статусе заказа в этом чате.
+                            Оплата наличными при получении в баре.
                         </p>
                     </div>
                     <button onclick="closeContactModal()" class="close-button" style="margin-top: 15px;">
@@ -387,7 +554,6 @@ function showContactModal(order, orderText) {
             </div>
         `;
     } else {
-        // Версия для обычного сайта
         modal.innerHTML = `
             <div class="modal-content">
                 <div style="text-align: center;">
@@ -418,9 +584,7 @@ function showContactModal(order, orderText) {
 
 function closeContactModal() {
     const modal = document.getElementById('contactModal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
+    if (modal) modal.style.display = 'none';
 }
 
 // ===================== ОФОРМЛЕНИЕ ЗАКАЗА (ОБЩЕЕ) =====================
@@ -430,7 +594,6 @@ async function handleOrderSubmit(e) {
 
     const nameInput = document.getElementById('name');
     const roomInput = document.getElementById('room');
-
     const name = nameInput?.value?.trim();
     const room = roomInput?.value?.trim();
 
@@ -447,110 +610,24 @@ async function handleOrderSubmit(e) {
     const orderId = 'ORD' + Date.now().toString().slice(-6);
     const total = calculateTotal();
 
+    const tg = getTelegramWebApp();
+    const user = tg?.initDataUnsafe?.user;
+
     const order = {
         orderId,
         name,
         room,
         items: cart,
         total,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        telegram_user_id: user?.id || null,
+        telegram_username: user?.username || null,
     };
 
     const orderText = formatOrderText(order);
-    const isMiniApp = isInsideTelegramMiniApp();
 
-    showLoading(true);
-
-    try {
-        if (isMiniApp) {
-            await handleMiniAppOrder(order, orderText);
-        } else {
-            await handleBrowserOrder(order, orderText);
-        }
-
-        // Очистка состояния
-        cart = [];
-        updateCart();
-        localStorage.removeItem('pelikan_cart');
-
-        const form = document.getElementById('order-form');
-        if (form) form.reset();
-
-        showNotification('Заказ оформлен! Спасибо.', 'success');
-    } catch (error) {
-        console.error('Ошибка оформления заказа:', error);
-        showNotification('Ошибка оформления заказа. Попробуйте ещё раз.', 'error');
-    } finally {
-        showLoading(false);
-    }
-}
-
-// ===================== MINI APP: HTTP + POPUP =====================
-
-async function handleMiniAppOrder(order, orderText) {
-    const tg = getTelegramWebApp();
-    // ✅ ДОБАВЛЯЕМ telegram_user_id и telegram_username
-    const user = tg?.initDataUnsafe?.user;
-    const telegram_user_id = user?.id || null;
-    const telegram_username = user?.username || null;
-    
-    // Добавляем в order
-    order.telegram_user_id = telegram_user_id;
-    order.telegram_username = telegram_username;
-
-    // 1. Отправляем данные боту через WebApp API (необязательно, но полезно)
-    if (tg) {
-        try {
-            tg.sendData(JSON.stringify(order));
-        } catch (e) {
-            console.warn('Ошибка tg.sendData:', e);
-        }
-    }
-
-    // 2. Отправляем заказ на backend с initData / user (как было)
-    const payload = {
-        ...order,
-        telegram_user_id: telegram_user_id,
-        telegram_username: telegram_username,
-        telegramInitData: tg?.initData || null,
-        telegramUser: tg?.initDataUnsafe?.user || null
-    };
-
-    // ✅ ИСПРАВЛЕНИЕ: явно указываем charset=utf-8
-    const response = await fetch(CONFIG.API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-        throw new Error(`API error (MiniApp): ${response.status}`);
-    }
-
-    // 3. Вместо tg.showPopup показываем наше модальное окно c 3 вариантами
-    showContactModal(order, orderText);
-}
-
-// ===================== БРАУЗЕР: HTTP + МОДАЛКА =====================
-
-async function handleBrowserOrder(order, orderText) {
-    // ✅ ИСПРАВЛЕНИЕ: явно указываем charset=utf-8
-    const response = await fetch(CONFIG.API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify(order)
-    });
-
-    if (!response.ok) {
-        throw new Error(`API error (browser): ${response.status}`);
-    }
-
-    // Показываем модалку с WhatsApp/Telegram/звонком
-    showContactModal(order, orderText);
+    // ── Показываем выбор способа оплаты ──
+    showPaymentModal(order, orderText);
 }
 
 // ===================== ИНИЦИАЛИЗАЦИЯ =====================
@@ -571,7 +648,6 @@ document.addEventListener('DOMContentLoaded', () => {
         clearBtn.addEventListener('click', clearCart);
     }
 
-    // Если это Telegram Mini App — инициализируем WebApp
     if (isInsideTelegramMiniApp()) {
         getTelegramWebApp();
     }
@@ -579,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Система заказов бара готова!');
 });
 
-// Экспорт в глобальную область, чтобы работали onclick в HTML
+// Экспорт в глобальную область
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 window.updateQuantity = updateQuantity;

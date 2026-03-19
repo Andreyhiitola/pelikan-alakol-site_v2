@@ -408,10 +408,6 @@ async function submitOrderWithPayment(order, orderText, paymentMethod) {
             telegramUser: user || null,
         };
 
-        // Если Mini App — сначала шлём sendData боту
-        if (tg && isInsideTelegramMiniApp()) {
-            try { tg.sendData(JSON.stringify(order)); } catch (e) { console.warn('sendData:', e); }
-        }
 
         const response = await fetch(CONFIG.API_URL, {
             method: 'POST',

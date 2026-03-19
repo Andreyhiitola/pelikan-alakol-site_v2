@@ -3,7 +3,7 @@
     "category": "Завтрак",
     "name": "Каша рисовая",
     "weight": "250/500 гр",
-    "price": "400/820"
+    "price": "400/800"
   },
   {
     "category": "Завтрак",
@@ -15,91 +15,91 @@
     "category": "Завтрак",
     "name": "Яичница 1 яйцо",
     "weight": "1 шт",
-    "price": 210
+    "price": "210"
   },
   {
     "category": "Завтрак",
     "name": "Яйцо вареное",
     "weight": "1 шт",
-    "price": 150
+    "price": "150"
   },
   {
     "category": "Завтрак",
     "name": "Вареники с картофелем",
     "weight": "250/20",
-    "price": 950
+    "price": "950"
   },
   {
     "category": "Завтрак",
     "name": "Сосиски из индейки жареная 40 гр",
     "weight": "1 шт",
-    "price": 280
+    "price": "280"
   },
   {
     "category": "Завтрак",
     "name": "Сосиска вареная 40 гр",
     "weight": "1 шт",
-    "price": 253
+    "price": "250"
   },
   {
     "category": "Завтрак",
     "name": "Сахар",
     "weight": "шт",
-    "price": 35
+    "price": "35"
   },
   {
     "category": "Завтрак",
     "name": "Хлеб",
     "weight": "1 кус",
-    "price": 35
+    "price": "35"
   },
   {
     "category": "Завтрак",
     "name": "Пирожки печеные с капустой",
     "weight": "50/25",
-    "price": 270
+    "price": "270"
   },
   {
     "category": "Завтрак",
     "name": "Пирожки печеные с картофелем",
     "weight": "50/25",
-    "price": 270
+    "price": "270"
   },
   {
     "category": "Завтрак",
     "name": "Булочка с крошкой",
     "weight": "50 гр",
-    "price": 200
+    "price": "200"
   },
   {
     "category": "Завтрак",
     "name": "Сосиска в тесте",
     "weight": "50/40",
-    "price": 350
+    "price": "350"
   },
   {
     "category": "Завтрак",
     "name": "Чай пакетированый",
     "weight": "1 шт",
-    "price": 35
+    "price": "35"
   },
   {
     "category": "Завтрак",
     "name": "Морс",
     "weight": "220 мл",
-    "price": 350
+    "price": "350"
   },
   {
     "category": "Завтрак",
     "name": "Компот",
     "weight": "220 мл",
-    "price": 250
+    "price": "250"
   },
   {
     "category": "Обед",
     "name": "Суп картофельный с горохом",
     "weight": "250/10 500/10",
-    "price": "зу"
+    "price": "700/1100"
   },
   {
     "category": "Обед",
@@ -111,55 +111,55 @@
     "category": "Обед",
     "name": "Котлета полтавская 100 гр",
     "weight": "1 шт",
-    "price": 1200
+    "price": "1200"
   },
   {
     "category": "Обед",
     "name": "Чахохбили из окорочков",
     "weight": "100/100",
-    "price": 950
+    "price": "950"
   },
   {
     "category": "Обед",
     "name": "Пельмени с маслом и б/ бульона",
     "weight": "250 гр",
-    "price": 1500
+    "price": "1500"
   },
   {
     "category": "Обед",
     "name": "Гарнир- картофельное пюре",
     "weight": "250 гр",
-    "price": 550
+    "price": "550"
   },
   {
     "category": "Обед",
     "name": "Гарнир- рожки",
     "weight": "200 гр",
-    "price": 450
+    "price": "450"
   },
   {
     "category": "Обед",
     "name": "Гарнир- гречка",
     "weight": "200 гр",
-    "price": 450
+    "price": "450"
   },
   {
     "category": "Обед",
     "name": "Гарнир- рис",
     "weight": "200 гр",
-    "price": 500
+    "price": "500"
   },
   {
     "category": "Обед",
     "name": "Салат- нарезка",
     "weight": "100 гр",
-    "price": 250
+    "price": "250"
   },
   {
     "category": "Обед",
     "name": "Салат Щетка",
     "weight": "100 гр",
-    "price": 300
+    "price": "300"
   },
   {
     "category": "Ужин",
@@ -171,24 +171,24 @@
     "category": "Ужин",
     "name": "Манты дрожевые 20/40",
     "weight": "1 шт",
-    "price": 350
+    "price": "350"
   },
   {
     "category": "Ужин",
     "name": "Котлета пожарская",
     "weight": "100 гр",
-    "price": 1000
+    "price": "1000"
   },
   {
     "category": "Ужин",
     "name": "Крылышко запеченое",
     "weight": "100 гр",
-    "price": 500
+    "price": "500"
   },
   {
     "category": "Ужин",
     "name": "Морковь по корейски",
     "weight": "100 гр",
-    "price": 300
+    "price": "300"
   }
 ]

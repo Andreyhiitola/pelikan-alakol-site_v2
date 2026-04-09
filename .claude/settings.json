@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "Загружаю дорожную карту...",
+            "command": "python3 -c \"\nimport json, os\nd = '/home/andysag/.claude/projects/-home-andysag-Desktop-pelikan-alakol-site-v2/memory'\nout = []\nfor f in ['roadmap.md', 'review_bar_html.md']:\n    try:\n        content = open(os.path.join(d, f)).read()\n        out.append('=== ' + f + ' ===\\n' + content)\n    except:\n        pass\nctx = '\\n\\n'.join(out)\nprint(json.dumps({'hookSpecificOutput': {'hookEventName': 'SessionStart', 'additionalContext': ctx}}))\n\""
+          }
+        ]
+      }
+    ]
+  }
+}

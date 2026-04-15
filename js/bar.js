@@ -12,6 +12,14 @@ const CONFIG = {
 let cart = [];
 let menuData = [];
 
+// ===================== УТИЛИТЫ =====================
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // ===================== TELEGRAM MINI APP DETECT =====================
 
 function isInsideTelegramMiniApp() {
@@ -575,7 +583,6 @@ function showContactModal(order, orderText) {
     }
 
     modal.style.display = 'flex';
-    window.currentOrderText = orderText;
 }
 
 function closeContactModal() {

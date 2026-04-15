@@ -9,6 +9,11 @@ Static hotel website for "Пеликан Алаколь" (Pelikan Alakol) resort
 **Live site:** https://pelikan-alakol.kz  
 **Bot:** @Pelican_alacol_hotel_bot (repo: https://github.com/Andreyhiitola/pelikan-bot)
 
+## Knowledge Base
+
+- `wiki/INDEX.md` — карта знаний (архитектура, концепции, журнал)
+- `STATUS.md` — что работает, что сломано, ближайшие задачи
+
 ## Session Workflow
 
 **At the start of each session** — the SessionStart hook automatically injects the roadmap and open issues from memory into context. Review them before starting work.
@@ -55,9 +60,11 @@ All page content is driven by JSON files fetched at runtime. `js/main.js` loads 
 
 ### Key JS modules
 - `js/bar.js` — self-contained module: loads `barzakaz.json`, renders menu, manages cart (persisted to `localStorage`), handles order submission with payment-method modal (card via Paybox or cash). Detects Telegram Mini App context via `window.Telegram.WebApp`.
-- `js/reviews.js` — fetches live reviews from bot API, renders cards with per-criterion scores.
+- `js/reviews.js` — fetches live reviews from bot API, renders cards with per-criterion scores. Contains `escapeHtml()` utility (reuse this for XSS fixes in `bar.js`).
 - `js/infrastructure.js` — renders amenity cards from `infrastructure.json`; `INFRASTRUCTURE_LINKS` maps card titles to internal pages.
-- `js/main.js` — orchestrates JSON loading and dispatches to render functions.
+- `js/main.js` — orchestrates JSON loading into `window.data`, then dispatches to `window.renderXxx()` callbacks exported by each module.
+- `js/navigation.js`, `js/dark-mode.js`, `js/mobile-menu.js` — sitewide UI included on every page (sticky nav, theme toggle, hamburger menu).
+- Other page-scoped modules: `js/gallery.js`, `js/accommodation.js`, `js/booking.js`, `js/activities.js`, `js/faq.js`, `js/contacts.js`, `js/promo.js`, `js/weather.js`, `js/map.js`, `js/menu.js`.
 
 ### Backend integration (external — not in this repo)
 - **Bar orders:** `POST https://apitelegram.parkpelikan-alakol.kz/api/order`
@@ -65,8 +72,25 @@ All page content is driven by JSON files fetched at runtime. `js/main.js` loads 
 - For local development, swap `CONFIG.API_URL` in `js/bar.js` to `http://localhost:8080/api/order`
 - Bot runs on VPS `85.192.40.138`, Docker Compose, port 8080
 
+**Order payload schema** (POST `/api/order`):
+```json
+{
+  "orderId": "1736187645123",
+  "name": "Иван",
+  "room": "205",
+  "telegram": "ivan_ivanov",
+  "items": [{ "id": "burger-1", "name": "Бургер", "price": 3800, "quantity": 2 }],
+  "total": 7600,
+  "timestamp": "06.01.2025, 20:34"
+}
+```
+Response: `{ "status": "ok", "order_id": "..." }`
+
 ### Telegram Mini App
 `bar.html` and `miniapp.html` include the Telegram WebApp SDK. `isInsideTelegramMiniApp()` in `bar.js` gates Mini App–specific behaviour (user data extraction from `tg.initDataUnsafe`, `tg.openLink()` for Paybox redirect). When running inside a Mini App, the order confirmation modal shows bot-notification messaging instead of a phone number.
+
+### Stale files — do not edit
+`index-annotated.html`, `index.backup_27.01.html`, `index_optimized.html`, `test.json` — kept for reference only, not served or used.
 
 ## Deployment
 

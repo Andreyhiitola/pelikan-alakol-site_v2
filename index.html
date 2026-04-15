@@ -25,8 +25,8 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 <meta property="og:type" content="website">
 <meta property="og:title" content="Пеликан Алаколь - Семейный отдых на озере">
 <meta property="og:description" content="Центр семейного отдыха на озере Алаколь. Более 5000 деревьев, чистый пляж, комфортные номера.">
-<meta property="og:url" content="https://pelican-alacol.ru">
-<meta property="og:image" content="https://pelican-alacol.ru/images/og-image.jpg">
+<meta property="og:url" content="https://pelikan-alakol.kz">
+<meta property="og:image" content="https://pelikan-alakol.kz/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
@@ -34,10 +34,10 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Пеликан Алаколь - Семейный отдых на озере">
 <meta name="twitter:description" content="Центр семейного отдыха на озере Алаколь. Более 5000 деревьев, чистый пляж, комфортные номера.">
-<meta name="twitter:image" content="https://pelican-alacol.ru/images/twitter-image.jpg">
+<meta name="twitter:image" content="https://pelikan-alakol.kz/images/twitter-image.jpg">
 
 <!-- Canonical URL -->
-<link rel="canonical" href="https://pelican-alacol.ru/">
+<link rel="canonical" href="https://pelikan-alakol.kz/">
 <link rel="stylesheet" href="css/booking.css">
 <link rel="stylesheet" href="css/accommodation.css">
 <!-- Structured Data (Schema.org) -->
@@ -47,7 +47,7 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
   "@type": "Hotel",
   "name": "Парк-отель Пеликан на Алаколе",
   "description": "Центр семейного отдыха на озере Алаколь",
-  "url": "https://pelican-alacol.ru",
+  "url": "https://pelikan-alakol.kz",
   "telephone": "+7-72833-30002",
   "address": {
     "@type": "PostalAddress",
@@ -61,7 +61,7 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
     "latitude": 45.955,
     "longitude": 81.5714
   },
-  "image": "https://pelican-alacol.ru/images/hotel-photo.jpg",
+  "image": "https://pelikan-alakol.kz/images/hotel-photo.jpg",
   "priceRange": "$$",
   "sameAs": [
     "https://www.instagram.com/pelican_alacol/"
@@ -72,7 +72,11 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="css/infrastructure.css?v=3">
 <link rel="stylesheet" href="css/logo.css">  
-<!-- ⚠️ ЗАМЕНИТЕ YOUR_API_KEY НА ВАШ РЕАЛЬНЫЙ GOOGLE MAPS API КЛЮЧ -->
+<!-- ⚠️ API-ключи: ограничьте по домену в Google Cloud Console и OpenWeatherMap Dashboard -->
+<script>
+  window.GOOGLE_MAPS_KEY = 'AIzaSyDWL-aBB2FGBRrtJzxVg4L21yUk_DljhDw';
+  window.OWM_KEY = 'f59a23d3c33e1335a9226aad91b13cdf';
+</script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWL-aBB2FGBRrtJzxVg4L21yUk_DljhDw&loading=async"></script>
 <style>
 :root {
@@ -1401,9 +1405,10 @@ body.dark-mode #docsModalBody p {
 <p>Забронируйте заранее и получите значительную скидку.</p>
 </div>
 <div class="scroll-item">
-<h3>💑 Медовый месяц</h3>
-<p><strong style="color: #FFB84D; font-size: 1.1em;">Отзыв</strong></p>
-<p>ЗДЕСЬ БУДЕТ БЛОК ДЛЯ ОТЗЫВОВ !!!!!!!!!!!!!!!!!!</p>
+<h3>⭐ Отзывы гостей</h3>
+<p><strong style="color: #FFB84D; font-size: 1.1em;">Читайте реальные отзывы</strong></p>
+<p>Гости делятся впечатлениями о своём отдыхе на Алаколе.</p>
+<a href="reviews.html" style="display:inline-block; margin-top:12px; padding:10px 20px; background:linear-gradient(135deg,#2d8659,#4ca876); color:#fff; border-radius:8px; text-decoration:none; font-weight:600;">Все отзывы →</a>
 </div>
 <div class="scroll-item">
 <h3>🎓 Студенческая скидка</h3>
@@ -1590,7 +1595,7 @@ body.dark-mode #docsModalBody p {
 
 <script>
 const CONTACTS_JSON_URL = 'contacts.json';
-const WEATHER_API_KEY = 'f59a23d3c33e1335a9226aad91b13cdf';
+const WEATHER_API_KEY = window.OWM_KEY;
 const LATITUDE = 45.955;
 const LONGITUDE = 81.5714;
 const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${LATITUDE}&lon=${LONGITUDE}&appid=${WEATHER_API_KEY}&units=metric&lang=ru`;

@@ -40,7 +40,6 @@ console.log('✓ CONFIG загружена. Путь:', CONFIG.dataPath);
 <link rel="canonical" href="https://pelican-alacol.ru/">
 <link rel="stylesheet" href="css/booking.css">
 <link rel="stylesheet" href="css/accommodation.css">
-<link rel="stylesheet" href="css/infrastructure.css">
 <!-- Structured Data (Schema.org) -->
 <script type="application/ld+json">
 {
@@ -325,15 +324,6 @@ transform: translateY(-5px);
     object-fit: contain;
     padding: 50px;
     background: #ffffff;
-}
-width: 100%;
-border-radius: 10px;
-margin: 0 auto 15px auto;
-width: 100%;
-border-radius: 10px;  
-height: 250px;
-object-fit: cover;
-transition: all 0.3s;
 }
 .scroll-item:hover img {
 transform: scale(1.05);
@@ -1151,62 +1141,26 @@ width: 100%;
   font-size: 0.9rem;
   gap: 10px;
 }
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 60px;
-  padding: 15px 10px;
-  font-size: 0.9rem;
+/* #docsModal темы */
+#docsModal .modal-content {
+  background: #ffffff;
+  color: #222222;
 }
-<head>
-    <!-- ... другие теги ... -->
-    <style>
-        /* ... тут уже есть много твоего CSS ... */
-        
-        /* ВСТАВЛЯЕШЬ СЮДА: */
-        
-        /* Светлая тема – явно задаём нормальные цвета */
-        #docsModal .modal-content {
-          background: #ffffff;
-          color: #222222;
-        }
-
-        #docsModalTitle,
-        #docsModalBody {
-          color: #222222;
-        }
-
-        /* ТЁМНАЯ ТЕМА */
-        body.dark-mode #docsModal .modal-content,
-        body.dark #docsModal .modal-content {
-          background: #1f2933 !important;
-          color: #f9fafb !important;
-        }
-
-        body.dark-mode #docsModalTitle,
-        body.dark #docsModalTitle,
-        body.dark-mode #docsModalBody,
-        body.dark #docsModalBody {
-          color: #f9fafb !important;
-        }
-
-        body.dark-mode #docsModalBody li,
-        body.dark #docsModalBody li,
-        body.dark-mode #docsModalBody p,
-        body.dark #docsModalBody p {
-          color: #f9fafb !important;
-        }
-
-    
+#docsModalTitle,
+#docsModalBody {
+  color: #222222;
 }
-
-</style>
-</head>
-
-
-
+body.dark-mode #docsModal .modal-content {
+  background: #1f2933 !important;
+  color: #f9fafb !important;
+}
+body.dark-mode #docsModalTitle,
+body.dark-mode #docsModalBody {
+  color: #f9fafb !important;
+}
+body.dark-mode #docsModalBody li,
+body.dark-mode #docsModalBody p {
+  color: #f9fafb !important;
 }
 
 </style>
@@ -1306,63 +1260,6 @@ width: 100%;
   <button class="hamburger" id="hamburger" aria-label="Меню" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
   </button>
-<nav class="nav-mobile" id="navMobile">
-    <!-- 1. Номера -->
-    <a href="#rooms" onclick="closeMobileMenu()">
-      <i class="fas fa-bed"></i> Номерной фонд
-    </a>
-    <!-- 2. Активности -->
-    <a href="#activities" onclick="closeMobileMenu()">
-      <i class="fas fa-hiking"></i> Активности
-    </a>
-    
-    <!-- 3. Галерея -->
-    <a href="#gallery" onclick="closeMobileMenu()">
-      <i class="fas fa-camera"></i> Галерея
-    </a>
-    
-    <!-- 4. Услуги -->
-    <a href="#infrastructure" onclick="closeMobileMenu()">
-      <a href="#infrastructure" class="header-btn" onclick="setActive(this)"><i class="fas fa-building"></i> Наши услуги</a>
-    </a>
-    
-    <!-- 5. Акции и Отзывы -->
-    <a href="#offers" onclick="closeMobileMenu()">
-      <i class="fas fa-gift"></i> Акции и Отзывы
-    </a>
-          <a href="#infrastructure" class="header-btn" onclick="setActive(this)"><i class="fas fa-building"></i> Наши услуги</a>
-    <!-- Кнопка "Контакты" в меню -->
-    <a href="#" class="header-btn" onclick="openDocsModal('price')">
-        <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
-    </a>
-    <a href="#" class="header-btn" onclick="openDocsModal('rules')">
-        <i class="fas fa-book"></i> Правила проживания
-    </a>
-    <a href="#offers" class="header-btn" onclick="setActive(this)">
-      <i class="fas fa-gift"></i> Акции и Отзывы
-    <a href="index_menu.html" class="header-btn menu-btn">
-      <span>🍽️ МЕНЮ</span>
-    </a>
-        <a href="#" class="header-btn" onclick="openContactsModal(); return false;">
-    <i class="fas fa-phone-alt"></i> Контакты
-    </a>
-  
-   <!-- Кнопка Прайс -->
-<a href="#" onclick="openDocsModal('price'); closeMobileMenu(); return false;">
-    <i class="fas fa-file-invoice-dollar"></i> Прайс-лист
-</a>
-
-<!-- Кнопка Правила -->
-<a href="#" onclick="openDocsModal('rules'); closeMobileMenu(); return false;">
-    <i class="fas fa-book"></i> Правила проживания
-</a>
-
-
-    <!-- 8. КОНТАКТЫ (Обязательно должны быть видны!) -->
-    <a href="#" onclick="closeMobileMenu(); openContactsModal(); return false;" style="display: flex !important;">
-      <i class="fas fa-phone-alt"></i> Контакты
-    </a>
-</nav>
 </header>
 <main>
 <div class="hero-section">
@@ -1518,9 +1415,6 @@ width: 100%;
 <button class="scroll-nav-btn next" onclick="scrollItems('offers', 1)">❯</button>
 </div>
 
-<section id="infrastructure">
-  
-</section>
 </main>
 
 <!-- Модальные окна -->
@@ -1642,12 +1536,7 @@ width: 100%;
         #faqModal .faq-item.active .faq-icon {
             transform: rotate(180deg) !important;
         }
-    
-<<<<<<< HEAD
-}
 
-=======
->>>>>>> 3050cfd2151824f651a527ea10de712628e92fed
 </style>
     <div id="faqContainer">
       <div class="loading">
@@ -1837,29 +1726,6 @@ notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
 document.body.appendChild(notification);
 setTimeout(() => notification.remove(), 3000);
 }
-// ✅ НОВЫЙ КОД КОНТАКТОВ
-// (loadContacts теперь берется из файла js/contacts.js)
-
-async function openContactsModal() {
-    const modal = document.getElementById('contactsModal');
-    if (!modal) return;
-    
-    modal.classList.add('active');
-    
-    // Пробуем вызвать новую функцию из js/contacts.js
-    if (typeof loadContacts === 'function') {
-        await loadContacts();
-    } else {
-        console.error("Critical: loadContacts() not found. Check js/contacts.js");
-    }
-}
-
-// Закрытие модального окна по клику на фон
-document.getElementById('contactsModal')?.addEventListener('click', (e) => {
-    if (e.target.id === 'contactsModal') {
-        e.target.classList.remove('active');
-    }
-});
 
 
 
@@ -1941,18 +1807,7 @@ container.appendChild(createInstagramCard(contacts.instagram));
 container.appendChild(createWebsiteCard(contacts.website));
 }
 
-function openContactsModal() {
-document.getElementById('contactsModal').classList.add('active');
-renderContacts('contactGridModal');
-}
-
-function closeContactsModal() {
-document.getElementById('contactsModal').classList.remove('active');
-}
-
-document.getElementById('contactsModal').addEventListener('click', (e) => {
-});
-// ✅ Новая логика открытия окна
+// Открытие модала контактов
 function openContactsModal() {
     const modal = document.getElementById('contactsModal');
     if (modal) {
@@ -2214,21 +2069,8 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
   document.getElementById('navMobile').classList.remove('active');
   document.querySelector('.hamburger').classList.remove('active');
-  
-  // ✅ НОВОЕ: показываем основное меню
   const mainNav = document.querySelector('nav');
   mainNav.style.display = 'flex';
- //--------------------------------------------------------------------- 
-  
-}
-
-
-  
-function closeMobileMenu() {
-const hamburger = document.getElementById('hamburger');
-const navMobile = document.getElementById('navMobile');
-hamburger.classList.remove('active');
-navMobile.classList.remove('active');
 }
 
 // Закрытие меню при клике на страницу (для десктопа)

@@ -105,7 +105,7 @@ async function loadOffers() {
         const response = await fetch('offer.json');
         if (!response.ok) throw new Error('Ошибка загрузки offer.json');
         const data = await response.json();
-        console.log(`✅ Offers: загружено ${data.length} шт.`);
+        console.log(`✅ Offers: загружено ${data.offers?.length ?? data.length} шт.`);
     } catch (error) {
         console.error('Ошибка акций:', error);
     }

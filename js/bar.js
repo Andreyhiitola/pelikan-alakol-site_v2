@@ -340,27 +340,29 @@ function showPaymentModal(order, orderText) {
     `;
     content.appendChild(title);
 
-    // Кнопка — Картой (Paybox)
-    const btnCard = document.createElement('button');
-    btnCard.style.cssText = `
-        display: flex; align-items: center; gap: 16px;
-        width: 100%; padding: 18px 20px; margin-bottom: 14px;
-        border: none; border-radius: 14px;
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        color: #fff; font-size: 1.05em; cursor: pointer; text-align: left;
-    `;
-    btnCard.innerHTML = `
-        <span style="font-size: 1.8em;">💳</span>
-        <div>
-            <div style="font-weight: bold; font-size: 1.1em;">Оплатить картой</div>
-            <div style="opacity: 0.85; font-size: 0.9em;">Visa / MasterCard (Paybox)</div>
-        </div>
-    `;
-    btnCard.addEventListener('click', () => {
-        modal.remove();
-        submitOrderWithPayment(order, orderText, 'card');
-    });
-    content.appendChild(btnCard);
+    // Кнопка — Картой (Paybox) — только в Telegram Mini App
+    if (isInsideTelegramMiniApp()) {
+        const btnCard = document.createElement('button');
+        btnCard.style.cssText = `
+            display: flex; align-items: center; gap: 16px;
+            width: 100%; padding: 18px 20px; margin-bottom: 14px;
+            border: none; border-radius: 14px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff; font-size: 1.05em; cursor: pointer; text-align: left;
+        `;
+        btnCard.innerHTML = `
+            <span style="font-size: 1.8em;">💳</span>
+            <div>
+                <div style="font-weight: bold; font-size: 1.1em;">Оплатить картой</div>
+                <div style="opacity: 0.85; font-size: 0.9em;">Visa / MasterCard (Paybox)</div>
+            </div>
+        `;
+        btnCard.addEventListener('click', () => {
+            modal.remove();
+            submitOrderWithPayment(order, orderText, 'card');
+        });
+        content.appendChild(btnCard);
+    }
 
     // Кнопка — Наличными
     const btnCash = document.createElement('button');

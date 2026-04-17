@@ -5,17 +5,15 @@
     "name": "Бургер (комбо)",
     "price": 3900,
     "description": "Сочный говяжий бургер с черной булочкой, картофель фри и напиток",
-    "image": "img/burger-black.jpg",
-    "Столбец 7": null
+    "image": "img/burger-black.jpg"
   },
   {
     "id": "burger-devon",
     "category": "FAST-FOOD",
-    "name": "Бургер Девонй (комбо)",
+    "name": "Бургер Двойной (комбо)",
     "price": 4100,
     "description": "Двойной бургер с беконом, картофель фри и напиток",
-    "image": "img/.бургерт_двойной.jpg",
-    "Столбец 7": null
+    "image": "img/burger_twice.jpg"
   },
   {
     "id": "harreci",
@@ -23,8 +21,7 @@
     "name": "Хрустящие крылышки",
     "price": 2100,
     "description": "Хрустящие куриные крылышки с фирменным соусом",
-    "image": "img/крылышки.jpg",
-    "Столбец 7": null
+    "image": "img/крылышки.jpg"
   },
   {
     "id": "fries",
@@ -32,8 +29,7 @@
     "name": "Фри с соусом",
     "price": 900,
     "description": "Золотистый картофель фри с соусом на выбор",
-    "image": "img/картофель фри.jpg",
-    "Столбец 7": null
+    "image": "img/fries_sauce.jpg"
   },
   {
     "id": "potato-cheese",
@@ -41,8 +37,7 @@
     "name": "Картофельные палочки с сыром",
     "price": 1500,
     "description": "Хрустящие картофельные палочки с расплавленным сыром",
-    "image": "img/картоф_палочки_сыр.jpg",
-    "Столбец 7": null
+    "image": "img/картоф_пал_сыр.jpg"
   },
   {
     "id": "cheese-sticks",
@@ -50,8 +45,7 @@
     "name": "Сырные палочки",
     "price": 2100,
     "description": "Моцарелла в хрустящей панировке",
-    "image": "img/сырные палочки.jpg",
-    "Столбец 7": null
+    "image": "img/cheese_sticks.jpg"
   },
   {
     "id": "chicken-sticks",
@@ -59,17 +53,15 @@
     "name": "Куриные палочки",
     "price": 2400,
     "description": "Нежное куриное филе в панировке",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
+    "image": "img/наггетсы.jpg"
   },
   {
     "id": "strips",
     "category": "FAST-FOOD",
     "name": "Стрипсы",
     "price": 2500,
-    "description": "наггетсы.jpg",
-    "image": "img/",
-    "Столбец 7": null
+    "description": "Куриные стрипсы в хрустящей панировке",
+    "image": "img/chicken_strips.jpg"
   },
   {
     "id": "hotdog",
@@ -77,8 +69,7 @@
     "name": "Хот-дог говяжий",
     "price": 2400,
     "description": "Сочная говяжья сосиска с овощами и соусами",
-    "image": "img/хот_дог.jpg",
-    "Столбец 7": null
+    "image": "img/хот_дог.jpg"
   },
   {
     "id": "pizza-pepperoni",
@@ -86,8 +77,7 @@
     "name": "Пицца \"Пепперони\"",
     "price": 3500,
     "description": "Классическая пицца с пепперони и моцареллой",
-    "image": "img/piza_peperony.jpg",
-    "Столбец 7": null
+    "image": "img/piza_peperony.jpg"
   },
   {
     "id": "pizza-margarita",
@@ -95,8 +85,7 @@
     "name": "Пицца \"Маргарита\"",
     "price": 2800,
     "description": "Традиционная итальянская пицца с томатами и базиликом",
-    "image": "img/pizza-margarita.jpg",
-    "Столбец 7": null
+    "image": "img/pizza-margarita.jpg"
   },
   {
     "id": "salad-greek",
@@ -104,8 +93,7 @@
     "name": "Салат \"Греческий\"",
     "price": 1400,
     "description": "Свежие овощи, фета, маслины, оливковое масло",
-    "image": "img/grecheskiy_salad.jpg",
-    "Столбец 7": null
+    "image": "img/grecheskiy_salad.jpg"
   },
   {
     "id": "eggplant-crispy",
@@ -113,8 +101,7 @@
     "name": "Хрустящий баклажан",
     "price": 1500,
     "description": "Запеченный баклажан с чесноком и специями",
-    "image": "img/баклажан_хрустящий.jpg",
-    "Столбец 7": null
+    "image": "img/баклажан_хрустящий.jpg"
   },
   {
     "id": "ramen-chicken",
@@ -122,8 +109,7 @@
     "name": "Рамен с курицей",
     "price": 2100,
     "description": "Японский суп с лапшой, курицей и яйцом",
-    "image": "img/ramen-chicken.jpg.jpg",
-    "Столбец 7": null
+    "image": "img/ramen_chicken.jpg"
   },
   {
     "id": "belderim",
@@ -131,8 +117,7 @@
     "name": "Бельдерим из конины (большая тарелка на 5-6 чел)",
     "price": 18000,
     "description": "Традиционное казахское блюдо из конины. Требуется предзаказ за 2 часа",
-    "image": "img/beshparmak.jpg",
-    "Столбец 7": null
+    "image": "img/beshparmak.jpg"
   },
   {
     "id": "adayskiy",
@@ -140,8 +125,7 @@
     "name": "Адайский с курицей (большая тарелка на 5-6 чел)",
     "price": 14000,
     "description": "Праздничное блюдо с курицей на компанию. Требуется предзаказ за 2 часа",
-    "image": "img/Адайский.jpg",
-    "Столбец 7": null
+    "image": "img/Адайский.jpg"
   },
   {
     "id": "schnitzel-beef",
@@ -149,17 +133,15 @@
     "name": "Шницель говяжий с сыром и овощами",
     "price": 2500,
     "description": "Сочный говяжий шницель с сыром и гарниром из овощей",
-    "image": "img/говяжий_шницель_рис.jpg",
-    "Столбец 7": null
+    "image": "img/говяжий_шницель_рис.jpg"
   },
   {
     "id": "schnitzel-turkey",
     "category": "ГОРЯЧИЕ БЛЮДА",
     "name": "Шницель из индюшки с картофелем фри",
     "price": 2500,
-    "description": "Традиционное рыбное блюдо с овощами",
-    "image": "img/Шницель_индейки_фри.jpg",
-    "Столбец 7": null
+    "description": "Шницель из индюшки с хрустящим картофелем фри",
+    "image": "img/Шницель_индейки_фри.jpg"
   },
   {
     "id": "teriyaki",
@@ -167,8 +149,7 @@
     "name": "Курица терияки с рисом",
     "price": 3000,
     "description": "Куриное филе в соусе терияки с рисом и овощами",
-    "image": "img/тереяки_chicken_rice.jpg",
-    "Столбец 7": null
+    "image": "img/тереяки_chicken_rice.jpg"
   },
   {
     "id": "hauari-alakol",
@@ -176,8 +157,7 @@
     "name": "Хауари по-алакольски",
     "price": 2500,
     "description": "Местное блюдо из рыбы по фирменному рецепту",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
+    "image": "img/placeholder.jpg"
   },
   {
     "id": "hauari-mergen",
@@ -185,8 +165,7 @@
     "name": "Хауари по-мергенски",
     "price": 2000,
     "description": "Традиционное рыбное блюдо с овощами",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
+    "image": "img/placeholder.jpg"
   },
   {
     "id": "bread-cheese",
@@ -194,35 +173,30 @@
     "name": "Хлебный с сыром",
     "price": 1000,
     "description": "Запеченный хлеб с сырной начинкой",
-    "image": "img/placeholder.jpg",
-    "Столбец 7": null
+    "image": "img/placeholder.jpg"
   },
-  
   {
     "id": "hachepury_adjarskiy",
     "category": "ГОРЯЧИЕ БЛЮДА",
-    "name": "",
+    "name": "Хачапури по-аджарски",
     "price": 1000,
     "description": "Хачапури по аджарски",
-    "image": "img/hachapury_adjarskiy.jpg",
-    "Столбец 7": null
+    "image": "img/hachapury_adjarskiy.jpg"
   },
   {
     "id": "coffe_black",
     "category": "Напитки",
-    "name": "",
+    "name": "Кофе",
     "price": 1000,
-    "description": "Кофе",
-    "image": "img/kofe.jpg",
-    "Столбец 7": null
+    "description": "Ароматный кофе",
+    "image": "img/kofe.jpg"
   },
   {
     "id": "tea",
     "category": "Напитки",
-    "name": "",
+    "name": "Чай",
     "price": 1000,
-    "description": "Чай",
-    "image": "img/tee.jpg",
-    "Столбец 7": null
-  }  
+    "description": "Горячий чай",
+    "image": "img/tee.jpg"
+  }
 ]

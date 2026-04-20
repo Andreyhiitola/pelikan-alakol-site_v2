@@ -860,6 +860,38 @@ nav { display: flex; align-items: center; gap: 4px; }
 .act-location i { color: var(--green); font-size: .7rem; }
 
 /* ============================================================
+   OFFERS
+   ============================================================ */
+.offers-section {
+  background: var(--bg-alt);
+  padding: 80px 0;
+}
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 768px) {
+  .offers-grid { grid-template-columns: 1fr; }
+}
+.offer-card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 2px 16px rgba(0,0,0,.06);
+  transition: transform .2s, box-shadow .2s;
+}
+.offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+}
+.offer-icon { font-size: 2.8rem; margin-bottom: 16px; }
+.offer-card h3 { font-size: 1.15rem; font-weight: 600; margin: 0 0 12px; color: var(--text); }
+.offer-card p { color: var(--text-muted); font-size: .95rem; line-height: 1.5; margin: 0 0 12px; }
+.offer-bonus { color: var(--green); font-weight: 600; font-size: .9rem; }
+
+/* ============================================================
    ROOMS
    ============================================================ */
 .rooms-section {
@@ -2366,104 +2398,13 @@ nav { display: flex; align-items: center; gap: 4px; }
         <span class="section-tag">Номерной фонд</span>
         <h2 class="section-title">Выберите свой номер</h2>
       </div>
-      <a href="#rooms" class="btn-primary" style="white-space:nowrap">
+      <a href="accommodation.html" class="btn-primary" style="white-space:nowrap; display:none" id="roomsMoreBtn">
         Все номера <i class="fas fa-arrow-right"></i>
       </a>
     </div>
 
     <div class="rooms-scroll-wrap">
-      <div class="rooms-scroll" id="roomsScroll">
-
-        <div class="room-card">
-          <div class="room-img">
-            <img src="images/accommodation/Бунгало 3-х местный.png" alt="Бунгало">
-            <span class="room-badge">Популярный</span>
-          </div>
-          <div class="room-info">
-            <h3>Бунгало 3-х местный</h3>
-            <div class="room-meta">
-              <span><i class="fas fa-users"></i> до 3 гостей</span>
-              <span><i class="fas fa-home"></i> Деревянный</span>
-            </div>
-            <div class="room-price">
-              <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html?id=бунгало-3х-местный" class="room-link">Подробнее</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="room-card">
-          <div class="room-img">
-            <img src="images/accommodation/Люкс 2-х местный.png" alt="Люкс">
-            <span class="room-badge" style="background:#c9a227">Люкс</span>
-          </div>
-          <div class="room-info">
-            <h3>Люкс 2-х местный</h3>
-            <div class="room-meta">
-              <span><i class="fas fa-users"></i> до 2 гостей</span>
-              <span><i class="fas fa-star"></i> Премиум</span>
-            </div>
-            <div class="room-price">
-              <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html?id=люкс-2х-местный" class="room-link">Подробнее</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="room-card">
-          <div class="room-img">
-            <img src="images/accommodation/Коттедж 6-ти местный.png" alt="Коттедж">
-            <span class="room-badge" style="background:#0077b6">Для компании</span>
-          </div>
-          <div class="room-info">
-            <h3>Коттедж 6-ти местный</h3>
-            <div class="room-meta">
-              <span><i class="fas fa-users"></i> до 6 гостей</span>
-              <span><i class="fas fa-home"></i> Коттедж</span>
-            </div>
-            <div class="room-price">
-              <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html?id=коттедж-6ти-местный" class="room-link">Подробнее</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="room-card">
-          <div class="room-img">
-            <img src="images/accommodation/Стандарт 2-х местный.png" alt="Стандарт">
-          </div>
-          <div class="room-info">
-            <h3>Стандарт 2-х местный</h3>
-            <div class="room-meta">
-              <span><i class="fas fa-users"></i> до 2 гостей</span>
-              <span><i class="fas fa-building"></i> Корпус</span>
-            </div>
-            <div class="room-price">
-              <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html?id=стандарт-2х-местный" class="room-link">Подробнее</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="room-card">
-          <div class="room-img">
-            <img src="images/accommodation/Бунгало семейный 6-ти местный.png" alt="Семейный бунгало">
-            <span class="room-badge">Семейный</span>
-          </div>
-          <div class="room-info">
-            <h3>Бунгало семейный 6-ти местный</h3>
-            <div class="room-meta">
-              <span><i class="fas fa-users"></i> до 6 гостей</span>
-              <span><i class="fas fa-baby"></i> Для семей</span>
-            </div>
-            <div class="room-price">
-              <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html?id=бунгало-семейный-6ти-местный" class="room-link">Подробнее</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <div class="rooms-scroll" id="roomsScroll"></div>
     </div>
 
     <div class="scroll-btns">
@@ -2570,6 +2511,38 @@ nav { display: flex; align-items: center; gap: 4px; }
     <a href="price.pdf" class="price-pdf-btn" target="_blank">
       <i class="fas fa-file-pdf"></i> Скачать прайс PDF
     </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     OFFERS
+     ============================================================ -->
+<section class="offers-section" id="offers">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:36px">
+      <span class="section-tag">Специальные предложения</span>
+      <h2 class="section-title">Акции</h2>
+    </div>
+    <div class="offers-grid">
+      <div class="offer-card">
+        <div class="offer-icon">💎</div>
+        <h3>Раннее бронирование</h3>
+        <p>Специальное предложение при 100% оплате проживания</p>
+        <div class="offer-bonus">✨ Максимальная выгода</div>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">💳</div>
+        <h3>Гибкая предоплата</h3>
+        <p>Раннее бронирование при внесении предоплаты не менее 40%</p>
+        <div class="offer-bonus">✨ Фиксация цены</div>
+      </div>
+      <div class="offer-card">
+        <div class="offer-icon">⭐</div>
+        <h3>Отзывы о нас</h3>
+        <p>Читайте честные отзывы наших гостей на независимых площадках</p>
+        <div class="offer-bonus">Рейтинг 4.9</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -3417,6 +3390,58 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'ArrowLeft') lightboxNav(-1);
   else if (e.key === 'Escape') closeLightbox();
 });
+</script>
+<script>
+(function() {
+  const BADGES = {
+    'люкс': { text: 'Люкс', color: '#c9a227' },
+    'коттедж': { text: 'Для компании', color: '#0077b6' },
+    'семейн': { text: 'Семейный', color: '#2d8659' },
+    'бунгало': { text: 'Популярный', color: '#2d8659' },
+  };
+  function getBadge(name) {
+    const n = name.toLowerCase();
+    if (n.includes('люкс')) return BADGES['люкс'];
+    if (n.includes('коттедж')) return BADGES['коттедж'];
+    if (n.includes('семейн')) return BADGES['семейн'];
+    if (n.includes('бунгало')) return BADGES['бунгало'];
+    return null;
+  }
+  fetch('accommodation.json')
+    .then(r => r.json())
+    .then(rooms => {
+      const scroll = document.getElementById('roomsScroll');
+      if (!scroll) return;
+      const badge = getBadge;
+      rooms.forEach(room => {
+        const b = badge(room.name);
+        const badgeHtml = b ? `<span class="room-badge" style="background:${b.color}">${b.text}</span>` : '';
+        const price = room.priceRange && room.priceRange !== '-'
+          ? `от ${room.priceRange.split(' - ')[0]} ₸ <span>/ночь</span>`
+          : 'По запросу';
+        const card = document.createElement('div');
+        card.className = 'room-card';
+        card.innerHTML = `
+          <div class="room-img">
+            <img src="${room.imageThumb}" alt="${room.name}" loading="lazy">
+            ${badgeHtml}
+          </div>
+          <div class="room-info">
+            <h3>${room.name}</h3>
+            <div class="room-meta">
+              <span><i class="fas fa-users"></i> до ${room.capacity} гостей</span>
+              <span><i class="fas fa-expand-arrows-alt"></i> ${room.area} м²</span>
+            </div>
+            <div class="room-price">
+              <div class="price-val">${price}</div>
+              <a href="accommodation.html?id=${room.id}" class="room-link">Подробнее</a>
+            </div>
+          </div>`;
+        scroll.appendChild(card);
+      });
+    })
+    .catch(e => console.error('Ошибка загрузки номеров:', e));
+})();
 </script>
 </body>
 </html>

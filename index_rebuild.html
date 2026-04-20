@@ -1933,48 +1933,48 @@ nav { display: flex; align-items: center; gap: 4px; }
     </div>
 
     <div class="gallery-tabs">
-      <button class="g-tab active">Все фото</button>
-      <button class="g-tab">Озеро и пляж</button>
-      <button class="g-tab">Бассейн</button>
-      <button class="g-tab">Территория</button>
-      <button class="g-tab">Столовая</button>
-      <button class="g-tab">Для детей</button>
+      <button class="g-tab active" data-cat="all" onclick="filterGallery(this)">Все фото</button>
+      <button class="g-tab" data-cat="lake" onclick="filterGallery(this)">Озеро и пляж</button>
+      <button class="g-tab" data-cat="pool" onclick="filterGallery(this)">Бассейн</button>
+      <button class="g-tab" data-cat="territory" onclick="filterGallery(this)">Территория</button>
+      <button class="g-tab" data-cat="canteen" onclick="filterGallery(this)">Столовая</button>
+      <button class="g-tab" data-cat="kids" onclick="filterGallery(this)">Для детей</button>
     </div>
 
-    <div class="gallery-grid">
-      <div class="g-item">
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="g-item" data-cat="lake">
         <img src="images/gallery/lake-view/01.jpg" alt="Вид на озеро" loading="lazy">
         <div class="g-overlay">Озеро Алаколь</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="lake">
         <img src="images/gallery/magic-sunset.jpg" alt="Закат" loading="lazy">
         <div class="g-overlay">Закат над озером</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="lake">
         <img src="images/gallery/beach_parom/01.jpg" alt="Пляж" loading="lazy">
         <div class="g-overlay">Пляж и паром</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="pool">
         <img src="images/gallery/outdoor-pool/01.jpg" alt="Бассейн" loading="lazy">
         <div class="g-overlay">Открытый бассейн</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="territory">
         <img src="images/gallery/wooden-house.jpg" alt="Бунгало" loading="lazy">
         <div class="g-overlay">Деревянные бунгало</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="kids">
         <img src="images/gallery/animation/01.jpg" alt="Анимация" loading="lazy">
         <div class="g-overlay">Детская анимация</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="kids">
         <img src="images/gallery/detskayploshadka/01.jpg" alt="Детская площадка" loading="lazy">
         <div class="g-overlay">Детская площадка</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="territory">
         <img src="images/gallery/bonfire-evening.jpg" alt="Вечер" loading="lazy">
         <div class="g-overlay">Вечер у костра</div>
       </div>
-      <div class="g-item">
+      <div class="g-item" data-cat="canteen">
         <img src="images/gallery/stolovay/01.jpg" alt="Столовая" loading="lazy">
         <div class="g-overlay">Столовая</div>
       </div>
@@ -3323,6 +3323,15 @@ async function sendAiMessage() {
 
 function toggleBookingTerms() {
   document.getElementById('bookingTerms').classList.toggle('open');
+}
+
+function filterGallery(btn) {
+  const cat = btn.dataset.cat;
+  document.querySelectorAll('.g-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#galleryGrid .g-item').forEach(item => {
+    item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+  });
 }
 </script>
 </body>

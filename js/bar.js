@@ -98,6 +98,8 @@ function renderMenu(data) {
         categoryDiv.appendChild(grid);
         container.appendChild(categoryDiv);
     });
+
+    document.dispatchEvent(new Event('menuRendered'));
 }
 
 function createDishCard(item) {
@@ -125,17 +127,21 @@ function createDishCard(item) {
         dishInfo.appendChild(dishDesc);
     }
 
-    const dishPrice = document.createElement('p');
+    const foot = document.createElement('div');
+    foot.className = 'dish-footer';
+
+    const dishPrice = document.createElement('span');
     dishPrice.className = 'dish-price';
     dishPrice.textContent = `${item.price.toLocaleString('ru-RU')} ₸`;
-    dishInfo.appendChild(dishPrice);
 
     const addBtn = document.createElement('button');
     addBtn.className = 'add-btn';
-    addBtn.innerHTML = '<i class="fas fa-cart-plus"></i> Добавить';
+    addBtn.innerHTML = '<i class="fas fa-cart-plus"></i> В корзину';
     addBtn.addEventListener('click', () => addToCart(item.id, item.name, item.price));
 
-    dishInfo.appendChild(addBtn);
+    foot.appendChild(dishPrice);
+    foot.appendChild(addBtn);
+    dishInfo.appendChild(foot);
     card.appendChild(img);
     card.appendChild(dishInfo);
     return card;
@@ -190,8 +196,12 @@ function updateCart() {
     const cartItems = document.getElementById('cart-items');
     const totalElement = document.getElementById('total');
     const submitButton = document.querySelector('#order-form button[type="submit"]');
+    const badge = document.getElementById('cart-badge');
 
     if (!cartItems || !totalElement) return;
+
+    const totalQty = cart.reduce((s, i) => s + i.quantity, 0);
+    if (badge) badge.textContent = totalQty;
 
     if (cart.length === 0) {
         cartItems.innerHTML = '<li class="empty-cart">Корзина пуста</li>';

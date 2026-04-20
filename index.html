@@ -1215,18 +1215,6 @@ nav { display: flex; align-items: center; gap: 4px; }
 /* ============================================================
    REBUILD NOTICE BANNER
    ============================================================ */
-.rebuild-notice {
-  background: linear-gradient(90deg, #0f766e, #0284c7);
-  color: white;
-  text-align: center;
-  padding: 10px 20px;
-  font-size: .85rem;
-  font-weight: 500;
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  z-index: 2000;
-}
-.rebuild-notice a { color: #a5f3fc; text-decoration: underline; margin-left: 8px; cursor: pointer; }
 
 /* ============================================================
    MODALS
@@ -1804,10 +1792,6 @@ nav { display: flex; align-items: center; gap: 4px; }
 <body>
 
 <!-- REBUILD NOTICE -->
-<div class="rebuild-notice" id="rebuildNotice">
-  🚧 Это макет нового дизайна (index_rebuild.html) — для сравнения с текущим сайтом
-  <a onclick="document.getElementById('rebuildNotice').remove()">✕ закрыть</a>
-</div>
 
 <!-- ============================================================
      HEADER

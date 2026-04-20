@@ -531,6 +531,80 @@ nav { display: flex; align-items: center; gap: 4px; }
 }
 .g-item:hover .g-overlay { opacity: 1; }
 
+/* ===== Lightbox ===== */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  display: block;
+}
+.lightbox-caption {
+  position: absolute;
+  bottom: -36px;
+  left: 0; right: 0;
+  text-align: center;
+  color: rgba(255,255,255,.8);
+  font-size: .9rem;
+}
+.lightbox-close {
+  position: fixed;
+  top: 20px; right: 24px;
+  background: rgba(255,255,255,.15);
+  border: none;
+  color: white;
+  font-size: 1.6rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+  z-index: 9001;
+}
+.lightbox-close:hover { background: rgba(255,255,255,.3); }
+.lightbox-nav {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,.15);
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+  z-index: 9001;
+}
+.lightbox-nav:hover { background: rgba(255,255,255,.3); }
+.lightbox-nav.prev { left: 16px; }
+.lightbox-nav.next { right: 16px; }
+.lightbox-counter {
+  position: fixed;
+  top: 24px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,.7);
+  font-size: .85rem;
+}
+
 .gallery-more {
   margin-top: 28px;
   text-align: center;
@@ -1910,6 +1984,18 @@ nav { display: flex; align-items: center; gap: 4px; }
 <!-- ============================================================
      GALLERY
      ============================================================ -->
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+  <button class="lightbox-nav prev" onclick="lightboxNav(-1)"><i class="fas fa-chevron-left"></i></button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+  <button class="lightbox-nav next" onclick="lightboxNav(1)"><i class="fas fa-chevron-right"></i></button>
+  <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
 <section class="gallery-section" id="gallery">
   <div class="container">
     <div class="section-head">
@@ -1927,49 +2013,44 @@ nav { display: flex; align-items: center; gap: 4px; }
     </div>
 
     <div class="gallery-grid" id="galleryGrid">
-      <div class="g-item" data-cat="lake">
+      <div class="g-item" data-cat="lake" onclick="openLightbox(this)">
         <img src="images/gallery/lake-view/01.jpg" alt="Вид на озеро" loading="lazy">
         <div class="g-overlay">Озеро Алаколь</div>
       </div>
-      <div class="g-item" data-cat="lake">
+      <div class="g-item" data-cat="lake" onclick="openLightbox(this)">
         <img src="images/gallery/magic-sunset.jpg" alt="Закат" loading="lazy">
         <div class="g-overlay">Закат над озером</div>
       </div>
-      <div class="g-item" data-cat="lake">
+      <div class="g-item" data-cat="lake" onclick="openLightbox(this)">
         <img src="images/gallery/beach_parom/01.jpg" alt="Пляж" loading="lazy">
         <div class="g-overlay">Пляж и паром</div>
       </div>
-      <div class="g-item" data-cat="pool">
+      <div class="g-item" data-cat="pool" onclick="openLightbox(this)">
         <img src="images/gallery/outdoor-pool/01.jpg" alt="Бассейн" loading="lazy">
         <div class="g-overlay">Открытый бассейн</div>
       </div>
-      <div class="g-item" data-cat="territory">
+      <div class="g-item" data-cat="territory" onclick="openLightbox(this)">
         <img src="images/gallery/wooden-house.jpg" alt="Бунгало" loading="lazy">
         <div class="g-overlay">Деревянные бунгало</div>
       </div>
-      <div class="g-item" data-cat="kids">
+      <div class="g-item" data-cat="kids" onclick="openLightbox(this)">
         <img src="images/gallery/animation/01.jpg" alt="Анимация" loading="lazy">
         <div class="g-overlay">Детская анимация</div>
       </div>
-      <div class="g-item" data-cat="kids">
+      <div class="g-item" data-cat="kids" onclick="openLightbox(this)">
         <img src="images/gallery/detskayploshadka/01.jpg" alt="Детская площадка" loading="lazy">
         <div class="g-overlay">Детская площадка</div>
       </div>
-      <div class="g-item" data-cat="territory">
+      <div class="g-item" data-cat="territory" onclick="openLightbox(this)">
         <img src="images/gallery/bonfire-evening.jpg" alt="Вечер" loading="lazy">
         <div class="g-overlay">Вечер у костра</div>
       </div>
-      <div class="g-item" data-cat="canteen">
+      <div class="g-item" data-cat="canteen" onclick="openLightbox(this)">
         <img src="images/gallery/stolovay/01.jpg" alt="Столовая" loading="lazy">
         <div class="g-overlay">Столовая</div>
       </div>
     </div>
 
-    <div class="gallery-more">
-      <a href="#gallery" class="btn-primary" style="display:inline-flex">
-        <i class="fas fa-images"></i> Открыть полную галерею
-      </a>
-    </div>
   </div>
 </section>
 
@@ -3318,6 +3399,40 @@ function filterGallery(btn) {
     item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
   });
 }
+
+let lbItems = [], lbIndex = 0;
+function openLightbox(el) {
+  const all = Array.from(document.querySelectorAll('#galleryGrid .g-item')).filter(i => i.style.display !== 'none');
+  lbItems = all.map(i => ({ src: i.querySelector('img').src, caption: i.querySelector('.g-overlay').textContent.trim() }));
+  lbIndex = all.indexOf(el);
+  showLightboxSlide();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function showLightboxSlide() {
+  const item = lbItems[lbIndex];
+  document.getElementById('lightboxImg').src = item.src;
+  document.getElementById('lightboxCaption').textContent = item.caption;
+  document.getElementById('lightboxCounter').textContent = (lbIndex + 1) + ' / ' + lbItems.length;
+}
+function lightboxNav(dir) {
+  lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+  showLightboxSlide();
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeLightboxOnBg(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  else if (e.key === 'ArrowLeft') lightboxNav(-1);
+  else if (e.key === 'Escape') closeLightbox();
+});
 </script>
 </body>
 </html>

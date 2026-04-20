@@ -4,7 +4,9 @@
 // ============================================================================
 
 const CONFIG = {
-  API_URL: 'https://apitelegram.parkpelikan-alakol.kz/api/order',
+  API_URL: location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+    ? 'http://localhost:8080/api/order'
+    : 'https://apitelegram.parkpelikan-alakol.kz/api/order',
   MENU_JSON: 'barzakaz.json',
 };
 

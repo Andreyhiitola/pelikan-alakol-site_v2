@@ -2,7 +2,9 @@
 // reviews.js - Загрузка и отображение отзывов
 // ============================================================================
 
-const API_URL = 'https://apitelegram.parkpelikan-alakol.kz/api/reviews';
+const API_URL = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+  ? 'http://localhost:8080/api/reviews'
+  : 'https://apitelegram.parkpelikan-alakol.kz/api/reviews';
 
 let allReviews = [];
 let currentSort = 'date';

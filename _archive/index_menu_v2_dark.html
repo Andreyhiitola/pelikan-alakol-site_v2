@@ -84,9 +84,9 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 24px 40px 80px;
-    background: rgba(255,255,255,.07);
-    backdrop-filter: blur(3px);
-    border-radius: 0 0 20px 20px;
+
+
+
 }
 
 /* ===== Schedule block ===== */
@@ -215,25 +215,13 @@ main {
     display: flex;
     flex-direction: column;
     transition: all .25s;
-    border-left: 4px solid #ccc;
+
 }
 .dish-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 32px rgba(0,0,0,.3);
 }
 /* Цвет полоски зависит от категории — задаётся в JS через data-category */
-.dish-card[data-category="Завтрак"] { border-left-color: #f7931e; }
-.dish-card[data-category="Обед"]    { border-left-color: #2d8659; }
-.dish-card[data-category="Ужин"]    { border-left-color: #0088cc; }
-
-.dish-name {
-    font-size: 1em;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 5px;
-    flex: 1;
-    line-height: 1.35;
-}
 .dish-weight {
     font-size: .82em;
     color: #888;
@@ -412,7 +400,7 @@ function renderMenu() {
             <h2 class="section-title">${icons[cat] || '🍽️'} ${cat}</h2>
             <div class="menu-grid">
                 ${dishes.map(d => `
-                    <div class="dish-card" data-category="${cat}">
+                    <div class="dish-card">
                         <div class="dish-name">${d.name}</div>
                         <div class="dish-weight">${d.weight || ''}</div>
                         <div class="dish-price">${Number(d.price).toLocaleString('ru-RU')} ₸</div>

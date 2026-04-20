@@ -9,8 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script>
-  window.OWM_KEY  = 'f59a23d3c33e1335a9226aad91b13cdf';
-  window.GMAP_KEY = 'AIzaSyDWL-aBB2FGBRrtJzxVg4L21yUk_DljhDw';
+  window.OWM_KEY   = 'f59a23d3c33e1335a9226aad91b13cdf';
+  window.GMAP_KEY  = 'AIzaSyDWL-aBB2FGBRrtJzxVg4L21yUk_DljhDw';
+  window.GROQ_KEY  = ''; // Вставьте ключ Groq: https://console.groq.com
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWL-aBB2FGBRrtJzxVg4L21yUk_DljhDw&loading=async"></script>
 <style>
@@ -49,127 +50,7 @@ a { color: inherit; text-decoration: none; }
 h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.25; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-/* ============================================================
-   SECTION NAV STRIP
-   ============================================================ */
-.section-nav {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(30,122,74,.1);
-  box-shadow: 0 2px 12px rgba(0,0,0,.06);
-}
-.section-nav__inner {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.section-nav__inner::-webkit-scrollbar { display: none; }
-
-.snav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: .82rem;
-  font-weight: 600;
-  white-space: nowrap;
-  color: var(--text-muted);
-  background: transparent;
-  border: 1.5px solid transparent;
-  cursor: pointer;
-  transition: all .25s;
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-}
-.snav-btn:hover {
-  background: var(--green-light);
-  color: var(--green);
-  border-color: rgba(30,122,74,.2);
-}
-.snav-btn.active {
-  background: var(--green);
-  color: var(--white);
-}
-.snav-btn--accent {
-  background: var(--green-light);
-  color: var(--green);
-  border-color: rgba(30,122,74,.25);
-}
-.snav-btn--accent:hover { background: var(--green); color: var(--white); }
-.snav-btn--gold {
-  background: linear-gradient(135deg, #fff8e1, #fef3c7);
-  color: #92620a;
-  border-color: rgba(201,162,39,.4);
-}
-.snav-btn--gold:hover { background: linear-gradient(135deg, #c9a227, #e8bc35); color: #1a1a1a; }
-.snav-btn--weather {
-  margin-left: auto;
-  background: var(--blue-light);
-  color: var(--blue);
-  border-color: rgba(0,119,182,.2);
-}
-.snav-btn--weather:hover { background: var(--blue); color: var(--white); }
-
-/* WEATHER DROPDOWN */
-.weather-drop {
-  display: none;
-  position: sticky;
-  top: 49px;
-  z-index: 998;
-  background: white;
-  border-bottom: 1px solid rgba(0,119,182,.1);
-  box-shadow: 0 6px 24px rgba(0,0,0,.1);
-}
-.weather-drop.open { display: block; }
-.weather-drop__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 20px;
-}
-.weather-drop__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-  font-size: .85rem;
-  font-weight: 600;
-  color: var(--blue);
-}
-.weather-close {
-  background: none; border: none; cursor: pointer;
-  color: var(--text-muted); font-size: 1em;
-  padding: 4px 8px; border-radius: 6px;
-  transition: background .2s;
-}
-.weather-close:hover { background: #f0f0f0; }
-.weather-cards {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.weather-cards::-webkit-scrollbar { display: none; }
-.weather-card {
-  background: var(--blue-light);
-  border-radius: 12px;
-  padding: 14px 18px;
-  text-align: center;
-  min-width: 90px;
-  flex-shrink: 0;
-}
-.weather-card .wday { font-size: .75rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
-.weather-card .wicon { font-size: 1.6em; margin-bottom: 4px; }
-.weather-card .wtemp { font-weight: 700; font-size: 1.1rem; color: var(--text); }
-.weather-card .wdesc { font-size: .72rem; color: var(--text-muted); margin-top: 3px; }
+.wc-loading { display: none; }
 .wc-loading { color: var(--text-muted); font-size: .9rem; padding: 10px; }
 
 /* ============================================================
@@ -205,34 +86,56 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.25; }
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
-.logo-icon {
-  width: 44px; height: 44px;
-  background: rgba(255,255,255,.2);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4em;
-  transition: background .35s;
+.logo-img-wrap {
+  display: flex;
+  align-items: center;
 }
-.site-header.scrolled .logo-icon { background: var(--green-light); }
-.logo-text {
+.logo-img-wrap img {
+  height: 42px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.55));
+  transition: filter .35s;
+}
+.site-header.scrolled .logo-img-wrap img {
+  filter: none;
+}
+.logo-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--white);
-  transition: color .35s;
-  line-height: 1.15;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 1px 6px rgba(0,0,0,.5);
+  line-height: 1.2;
+  transition: color .35s, text-shadow .35s;
+  display: none; /* скрыт на десктопе, виден в мобильном меню */
 }
-.logo-text span { display: block; font-size: .75rem; font-weight: 400; opacity: .8; font-family: 'Inter', sans-serif; }
+.logo-name span {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: .68rem;
+  font-weight: 400;
+  letter-spacing: .08em;
+  opacity: .8;
+  text-transform: uppercase;
+}
+.site-header.scrolled .logo-name {
+  color: var(--green);
+  text-shadow: none;
+}
+.site-header.scrolled .logo-name span { opacity: .65; }
 
 nav { display: flex; align-items: center; gap: 4px; }
 .nav-link {
   color: rgba(255,255,255,.9);
-  font-size: .9rem;
+  font-size: .82rem;
   font-weight: 500;
-  padding: 8px 14px;
+  padding: 7px 10px;
   border-radius: 8px;
   transition: all .25s;
+  white-space: nowrap;
 }
 .nav-link:hover { background: rgba(255,255,255,.15); color: var(--white); }
 
@@ -248,6 +151,110 @@ nav { display: flex; align-items: center; gap: 4px; }
   white-space: nowrap;
 }
 .header-cta:hover { background: var(--white); color: var(--green); }
+
+/* ============================================================
+   HAMBURGER & MOBILE NAV
+   ============================================================ */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,.15);
+  border: 1.5px solid rgba(255,255,255,.35);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+  transition: background .25s;
+  flex-shrink: 0;
+}
+.hamburger:hover { background: rgba(255,255,255,.28); }
+.hamburger span {
+  display: block;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform .3s, opacity .3s, width .3s;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.site-header.scrolled .hamburger {
+  background: rgba(30,122,74,.1);
+  border-color: rgba(30,122,74,.25);
+}
+.site-header.scrolled .hamburger span { background: var(--green); }
+
+/* Mobile nav drawer */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(5,25,15,.97);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.mobile-nav.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.mobile-nav a {
+  color: rgba(255,255,255,.85);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
+  padding: 12px 32px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all .2s;
+  text-decoration: none;
+  width: 100%;
+  max-width: 320px;
+}
+.mobile-nav a:hover, .mobile-nav a:active {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+}
+.mobile-nav .mobile-cta {
+  margin-top: 16px;
+  background: var(--green);
+  color: #fff !important;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem !important;
+  padding: 14px 40px;
+  border-radius: 30px;
+}
+.mobile-nav .mobile-cta:hover { background: var(--green-dark) !important; }
+
+.mobile-nav-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: rgba(255,255,255,.12);
+  border: 1.5px solid rgba(255,255,255,.25);
+  color: #fff;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.mobile-nav-close:hover { background: rgba(255,255,255,.25); }
+
+@media (max-width: 860px) {
+  .hamburger { display: flex; }
+  nav, .header-cta { display: none; }
+}
 
 /* ============================================================
    HERO
@@ -709,6 +716,15 @@ nav { display: flex; align-items: center; gap: 4px; }
 @media (max-width: 768px) {
   .food-grid { grid-template-columns: 1fr; }
   .food-card__img { height: 200px; }
+}
+@media (max-width: 900px) {
+  .atmo-mosaic {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 260px 220px 220px;
+  }
+  .atmo-item--tall { grid-row: auto; grid-column: 1 / 3; }
+  .day-grid { grid-template-columns: 1fr; }
+  .day-card { min-height: 320px; }
 }
 
 /* ============================================================
@@ -1249,6 +1265,159 @@ nav { display: flex; align-items: center; gap: 4px; }
 .float-btn:hover { transform: scale(1.12); background: var(--green-dark); }
 .float-btn.gold { background: var(--gold); box-shadow: 0 4px 14px rgba(201,162,39,.4); }
 .float-btn.gold:hover { background: #b08d1f; }
+.float-btn.ai {
+  background: linear-gradient(135deg, #6c3fc5, #9b59e8);
+  box-shadow: 0 4px 14px rgba(108,63,197,.45);
+  width: 52px; height: 52px; font-size: 1.2rem;
+}
+.float-btn.ai:hover { background: linear-gradient(135deg, #5a32a8, #8248d4); transform: scale(1.12); }
+
+/* ============================================================
+   AI CHAT MODAL
+   ============================================================ */
+.ai-modal .modal-content {
+  max-width: 520px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  max-height: 680px;
+}
+.ai-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  background: linear-gradient(135deg, #6c3fc5, #9b59e8);
+  border-radius: 20px 20px 0 0;
+  color: #fff;
+  flex-shrink: 0;
+}
+.ai-modal-header .modal-close {
+  background: rgba(255,255,255,.2);
+  color: #fff;
+  margin-left: auto;
+}
+.ai-modal-header .modal-close:hover { background: rgba(255,255,255,.35); }
+.ai-avatar-wrap {
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.ai-modal-header h3 { margin: 0; font-size: 1rem; font-family: 'Inter', sans-serif; }
+.ai-modal-header span { font-size: .75rem; opacity: .8; }
+.ai-online { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+.ai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+.ai-messages::-webkit-scrollbar { width: 4px; }
+.ai-messages::-webkit-scrollbar-track { background: transparent; }
+.ai-messages::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+
+.ai-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: .88rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.ai-msg.bot {
+  background: #f0eaff;
+  color: #2d1b6e;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.ai-msg.user {
+  background: linear-gradient(135deg, #6c3fc5, #9b59e8);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+.ai-msg.typing { color: #9b59e8; font-style: italic; }
+
+.ai-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+}
+.ai-faq-item {
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: .83rem;
+  color: #4a2d8a;
+  background: #f5f0ff;
+  border: 1px solid #e0d5ff;
+  cursor: pointer;
+  transition: all .18s;
+  line-height: 1.3;
+}
+.ai-faq-item:hover {
+  background: #6c3fc5;
+  color: #fff;
+  border-color: #6c3fc5;
+  padding-left: 18px;
+}
+
+.ai-back-wrap {
+  padding: 6px 16px 0;
+  flex-shrink: 0;
+}
+.ai-back-btn {
+  background: none;
+  border: 1.5px solid #c9a8f0;
+  color: #6c3fc5;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ai-back-btn:hover { background: #6c3fc5; color: #fff; border-color: #6c3fc5; }
+.ai-input-wrap {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #ede8ff;
+  flex-shrink: 0;
+}
+.ai-input-wrap input {
+  flex: 1;
+  border: 1.5px solid #d0c4f5;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: .88rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+}
+.ai-input-wrap input:focus { border-color: #9b59e8; }
+.ai-input-wrap button {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, #6c3fc5, #9b59e8);
+  color: #fff; border: none; border-radius: 50%;
+  cursor: pointer; font-size: .9rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.ai-input-wrap button:hover { transform: scale(1.1); }
+.ai-input-wrap button:disabled { opacity: .5; cursor: default; transform: none; }
 
 /* ============================================================
    TOAST NOTIFICATION
@@ -1263,6 +1432,245 @@ nav { display: flex; align-items: center; gap: 4px; }
   transition: all .3s; z-index: 3000; pointer-events: none;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============================================================
+   ATMOSPHERE MOSAIC
+   ============================================================ */
+.atmosphere-section {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.atmo-intro {
+  text-align: center;
+  padding: 80px 24px 52px;
+  background: var(--white);
+}
+.atmo-intro .section-tag { display: inline-block; margin-bottom: 14px; }
+.atmo-intro .section-title { margin-bottom: 16px; }
+.atmo-intro .section-sub { max-width: 560px; margin: 0 auto; }
+
+.atmo-mosaic {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-rows: 320px 280px;
+  gap: 4px;
+}
+.atmo-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.atmo-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .7s ease;
+  display: block;
+}
+.atmo-item:hover img { transform: scale(1.06); }
+.atmo-item__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,40,20,.75) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px 20px;
+  color: #fff;
+  transition: background .3s;
+}
+.atmo-item:hover .atmo-item__overlay {
+  background: linear-gradient(to top, rgba(10,40,20,.85) 0%, rgba(0,0,0,.15) 100%);
+}
+.atmo-item__tag {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+  margin-bottom: 6px;
+}
+.atmo-item__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+.atmo-item--tall {
+  grid-row: 1 / 3;
+}
+.atmo-item--tall .atmo-item__title { font-size: 1.6rem; }
+
+/* ============================================================
+   DAY AT PELIKAN
+   ============================================================ */
+.day-section {
+  padding: 80px 0;
+  background: var(--bg);
+}
+.day-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.day-card {
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.day-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s ease;
+}
+.day-card:hover img { transform: scale(1.05); }
+.day-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5,25,15,.88) 0%, rgba(0,0,0,.1) 60%);
+}
+.day-card__content {
+  position: relative;
+  z-index: 1;
+  padding: 28px 26px;
+  color: #fff;
+}
+.day-card__time {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.day-card__emoji { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+.day-card__title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.day-card__desc {
+  font-size: .88rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,.82);
+}
+.day-card__moments {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.day-card__moment {
+  font-size: .8rem;
+  color: rgba(255,255,255,.7);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.day-card__moment i { color: #7ee8a2; font-size: .75rem; }
+
+/* ============================================================
+   PRICE SECTION
+   ============================================================ */
+.price-section { padding: 80px 0; background: var(--white); }
+
+.price-note {
+  background: #fff8e6;
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: .88rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+.price-note strong { color: var(--text); }
+
+.price-table-wrap {
+  overflow-x: auto;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+  min-width: 560px;
+}
+.price-table thead th {
+  background: var(--green);
+  color: #fff;
+  padding: 14px 16px;
+  text-align: center;
+  font-weight: 600;
+  font-size: .82rem;
+  white-space: nowrap;
+}
+.price-table thead th:first-child {
+  text-align: left;
+  background: var(--green-dark);
+  min-width: 220px;
+}
+.price-table tbody tr:nth-child(even) { background: var(--bg); }
+.price-table tbody tr:hover { background: var(--green-light); }
+.price-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(30,122,74,.08);
+  color: var(--text);
+}
+.price-table td:first-child { font-weight: 500; }
+.price-table td:not(:first-child) {
+  text-align: center;
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+}
+.price-table td.price-na {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.price-period-head {
+  font-size: .72rem;
+  opacity: .8;
+  display: block;
+  font-weight: 400;
+  margin-top: 2px;
+}
+.price-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  background: var(--green-light);
+  color: var(--green);
+  border: 1.5px solid rgba(30,122,74,.3);
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: .88rem;
+  text-decoration: none;
+  transition: all .25s;
+}
+.price-pdf-btn:hover { background: var(--green); color: #fff; }
 
 /* ============================================================
    VARIANTS SECTION
@@ -1314,63 +1722,60 @@ nav { display: flex; align-items: center; gap: 4px; }
     <div class="header-inner">
 
       <a href="#" class="logo">
-        <div class="logo-icon">🦩</div>
-        <div class="logo-text">
+        <div class="logo-img-wrap">
+          <img src="images/logo.png" alt="Пеликан Алаколь">
+        </div>
+        <div class="logo-name">
           Пеликан Алаколь
-          <span>Парк-отель на озере</span>
+          <span>Парк-отель · Казахстан</span>
         </div>
       </a>
 
       <nav>
-        <a href="#features" class="nav-link">Об отеле</a>
-        <a href="#gallery" class="nav-link">Галерея</a>
-        <a href="#rooms" class="nav-link">Номера</a>
-        <a href="bar.html" class="nav-link">🍔 Бар</a>
-        <a href="#reviews" class="nav-link">Отзывы</a>
-        <a href="#contacts" class="nav-link">Контакты</a>
+        <a href="#features"       class="nav-link">Об отеле</a>
+        <a href="#gallery"        class="nav-link">Галерея</a>
+        <a href="#rooms"          class="nav-link">Номера</a>
+        <a href="#activities"     class="nav-link">Активности</a>
+        <a href="index_menu.html" class="nav-link">Столовая</a>
+        <a href="bar.html"        class="nav-link">Бар</a>
+        <a href="#offers"         class="nav-link">Акции</a>
+        <a href="#price"          class="nav-link">Прайс</a>
+        <a href="#reviews"        class="nav-link">Отзывы</a>
+        <a href="#contacts"       class="nav-link">Контакты</a>
       </nav>
 
       <a href="#booking" class="header-cta">
         <i class="fas fa-calendar-check"></i> Забронировать
       </a>
 
+      <button class="hamburger" id="hamburger" aria-label="Меню" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </button>
+
     </div>
   </div>
 </header>
 
+<!-- Mobile nav overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="#features" onclick="toggleMobileNav()">Об отеле</a>
+  <a href="#gallery"  onclick="toggleMobileNav()">Галерея</a>
+  <a href="#rooms"    onclick="toggleMobileNav()">Номера</a>
+  <a href="#activities" onclick="toggleMobileNav()">Активности</a>
+  <a href="bar.html">🍔 Бар</a>
+  <a href="index_menu.html">🍽 Меню столовой</a>
+  <a href="#price"    onclick="toggleMobileNav()">💰 Прайс</a>
+  <a href="#reviews"  onclick="toggleMobileNav()">Отзывы</a>
+  <a href="#contacts" onclick="toggleMobileNav()">Контакты</a>
+  <a href="#booking"  onclick="toggleMobileNav()" class="mobile-cta">
+    <i class="fas fa-calendar-check"></i> Забронировать
+  </a>
+</div>
+
 <!-- ============================================================
      SECTION NAV (sticky strip)
      ============================================================ -->
-<div class="section-nav" id="sectionNav">
-  <div class="section-nav__inner">
-    <a href="#rooms"          class="snav-btn"><i class="fas fa-bed"></i> Номерной фонд</a>
-    <a href="#gallery"        class="snav-btn"><i class="fas fa-camera"></i> Галерея</a>
-    <a href="#activities"     class="snav-btn"><i class="fas fa-hiking"></i> Активности</a>
-    <a href="#features"       class="snav-btn"><i class="fas fa-building"></i> Услуги</a>
-    <a href="index_menu.html" class="snav-btn snav-btn--accent"><i class="fas fa-utensils"></i> Меню столовой</a>
-    <a href="bar.html"        class="snav-btn snav-btn--gold"><i class="fas fa-cocktail"></i> Бар</a>
-    <a href="#offers"         class="snav-btn"><i class="fas fa-gift"></i> Акции</a>
-    <a href="#booking"        class="snav-btn"><i class="fas fa-file-invoice-dollar"></i> Прайс</a>
-    <a href="#contacts"       class="snav-btn"><i class="fas fa-phone-alt"></i> Контакты</a>
-    <button class="snav-btn snav-btn--weather" onclick="toggleWeather()">
-      <i class="fas fa-cloud-sun"></i> Погода
-    </button>
-  </div>
-</div>
-
-<!-- WEATHER DROPDOWN -->
-<div class="weather-drop" id="weatherDrop">
-  <div class="weather-drop__inner">
-    <div class="weather-drop__head">
-      <span><i class="fas fa-map-marker-alt"></i> Озеро Алаколь</span>
-      <button onclick="toggleWeather()" class="weather-close"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="weather-cards" id="weatherCards">
-      <div class="wc-loading"><i class="fas fa-spinner fa-spin"></i> Загружаем...</div>
-    </div>
-  </div>
-</div>
-
 <!-- ============================================================
      HERO
      ============================================================ -->
@@ -1380,10 +1785,11 @@ nav { display: flex; align-items: center; gap: 4px; }
 
   <div class="container">
     <div class="hero-content">
-      <div class="hero-badge">
+      <a href="#contacts" class="hero-badge" style="text-decoration:none; cursor:pointer" title="Показать на карте">
         <i class="fas fa-map-marker-alt"></i>
         Озеро Алаколь, Казахстан · Сезон июнь–сентябрь
-      </div>
+        <i class="fas fa-chevron-right" style="font-size:.7em; opacity:.7; margin-left:4px"></i>
+      </a>
 
       <h1>
         Отдых у <em>целебного озера</em><br>для всей семьи
@@ -1501,23 +1907,39 @@ nav { display: flex; align-items: center; gap: 4px; }
 
     <div class="gallery-grid">
       <div class="g-item">
-        <img src="images/gallery/lake-view/01.jpg" alt="Вид на озеро">
+        <img src="images/gallery/lake-view/01.jpg" alt="Вид на озеро" loading="lazy">
         <div class="g-overlay">Озеро Алаколь</div>
       </div>
       <div class="g-item">
-        <img src="images/gallery/outdoor-pool/01.jpg" alt="Бассейн">
-        <div class="g-overlay">Открытый бассейн</div>
+        <img src="images/gallery/magic-sunset.jpg" alt="Закат" loading="lazy">
+        <div class="g-overlay">Закат над озером</div>
       </div>
       <div class="g-item">
-        <img src="images/gallery/beach_parom/01.jpg" alt="Пляж">
+        <img src="images/gallery/beach_parom/01.jpg" alt="Пляж" loading="lazy">
         <div class="g-overlay">Пляж и паром</div>
       </div>
       <div class="g-item">
-        <img src="images/gallery/detskayploshadka/01.jpg" alt="Детская площадка">
+        <img src="images/gallery/outdoor-pool/01.jpg" alt="Бассейн" loading="lazy">
+        <div class="g-overlay">Открытый бассейн</div>
+      </div>
+      <div class="g-item">
+        <img src="images/gallery/wooden-house.jpg" alt="Бунгало" loading="lazy">
+        <div class="g-overlay">Деревянные бунгало</div>
+      </div>
+      <div class="g-item">
+        <img src="images/gallery/animation/01.jpg" alt="Анимация" loading="lazy">
+        <div class="g-overlay">Детская анимация</div>
+      </div>
+      <div class="g-item">
+        <img src="images/gallery/detskayploshadka/01.jpg" alt="Детская площадка" loading="lazy">
         <div class="g-overlay">Детская площадка</div>
       </div>
       <div class="g-item">
-        <img src="images/gallery/stolovay/01.jpg" alt="Столовая">
+        <img src="images/gallery/bonfire-evening.jpg" alt="Вечер" loading="lazy">
+        <div class="g-overlay">Вечер у костра</div>
+      </div>
+      <div class="g-item">
+        <img src="images/gallery/stolovay/01.jpg" alt="Столовая" loading="lazy">
         <div class="g-overlay">Столовая</div>
       </div>
     </div>
@@ -1594,6 +2016,120 @@ nav { display: flex; align-items: center; gap: 4px; }
               <strong>Живая природа</strong>
               <span>5000+ деревьев</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ATMOSPHERE MOSAIC
+     ============================================================ -->
+<section class="atmosphere-section" id="atmosphere">
+  <div class="atmo-intro">
+    <div class="container">
+      <span class="section-tag">Атмосфера</span>
+      <h2 class="section-title">Место, где время замедляется</h2>
+      <p class="section-sub">Утренний туман над озером, запах сосен, звук волн и звёздное небо — то, за чем сюда возвращаются снова</p>
+    </div>
+  </div>
+
+  <div class="atmo-mosaic">
+    <div class="atmo-item atmo-item--tall">
+      <img src="images/gallery/magic-sunset.jpg" alt="Закат над Алаколем" loading="lazy">
+      <div class="atmo-item__overlay">
+        <div class="atmo-item__tag">Природа</div>
+        <div class="atmo-item__title">Закаты над Алаколем не забываются</div>
+      </div>
+    </div>
+    <div class="atmo-item">
+      <img src="images/gallery/morning-nature.jpg" alt="Утро в парке" loading="lazy">
+      <div class="atmo-item__overlay">
+        <div class="atmo-item__tag">Утро</div>
+        <div class="atmo-item__title">Свежий воздух и пение птиц</div>
+      </div>
+    </div>
+    <div class="atmo-item">
+      <img src="images/gallery/wooden-house.jpg" alt="Деревянные бунгало" loading="lazy">
+      <div class="atmo-item__overlay">
+        <div class="atmo-item__tag">Жильё</div>
+        <div class="atmo-item__title">Деревянные бунгало среди деревьев</div>
+      </div>
+    </div>
+    <div class="atmo-item">
+      <img src="images/gallery/bonfire-evening.jpg" alt="Вечер у костра" loading="lazy">
+      <div class="atmo-item__overlay">
+        <div class="atmo-item__tag">Вечер</div>
+        <div class="atmo-item__title">Вечер у костра с близкими</div>
+      </div>
+    </div>
+    <div class="atmo-item">
+      <img src="images/gallery/night-sky.jpg" alt="Звёздное небо" loading="lazy">
+      <div class="atmo-item__overlay">
+        <div class="atmo-item__tag">Ночь</div>
+        <div class="atmo-item__title">Звёздное небо вдали от города</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DAY AT PELIKAN
+     ============================================================ -->
+<section class="day-section">
+  <div class="container">
+    <div class="section-head" style="text-align:center">
+      <span class="section-tag">Типичный день</span>
+      <h2 class="section-title">День в Пеликане</h2>
+      <p class="section-sub">Каждый день здесь проходит по-своему — но вот из чего обычно состоит идеальный отдых</p>
+    </div>
+
+    <div class="day-grid">
+      <div class="day-card">
+        <img src="images/gallery/morning-nature.jpg" alt="Утро" loading="lazy">
+        <div class="day-card__overlay"></div>
+        <div class="day-card__content">
+          <div class="day-card__time"><i class="fas fa-sun"></i> Утро</div>
+          <span class="day-card__emoji">🌅</span>
+          <div class="day-card__title">Пробуждение на природе</div>
+          <div class="day-card__desc">Свежий воздух степи и гор, пение птиц, завтрак в столовой — лучшее начало дня.</div>
+          <div class="day-card__moments">
+            <div class="day-card__moment"><i class="fas fa-check"></i> Завтрак с 8:00 до 10:30</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> Прогулка по территории</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> Паром на пляж в 8:00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <img src="images/gallery/beach_parom/01.jpg" alt="День на пляже" loading="lazy">
+        <div class="day-card__overlay"></div>
+        <div class="day-card__content">
+          <div class="day-card__time"><i class="fas fa-umbrella-beach"></i> День</div>
+          <span class="day-card__emoji">🏖️</span>
+          <div class="day-card__title">Целебная вода Алаколя</div>
+          <div class="day-card__desc">Галечный пляж, минеральная вода озера с уникальными свойствами, бассейн и детская анимация.</div>
+          <div class="day-card__moments">
+            <div class="day-card__moment"><i class="fas fa-check"></i> Пляж до 19:00</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> Бассейн с 10:00</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> Обед с 12:00 до 15:30</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <img src="images/gallery/bonfire-evening.jpg" alt="Вечер у костра" loading="lazy">
+        <div class="day-card__overlay"></div>
+        <div class="day-card__content">
+          <div class="day-card__time"><i class="fas fa-moon"></i> Вечер</div>
+          <span class="day-card__emoji">🌙</span>
+          <div class="day-card__title">Вечер под открытым небом</div>
+          <div class="day-card__desc">Ужин, живая музыка в амфитеатре, кино для детей и костёр под звёздным небом Жетысу.</div>
+          <div class="day-card__moments">
+            <div class="day-card__moment"><i class="fas fa-check"></i> Ужин с 17:30</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> Вечерняя программа с 19:00</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> Заказ из бара на номер</div>
           </div>
         </div>
       </div>
@@ -1922,6 +2458,34 @@ nav { display: flex; align-items: center; gap: 4px; }
 </section>
 
 <!-- ============================================================
+     PRICE
+     ============================================================ -->
+<section class="price-section" id="price">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Стоимость проживания</span>
+      <h2 class="section-title">Прайс 2026</h2>
+      <p class="section-sub">Цены в тенге за номер в сутки, без питания</p>
+    </div>
+
+    <div class="price-note" id="priceNote">
+      <i class="fas fa-spinner fa-spin"></i> Загрузка…
+    </div>
+
+    <div class="price-table-wrap">
+      <table class="price-table" id="priceTable">
+        <thead id="priceThead"></thead>
+        <tbody id="priceTbody"></tbody>
+      </table>
+    </div>
+
+    <a href="price.pdf" class="price-pdf-btn" target="_blank">
+      <i class="fas fa-file-pdf"></i> Скачать прайс PDF
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
      REVIEWS
      ============================================================ -->
 <section class="reviews-section" id="reviews">
@@ -2000,7 +2564,10 @@ nav { display: flex; align-items: center; gap: 4px; }
           </div>
           <div class="contact-phones" style="margin-top:14px">
             <a href="tel:+77272927899"><i class="fas fa-phone"></i> +7 (727) 292-78-99</a>
-            <a href="tel:+77017714733"><i class="fas fa-phone"></i> +7 701 771-47-33</a>
+            <a href="tel:+77017714733"><i class="fas fa-phone"></i> +7 (701) 771-47-33</a>
+            <a href="https://wa.me/77017714733" target="_blank"><i class="fab fa-whatsapp" style="color:#25d366"></i> +7 (701) 771-47-33</a>
+            <a href="tel:+77058067833"><i class="fas fa-phone"></i> +7 (705) 806-78-33</a>
+            <a href="https://wa.me/77058067833" target="_blank"><i class="fab fa-whatsapp" style="color:#25d366"></i> +7 (705) 806-78-33</a>
           </div>
         </div>
 
@@ -2020,7 +2587,9 @@ nav { display: flex; align-items: center; gap: 4px; }
           </div>
           <div class="contact-phones" style="margin-top:14px">
             <a href="tel:+77283330002"><i class="fas fa-phone"></i> +7 (72833) 3-00-02</a>
-            <a href="tel:+77767275841"><i class="fas fa-phone"></i> +7 776 727-58-41</a>
+            <a href="tel:+77767275841"><i class="fas fa-phone"></i> +7 (776) 727-58-41</a>
+            <a href="https://wa.me/77767275841" target="_blank"><i class="fab fa-whatsapp" style="color:#25d366"></i> +7 (776) 727-58-41</a>
+            <a href="https://t.me/Pelican_alacol_hotel_bot" target="_blank"><i class="fab fa-telegram" style="color:#29b6d8"></i> +7 (776) 727-58-41</a>
           </div>
         </div>
 
@@ -2041,7 +2610,7 @@ nav { display: flex; align-items: center; gap: 4px; }
 
       <div class="map-wrap">
         <iframe
-          src="https://yandex.ru/map-widget/v1/?ll=81.571400%2C45.955000&z=13&pt=81.571400,45.955000,pm2rdm"
+          src="https://yandex.ru/map-widget/v1/?ll=81.569071%2C45.951451&z=14&pt=81.569071,45.951451,pm2rdm"
           allowfullscreen
           loading="lazy">
         </iframe>
@@ -2139,8 +2708,12 @@ nav { display: flex; align-items: center; gap: 4px; }
       <div class="footer-col">
         <h4>Контакты</h4>
         <a href="tel:+77272927899">+7 (727) 292-78-99</a>
-        <a href="tel:+77017714733">+7 701 771-47-33</a>
-        <a href="mailto:pelikan-alakol@mail.ru">pelikan-alakol@mail.ru</a>
+        <a href="tel:+77017714733">+7 (701) 771-47-33</a>
+        <a href="tel:+77058067833">+7 (705) 806-78-33</a>
+        <a href="tel:+77283330002">+7 (72833) 3-00-02</a>
+        <a href="https://wa.me/77017714733" target="_blank"><i class="fab fa-whatsapp" style="color:#25d366"></i> WhatsApp 701</a>
+        <a href="https://wa.me/77767275841" target="_blank"><i class="fab fa-whatsapp" style="color:#25d366"></i> WhatsApp 776</a>
+        <a href="https://t.me/Pelican_alacol_hotel_bot" target="_blank"><i class="fab fa-telegram" style="color:#29b6d8"></i> Telegram</a>
         <a href="mailto:pelikan-08@mail.ru">pelikan-08@mail.ru</a>
       </div>
     </div>
@@ -2159,7 +2732,7 @@ nav { display: flex; align-items: center; gap: 4px; }
   <button class="float-btn" onclick="openWeatherModal()" title="Прогноз погоды"><i class="fas fa-cloud-sun"></i></button>
   <button class="float-btn" onclick="openMapModal()" title="Карта и маршрут"><i class="fas fa-map-location-dot"></i></button>
   <button class="float-btn" onclick="openContactsModal()" title="Контакты"><i class="fas fa-headset"></i></button>
-  <button class="float-btn gold" onclick="openFaqModal()" title="Частые вопросы"><i class="fas fa-question-circle"></i></button>
+  <button class="float-btn ai" onclick="openAiChat()" title="ИИ-помощник"><i class="fas fa-robot"></i></button>
 </div>
 
 <!-- ============================================================
@@ -2198,14 +2771,14 @@ nav { display: flex; align-items: center; gap: 4px; }
     <div style="background:var(--green-light); padding:13px 18px; border-radius:10px; margin-bottom:14px; cursor:pointer" onclick="copyCoords()">
       <p style="margin:0; display:flex; align-items:center; gap:10px">
         <strong style="color:var(--green)">📍 GPS:</strong>
-        <span style="font-family:monospace; font-size:1rem">45.953120, 81.568958</span>
+        <span style="font-family:monospace; font-size:1rem">45.951451, 81.569071</span>
         <i class="fas fa-copy" style="color:var(--green); margin-left:auto"></i>
       </p>
     </div>
     <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px">
-      <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=45.953120,81.568958','_blank')" style="padding:11px 8px; background:linear-gradient(135deg,#4285f4,#357ae8); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:.82rem">🗺️ Google Maps</button>
-      <button onclick="window.open('https://yandex.ru/maps/?rtext=~45.953120,81.568958&rtt=auto','_blank')" style="padding:11px 8px; background:linear-gradient(135deg,#fc3f1d,#d63516); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:.82rem">📍 Яндекс.Карты</button>
-      <button onclick="window.open('https://2gis.kz/geo/81.568958,45.953120','_blank')" style="padding:11px 8px; background:linear-gradient(135deg,#31ac45,#28923a); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:.82rem">🧭 2ГИС</button>
+      <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=45.951451,81.569071','_blank')" style="padding:11px 8px; background:linear-gradient(135deg,#4285f4,#357ae8); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:.82rem">🗺️ Google Maps</button>
+      <button onclick="window.open('https://yandex.ru/maps/?rtext=~45.951451,81.569071&rtt=auto','_blank')" style="padding:11px 8px; background:linear-gradient(135deg,#fc3f1d,#d63516); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:.82rem">📍 Яндекс.Карты</button>
+      <button onclick="window.open('https://2gis.kz/geo/81.569071,45.951451','_blank')" style="padding:11px 8px; background:linear-gradient(135deg,#31ac45,#28923a); color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600; font-size:.82rem">🧭 2ГИС</button>
     </div>
     <div style="background:var(--bg); padding:16px 20px; border-radius:10px">
       <h4 style="color:var(--green); margin-bottom:10px; font-family:'Playfair Display',serif"><i class="fas fa-route"></i> Расстояние от городов</h4>
@@ -2219,12 +2792,54 @@ nav { display: flex; align-items: center; gap: 4px; }
 </div>
 
 <!-- FAQ -->
-<div class="modal" id="faqModal">
-  <div class="modal-content" style="max-width:700px">
-    <button class="modal-close" onclick="closeModal('faqModal')">✕</button>
-    <h2><i class="fas fa-question-circle"></i> Часто задаваемые вопросы</h2>
-    <div id="faqContainer">
-      <div style="padding:20px; text-align:center; color:var(--text-muted)"><i class="fas fa-spinner fa-spin"></i> Загрузка...</div>
+<div class="modal ai-modal" id="aiModal">
+  <div class="modal-content">
+    <div class="ai-modal-header">
+      <div class="ai-avatar-wrap">🤖</div>
+      <div>
+        <h3>ИИ-помощник Пеликан</h3>
+        <span><span class="ai-online"></span>Онлайн · отвечает мгновенно</span>
+      </div>
+      <button class="modal-close" onclick="closeModal('aiModal')">✕</button>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-msg bot">Привет! Я ИИ-помощник базы отдыха «Пеликан Алаколь». Выберите вопрос из списка или напишите свой.</div>
+      <div class="ai-faq-list" id="aiFaqList">
+        <div class="ai-faq-item" onclick="askAI('Как забронировать номер на сайте?')">1. Как забронировать номер?</div>
+        <div class="ai-faq-item" onclick="askAI('Где находится база отдыха Пеликан?')">2. Где находится база отдыха?</div>
+        <div class="ai-faq-item" onclick="askAI('Какая предоплата необходима для бронирования?')">3. Какая предоплата необходима?</div>
+        <div class="ai-faq-item" onclick="askAI('Возможна ли отмена бронирования?')">4. Возможна ли отмена бронирования?</div>
+        <div class="ai-faq-item" onclick="askAI('Во сколько заезд и выезд?')">5. Во сколько заезд и выезд?</div>
+        <div class="ai-faq-item" onclick="askAI('Какие условия проживания на базе?')">6. Какие условия проживания?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли питание на базе?')">7. Есть ли питание на базе?</div>
+        <div class="ai-faq-item" onclick="askAI('Можно ли приехать с детьми?')">8. Можно ли приехать с детьми?</div>
+        <div class="ai-faq-item" onclick="askAI('Разрешено ли проживание с животными?')">9. Разрешено ли проживание с животными?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли парковка?')">10. Есть ли парковка?</div>
+        <div class="ai-faq-item" onclick="askAI('Предоставляется ли постельное белье и полотенца?')">11. Предоставляется ли постельное бельё?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли на базе охрана?')">12. Есть ли на базе охрана?</div>
+        <div class="ai-faq-item" onclick="askAI('Можно ли организовать мероприятие или заезд группой?')">13. Можно ли организовать мероприятие?</div>
+        <div class="ai-faq-item" onclick="askAI('Как связаться с администрацией?')">14. Как связаться с администрацией?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли горячая вода и электричество круглосуточно?')">15. Есть ли горячая вода и электричество?</div>
+        <div class="ai-faq-item" onclick="askAI('Как далеко база находится от берега озера?')">16. Как далеко до берега озера?</div>
+        <div class="ai-faq-item" onclick="askAI('Можно ли готовить самостоятельно?')">17. Можно ли готовить самостоятельно?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли Wi-Fi на территории?')">18. Есть ли Wi-Fi?</div>
+        <div class="ai-faq-item" onclick="askAI('Можно ли курить на территории базы?')">19. Можно ли курить на территории?</div>
+        <div class="ai-faq-item" onclick="askAI('Разрешены ли шумные мероприятия?')">20. Разрешены ли шумные мероприятия?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли ограничения по количеству гостей в номере?')">21. Ограничения по гостям в номере?</div>
+        <div class="ai-faq-item" onclick="askAI('Можно ли принимать гостей не проживающих на базе?')">22. Можно ли принимать внешних гостей?</div>
+        <div class="ai-faq-item" onclick="askAI('Что делать при утере вещей?')">23. Что делать при утере вещей?</div>
+        <div class="ai-faq-item" onclick="askAI('Есть ли медицинская помощь поблизости?')">24. Есть ли медицинская помощь?</div>
+        <div class="ai-faq-item" onclick="askAI('Можно ли продлить проживание?')">25. Можно ли продлить проживание?</div>
+        <div class="ai-faq-item" onclick="askAI('Какие правила действуют при выезде?')">26. Правила при выезде?</div>
+        <div class="ai-faq-item" onclick="askAI('Как добраться до базы Пеликан из Алматы?')">27. Как добраться до базы?</div>
+      </div>
+    </div>
+    <div class="ai-back-wrap" id="aiBackWrap" style="display:none">
+      <button class="ai-back-btn" onclick="showAiFaqList()"><i class="fas fa-list"></i> К списку вопросов</button>
+    </div>
+    <div class="ai-input-wrap">
+      <input type="text" id="aiInput" placeholder="Ваш вопрос…" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendAiMessage();}">
+      <button onclick="sendAiMessage()" id="aiSendBtn"><i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 </div>
@@ -2256,7 +2871,7 @@ window.addEventListener('scroll', () => {
 
 // Weather toggle
 const WEATHER_KEY = window.OWM_KEY || 'f59a23d3c33e1335a9226aad91b13cdf';
-const WEATHER_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=45.955&lon=81.571&appid=${WEATHER_KEY}&units=metric&lang=ru`;
+const WEATHER_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=45.951451&lon=81.569071&appid=${WEATHER_KEY}&units=metric&lang=ru`;
 const EMOJI = { '01':'☀️','02':'🌤️','03':'⛅','04':'☁️','09':'🌧️','10':'🌦️','11':'⛈️','13':'❄️','50':'🌫️' };
 let weatherLoaded = false;
 
@@ -2289,6 +2904,71 @@ async function loadWeather() {
     container.innerHTML = '<div class="wc-loading">Нет данных о погоде</div>';
   }
 }
+
+// ===== PRICE TABLE =====
+async function loadPrice() {
+  try {
+    const r = await fetch('price.json');
+    const d = await r.json();
+
+    // Note
+    document.getElementById('priceNote').innerHTML =
+      `<i class="fas fa-info-circle" style="color:var(--gold)"></i> ${d.note}`;
+
+    // Header row
+    const thead = document.getElementById('priceThead');
+    const hr = document.createElement('tr');
+    const th0 = document.createElement('th');
+    th0.textContent = 'Тип номера';
+    hr.appendChild(th0);
+    d.periods.forEach(p => {
+      const th = document.createElement('th');
+      th.innerHTML = `Период ${p.id}<span class="price-period-head">${p.label}</span>`;
+      hr.appendChild(th);
+    });
+    thead.appendChild(hr);
+
+    // Rows
+    const tbody = document.getElementById('priceTbody');
+    d.rooms.forEach(room => {
+      const tr = document.createElement('tr');
+      const td0 = document.createElement('td');
+      td0.textContent = room.name;
+      tr.appendChild(td0);
+      d.periods.forEach(p => {
+        const td = document.createElement('td');
+        const val = room.prices[p.id];
+        if (val === '-' || !val) {
+          td.textContent = 'По запросу';
+          td.className = 'price-na';
+        } else {
+          td.textContent = Number(val).toLocaleString('ru-RU') + ' ₸';
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  } catch(e) {
+    document.getElementById('priceNote').textContent = 'Не удалось загрузить прайс.';
+  }
+}
+loadPrice();
+
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  const btn = document.getElementById('hamburger');
+  const open = nav.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+// Close mobile nav on ESC
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const nav = document.getElementById('mobileNav');
+    if (nav.classList.contains('open')) toggleMobileNav();
+  }
+});
 
 function toggleWeather() {
   const drop = document.getElementById('weatherDrop');
@@ -2357,7 +3037,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 function copyCoords() {
-  navigator.clipboard.writeText('45.953120, 81.568958')
+  navigator.clipboard.writeText('45.951451, 81.569071')
     .then(() => showToast('GPS скопирован ✓'))
     .catch(() => showToast('45.953120, 81.568958'));
 }
@@ -2450,7 +3130,7 @@ function openMapModal() {
 }
 function initModalMap() {
   if (modalMapInited) return;
-  const LAT = 45.953120, LNG = 81.568958;
+  const LAT = 45.951451, LNG = 81.569071;
   const map = new google.maps.Map(document.getElementById('modalMap'), {
     center: { lat: LAT, lng: LNG }, zoom: 11,
     mapTypeControl: false, streetViewControl: false, fullscreenControl: false
@@ -2463,30 +3143,158 @@ function initModalMap() {
 }
 
 // ============================================================
-// FAQ MODAL
+// AI CHAT (Groq API)
 // ============================================================
-async function openFaqModal() {
-  openModal('faqModal');
-  const box = document.getElementById('faqContainer');
-  if (box.dataset.loaded) return;
-  try {
-    const data = await fetch('faq.json').then(r => r.json());
-    box.innerHTML = data.items.map((item, i) => `
-      <div class="faq-item" id="faqItem-${i}">
-        <div class="faq-question" onclick="toggleFaqItem(${i})">
-          <span>${item.question}</span>
-          <i class="fas fa-chevron-down faq-icon"></i>
-        </div>
-        <div class="faq-answer">${item.answer.replace(/\n/g, '<br>')}</div>
-      </div>
-    `).join('');
-    box.dataset.loaded = '1';
-  } catch(e) {
-    box.innerHTML = '<div style="color:red;padding:12px">Ошибка загрузки FAQ</div>';
-  }
+const AI_SYSTEM = `Ты — ИИ-помощник базы отдыха «Пеликан Алаколь». Отвечай кратко, по-русски, строго по данным ниже. Вопрос не по теме базы — «Я отвечаю только на вопросы об отдыхе в Пеликан Алаколь.» Нет ответа в данных — «Уточните у администрации: +7(701)771-47-33, WhatsApp +7(776)727-58-41, Telegram @Pelican_alacol_hotel_bot»
+
+База: берег оз.Алаколь, Жетысу обл., с.Акши. GPS 45.951451,81.569071. Сезон июнь–сентябрь.
+Расстояния: Алматы 630км/8ч, Усть-Каменогорск 598км/8ч, Астана 1400км/15ч.
+Бронь: сайт pelikan-alakol.kz, тел/WhatsApp. Менеджер подтверждает за 24ч (пн–пт 9–17). Оплатить за 3 раб.дня, не позднее 24ч до заезда.
+Предоплата: 40–100% (зависит от сезона). Скидки считает менеджер.
+Отмена: >10 дней — возврат минус банк.расходы; 7–10 дней — штраф 25%; 3–7 дней — штраф 50%; <3 дней — без возврата. Незаезд/досрочный выезд — без возврата.
+Заезд 11:00, выезд 09:00 (время Астаны). Ранний/поздний — доп.оплата.
+Залог: вносится при заселении, возвращается при соблюдении правил.
+Номера: деревянные бунгало. Бельё включено (смена раз в 5 дней), уборка раз в день. Полотенца — по категории номера.
+Дети: приветствуются, анимация. Дети до 6 лет с родителями бесплатно (1 ребёнок — Эконом/Стандарт/Бунгало/Люкс; 2 детей — Семейные номера; 3 детей — Коттеджи).
+Животные: запрещены.
+Питание: столовая завтрак 8–10:30, обед 12–15:30, ужин 17:30–20:00. Бар. Готовить в номерах нельзя, есть мангальная зона.
+Парковка: охраняемая, Коттеджи/Семейные — 2 места, остальные — 1 место.
+Охрана 24/7, видеонаблюдение.
+Мероприятия/группы: принимаются, условия индивидуально.
+Горячая вода и свет: круглосуточно.
+До пляжа: 100м до причала + паром 3–4 мин + 170м по настилу.
+Wi-Fi: в зоне ресепшен.
+Курение: только в спец.местах.
+Тишина: с 23:00 до 09:00.
+Доп.гости: до 23:00, после — оформить проживание.
+Утеря вещей: обратиться к администратору.
+Медпункт: на территории, скорую вызывает администрация.
+Продление: возможно при наличии номеров.
+Выезд: сдать номер и ключи до 09:00, при порче — возмещение ущерба.
+Контакты: Алматы +7(727)292-78-99 пн–пт 9–16:45; WhatsApp +7(701)771-47-33, +7(705)806-78-33; база +7(72833)3-00-02; WhatsApp/Telegram +7(776)727-58-41; бот @Pelican_alacol_hotel_bot; email pelikan-08@mail.ru`;
+
+const aiHistory = [];
+let aiTyping = false;
+
+function openAiChat() { openModal('aiModal'); }
+
+function showAiFaqList() {
+  const box = document.getElementById('aiMessages');
+  // Удаляем старые сообщения, возвращаем приветствие + список
+  box.innerHTML = `
+    <div class="ai-msg bot">Выберите вопрос из списка или напишите свой.</div>
+    <div class="ai-faq-list" id="aiFaqList">
+      <div class="ai-faq-item" onclick="askAI('Как забронировать номер на сайте?')">1. Как забронировать номер?</div>
+      <div class="ai-faq-item" onclick="askAI('Где находится база отдыха Пеликан?')">2. Где находится база отдыха?</div>
+      <div class="ai-faq-item" onclick="askAI('Какая предоплата необходима для бронирования?')">3. Какая предоплата необходима?</div>
+      <div class="ai-faq-item" onclick="askAI('Возможна ли отмена бронирования?')">4. Возможна ли отмена бронирования?</div>
+      <div class="ai-faq-item" onclick="askAI('Во сколько заезд и выезд?')">5. Во сколько заезд и выезд?</div>
+      <div class="ai-faq-item" onclick="askAI('Какие условия проживания на базе?')">6. Какие условия проживания?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли питание на базе?')">7. Есть ли питание на базе?</div>
+      <div class="ai-faq-item" onclick="askAI('Можно ли приехать с детьми?')">8. Можно ли приехать с детьми?</div>
+      <div class="ai-faq-item" onclick="askAI('Разрешено ли проживание с животными?')">9. Разрешено ли проживание с животными?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли парковка?')">10. Есть ли парковка?</div>
+      <div class="ai-faq-item" onclick="askAI('Предоставляется ли постельное белье и полотенца?')">11. Предоставляется ли постельное бельё?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли на базе охрана?')">12. Есть ли на базе охрана?</div>
+      <div class="ai-faq-item" onclick="askAI('Можно ли организовать мероприятие или заезд группой?')">13. Можно ли организовать мероприятие?</div>
+      <div class="ai-faq-item" onclick="askAI('Как связаться с администрацией?')">14. Как связаться с администрацией?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли горячая вода и электричество круглосуточно?')">15. Есть ли горячая вода и электричество?</div>
+      <div class="ai-faq-item" onclick="askAI('Как далеко база находится от берега озера?')">16. Как далеко до берега озера?</div>
+      <div class="ai-faq-item" onclick="askAI('Можно ли готовить самостоятельно?')">17. Можно ли готовить самостоятельно?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли Wi-Fi на территории?')">18. Есть ли Wi-Fi?</div>
+      <div class="ai-faq-item" onclick="askAI('Можно ли курить на территории базы?')">19. Можно ли курить на территории?</div>
+      <div class="ai-faq-item" onclick="askAI('Разрешены ли шумные мероприятия?')">20. Разрешены ли шумные мероприятия?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли ограничения по количеству гостей в номере?')">21. Ограничения по гостям в номере?</div>
+      <div class="ai-faq-item" onclick="askAI('Можно ли принимать гостей не проживающих на базе?')">22. Можно ли принимать внешних гостей?</div>
+      <div class="ai-faq-item" onclick="askAI('Что делать при утере вещей?')">23. Что делать при утере вещей?</div>
+      <div class="ai-faq-item" onclick="askAI('Есть ли медицинская помощь поблизости?')">24. Есть ли медицинская помощь?</div>
+      <div class="ai-faq-item" onclick="askAI('Можно ли продлить проживание?')">25. Можно ли продлить проживание?</div>
+      <div class="ai-faq-item" onclick="askAI('Какие правила действуют при выезде?')">26. Правила при выезде?</div>
+      <div class="ai-faq-item" onclick="askAI('Как добраться до базы Пеликан из Алматы?')">27. Как добраться до базы?</div>
+    </div>`;
+  aiHistory.length = 0;
+  document.getElementById('aiBackWrap').style.display = 'none';
 }
-function toggleFaqItem(i) {
-  document.getElementById(`faqItem-${i}`).classList.toggle('active');
+
+function addAiMsg(text, role) {
+  const box = document.getElementById('aiMessages');
+  const div = document.createElement('div');
+  div.className = `ai-msg ${role}`;
+  div.textContent = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+
+async function askAI(question) {
+  document.getElementById('aiInput').value = question;
+  await sendAiMessage();
+}
+
+async function sendAiMessage() {
+  if (aiTyping) return;
+  const input = document.getElementById('aiInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const key = window.GROQ_KEY;
+  if (!key) {
+    addAiMsg('⚠️ API-ключ Groq не настроен. Добавьте window.GROQ_KEY в настройки сайта.', 'bot');
+    return;
+  }
+
+  input.value = '';
+  addAiMsg(text, 'user');
+  aiHistory.push({ role: 'user', content: text });
+
+  // Скрываем список вопросов, показываем кнопку возврата
+  document.getElementById('aiFaqList')?.remove();
+  document.getElementById('aiBackWrap').style.display = 'block';
+
+  aiTyping = true;
+  const sendBtn = document.getElementById('aiSendBtn');
+  sendBtn.disabled = true;
+
+  const typingDiv = addAiMsg('…', 'bot typing');
+
+  try {
+    const payload = {
+      model: 'llama-3.1-8b-instant',
+      messages: [{ role: 'system', content: AI_SYSTEM }, ...aiHistory],
+      max_tokens: 500,
+      temperature: 0.5
+    };
+    console.log('Groq request:', JSON.stringify(payload).length, 'bytes');
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(`HTTP ${res.status}: ${errBody?.error?.message || res.statusText}`);
+    }
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || 'Нет ответа';
+
+    typingDiv.classList.remove('typing');
+    typingDiv.textContent = reply;
+    aiHistory.push({ role: 'assistant', content: reply });
+  } catch (e) {
+    console.error('Groq error:', e);
+    typingDiv.classList.remove('typing');
+    typingDiv.textContent = `❌ ${e.message}`;
+    aiHistory.pop();
+  } finally {
+    aiTyping = false;
+    sendBtn.disabled = false;
+    document.getElementById('aiMessages').scrollTop = 99999;
+    input.focus();
+  }
 }
 
 function toggleBookingTerms() {

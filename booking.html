@@ -2,31 +2,168 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Онлайн-бронирование – Пеликан Алаколь</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключи свои стили, чтобы страница выглядела в едином стиле -->
-  <link rel="stylesheet" href="css/infrastructure.css">
+  <title>Онлайн-бронирование — Пеликан Алаколь</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --green:       #1e7a4a;
+      --green-dark:  #155c38;
+      --green-light: #e8f5ee;
+      --gold:        #c9a227;
+      --amber:       #b45309;
+      --amber-light: #fef3c7;
+      --text:        #1a2a1f;
+      --text-muted:  #5a6e5e;
+      --white:       #ffffff;
+      --bg:          #f7faf8;
+      --border:      #d4e4da;
+      --radius:      16px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    /* TOP BAR */
+    .top-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .top-bar-inner { display: flex; align-items: center; justify-content: space-between; }
+    .back-link {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--green); font-weight: 500; font-size: .9rem;
+      padding: 8px 16px; border-radius: 10px; border: 1.5px solid var(--border);
+      transition: background .2s;
+    }
+    .back-link:hover { background: var(--green-light); }
+    .site-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; color: var(--green); }
+
+    /* MAIN */
+    main { padding: 48px 0 80px; }
+
+    .page-title {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin-bottom: 8px;
+    }
+    .page-subtitle { color: var(--text-muted); margin-bottom: 40px; }
+
+    /* WARNING BLOCK */
+    .warning-block {
+      background: var(--amber-light);
+      border: 1.5px solid #fbbf24;
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .warning-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .warning-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .warning-list li {
+      display: flex;
+      gap: 10px;
+      font-size: .9rem;
+      color: #78350f;
+      line-height: 1.55;
+    }
+    .warning-list li::before {
+      content: "•";
+      color: var(--amber);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* BOOKING WIDGET */
+    .booking-section-title {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    .booking-widget-wrap {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      min-height: 200px;
+    }
+    #mbh-results-wrapper a {
+      color: var(--green);
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header style="margin: 20px 0;">
-      <a href="index.html" class="contact-btn">
-        ← На главную
-      </a>
-    </header>
 
-    <main>
-      <h2>Онлайн-бронирование</h2>
-      <p>Доступные номера на выбранные даты.</p>
-
-      <!-- Место для вывода результатов поиска -->
-      <div id="mbh-results-wrapper">
-        <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-inner">
+        <a href="index.html#booking" class="back-link">
+          <i class="fas fa-arrow-left"></i> На главную
+        </a>
+        <span class="site-name">Пеликан Алаколь</span>
+        <a href="tel:+77283330002" style="color:var(--green); font-weight:600; font-size:.9rem;">
+          <i class="fas fa-phone"></i> +7 (72833) 3-00-02
+        </a>
       </div>
-    </main>
+    </div>
   </div>
 
-  <!-- Скрипт вывода результатов Maxi‑Booking -->
+  <main>
+    <div class="container">
+
+      <h1 class="page-title">Онлайн-бронирование</h1>
+      <p class="page-subtitle">Выберите тип номера и удобные даты заезда</p>
+
+      <!-- ПРАВИЛА БРОНИРОВАНИЯ -->
+      <div class="warning-block">
+        <div class="warning-title">
+          <i class="fas fa-exclamation-triangle"></i>
+          Важно перед бронированием
+        </div>
+        <ul class="warning-list">
+          <li>Все цены указаны без учёта действующих скидок. Итоговая стоимость будет рассчитана менеджером при подтверждении брони.</li>
+          <li>После оформления заявки с вами свяжется менеджер с 09:00 до 17:00 в рабочие дни. Оплату необходимо произвести в течение трёх рабочих дней.</li>
+          <li>Если дата заезда близка — оплата не позднее чем за 24 часа до заезда.</li>
+          <li>Оплата возможна в офисе продаж или дистанционно после выставления счёта.</li>
+          <li>При неоплате в указанные сроки бронь снимается автоматически.</li>
+          <li>Обязательно корректно указывайте номер телефона и e-mail — иначе менеджер не сможет выйти на связь и бронь снимается.</li>
+          <li>Если в течение трёх рабочих дней с вами не вышли на связь — свяжитесь с нами самостоятельно, иначе бронь снимается.</li>
+        </ul>
+      </div>
+
+      <!-- ВИДЖЕТ -->
+      <h2 class="booking-section-title">Доступные номера</h2>
+      <div class="booking-widget-wrap">
+        <div id="mbh-results-wrapper">
+          <a href="https://maxi-booking.ru/">система онлайн бронирования</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
   <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
 </body>
 </html>

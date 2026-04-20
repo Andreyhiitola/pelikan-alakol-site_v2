@@ -1,7 +1,6 @@
 // ============================================================================
 // bar.js - Бар "Пеликан Алаколь"
 // Меню + корзина + заказ с сайта и Telegram Mini App
-// + Paybox оплата картой (debug-режим)
 // ============================================================================
 
 const CONFIG = {
@@ -323,94 +322,7 @@ function formatOrderText(order) {
     return text;
 }
 
-// ===================== PAYBOX: МОДАЛКА ВЫБОРА ОПЛАТЫ =====================
-
-function showPaymentModal(order, orderText) {
-    // Удаляем старую модалку если есть
-    document.getElementById('paymentModal')?.remove();
-
-    const modal = document.createElement('div');
-    modal.id = 'paymentModal';
-    modal.className = 'modal';
-    modal.style.display = 'flex';
-
-    const content = document.createElement('div');
-    content.className = 'modal-content';
-    content.style.cssText = 'max-width: 420px; width: 100%;';
-
-    // Заголовок
-    const title = document.createElement('div');
-    title.style.cssText = 'text-align: center; margin-bottom: 24px;';
-    title.innerHTML = `
-        <div style="font-size: 2.5em; margin-bottom: 12px;">💳</div>
-        <h2 style="margin: 0 0 8px;">Способ оплаты</h2>
-        <p style="margin: 0; color: #FFD700; font-size: 1.2em;">
-            Итого: <strong>${order.total.toLocaleString('ru-RU')} ₸</strong>
-        </p>
-    `;
-    content.appendChild(title);
-
-    // Кнопка — Картой (Paybox) — только в Telegram Mini App
-    if (isInsideTelegramMiniApp()) {
-        const btnCard = document.createElement('button');
-        btnCard.style.cssText = `
-            display: flex; align-items: center; gap: 16px;
-            width: 100%; padding: 18px 20px; margin-bottom: 14px;
-            border: none; border-radius: 14px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            color: #fff; font-size: 1.05em; cursor: pointer; text-align: left;
-        `;
-        btnCard.innerHTML = `
-            <span style="font-size: 1.8em;">💳</span>
-            <div>
-                <div style="font-weight: bold; font-size: 1.1em;">Оплатить картой</div>
-                <div style="opacity: 0.85; font-size: 0.9em;">Visa / MasterCard (Paybox)</div>
-            </div>
-        `;
-        btnCard.addEventListener('click', () => {
-            modal.remove();
-            submitOrderWithPayment(order, orderText, 'card');
-        });
-        content.appendChild(btnCard);
-    }
-
-    // Кнопка — Наличными
-    const btnCash = document.createElement('button');
-    btnCash.style.cssText = `
-        display: flex; align-items: center; gap: 16px;
-        width: 100%; padding: 18px 20px; margin-bottom: 14px;
-        border: 2px solid rgba(255,255,255,0.2); border-radius: 14px;
-        background: rgba(255,255,255,0.05); color: #fff;
-        font-size: 1.05em; cursor: pointer; text-align: left;
-    `;
-    btnCash.innerHTML = `
-        <span style="font-size: 1.8em;">💵</span>
-        <div>
-            <div style="font-weight: bold; font-size: 1.1em;">Наличными при получении</div>
-            <div style="opacity: 0.7; font-size: 0.9em;">Оплата в баре</div>
-        </div>
-    `;
-    btnCash.addEventListener('click', () => {
-        modal.remove();
-        submitOrderWithPayment(order, orderText, 'cash');
-    });
-    content.appendChild(btnCash);
-
-    // Отмена
-    const btnCancel = document.createElement('button');
-    btnCancel.style.cssText = `
-        width: 100%; padding: 12px; border: none; background: none;
-        color: rgba(255,255,255,0.45); font-size: 0.95em; cursor: pointer;
-    `;
-    btnCancel.textContent = 'Отмена';
-    btnCancel.addEventListener('click', () => modal.remove());
-    content.appendChild(btnCancel);
-
-    modal.appendChild(content);
-    document.body.appendChild(modal);
-}
-
-// ===================== ОТПРАВКА ЗАКАЗА С МЕТОДОМ ОПЛАТЫ =====================
+// ===================== ОТПРАВКА ЗАКАЗА =====================
 
 async function submitOrderWithPayment(order, orderText, paymentMethod) {
     showLoading(true);
@@ -445,16 +357,7 @@ async function submitOrderWithPayment(order, orderText, paymentMethod) {
             return;
         }
 
-        if (paymentMethod === 'card' && result.payment_url) {
-            // Открываем страницу Paybox
-            showPayboxRedirectModal(order, result.payment_url);
-        } else {
-            // Наличные или fallback (нет ссылки)
-            if (paymentMethod === 'card' && !result.payment_url) {
-                console.warn('Paybox URL не получен, fallback на наличные');
-            }
-            showContactModal(order, orderText);
-        }
+        showContactModal(order, orderText);
 
         // Очистка
         cart = [];
@@ -468,67 +371,6 @@ async function submitOrderWithPayment(order, orderText, paymentMethod) {
         console.error('Ошибка оформления заказа:', error);
         showNotification('Ошибка оформления заказа. Попробуйте ещё раз.', 'error');
     }
-}
-
-// ===================== PAYBOX: МОДАЛКА РЕДИРЕКТА =====================
-
-function showPayboxRedirectModal(order, paymentUrl) {
-    document.getElementById('payboxRedirectModal')?.remove();
-
-    const modal = document.createElement('div');
-    modal.id = 'payboxRedirectModal';
-    modal.className = 'modal';
-    modal.style.display = 'flex';
-
-    const content = document.createElement('div');
-    content.className = 'modal-content';
-    content.style.cssText = 'max-width: 420px; width: 100%; text-align: center;';
-
-    content.innerHTML = `
-        <div style="font-size: 3em; margin-bottom: 16px;">✅</div>
-        <h2 style="margin: 0 0 8px;">Заказ #${order.orderId} создан!</h2>
-        <p style="color: #FFD700; font-size: 1.2em; margin: 0 0 20px;">
-            ${order.total.toLocaleString('ru-RU')} ₸
-        </p>
-        <div style="
-            background: rgba(37,99,235,0.15); border-left: 4px solid #2563eb;
-            padding: 16px; border-radius: 10px; margin-bottom: 24px; text-align: left;
-        ">
-            <p style="margin: 0; line-height: 1.6; font-size: 0.95em;">
-                Нажмите кнопку ниже для перехода на страницу оплаты. 
-                После оплаты вернитесь в Telegram — мы пришлём уведомление.
-            </p>
-        </div>
-    `;
-
-    // Кнопка перехода к оплате
-    const btnPay = document.createElement('button');
-    btnPay.className = 'add-btn';
-    btnPay.style.cssText = 'width: 100%; padding: 16px; font-size: 1.1em; margin-bottom: 12px;';
-    btnPay.textContent = '💳 Перейти к оплате';
-    btnPay.addEventListener('click', () => {
-        const tg = window.Telegram?.WebApp;
-        if (tg?.openLink) {
-            tg.openLink(paymentUrl);
-        } else {
-            window.open(paymentUrl, '_blank');
-        }
-        modal.remove();
-    });
-    content.appendChild(btnPay);
-
-    // Закрыть без оплаты
-    const btnClose = document.createElement('button');
-    btnClose.style.cssText = `
-        width: 100%; padding: 12px; border: none; background: none;
-        color: rgba(255,255,255,0.45); font-size: 0.9em; cursor: pointer;
-    `;
-    btnClose.textContent = 'Закрыть (оплачу позже)';
-    btnClose.addEventListener('click', () => modal.remove());
-    content.appendChild(btnClose);
-
-    modal.appendChild(content);
-    document.body.appendChild(modal);
 }
 
 // ===================== МОДАЛКА ДЛЯ САЙТА (наличные / звонок) =====================
@@ -641,8 +483,7 @@ async function handleOrderSubmit(e) {
 
     const orderText = formatOrderText(order);
 
-    // ── Показываем выбор способа оплаты ──
-    showPaymentModal(order, orderText);
+    submitOrderWithPayment(order, orderText, 'cash');
 }
 
 // ===================== ИНИЦИАЛИЗАЦИЯ =====================

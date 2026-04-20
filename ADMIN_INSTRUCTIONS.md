@@ -1,5 +1,20 @@
 # 📱 Инструкция для администраторов бара
 
+## Быстрая справка
+
+| Что | Где |
+|-----|-----|
+| Сайт (прод) | https://pelikan-alakol.kz |
+| Меню бара | https://pelikan-alakol.kz/bar.html |
+| Бот | @Pelican_alacol_hotel_bot |
+| VPS | 85.192.40.138 |
+| API заказов | https://apitelegram.parkpelikan-alakol.kz/api/order |
+| Телефон ресепшн | +7 (72833) 3-00-02 |
+
+**Оплата заказов:** только наличными при получении (карта не поддерживается).
+
+---
+
 ## Как добавить администраторов
 
 ### Шаг 1: Узнать Telegram ID администратора
@@ -304,4 +319,32 @@ cp data/orders.db data/orders.db.backup
 sqlite3 data/orders.db "PRAGMA integrity_check;"
 
 # Если ошибки - восстановить из backup
+cp data/orders.db.backup data/orders.db
+docker-compose restart bot
+```
+
+### Заказ пришёл без Telegram-данных (с сайта)
+
+Если гость оформил заказ через сайт не из Telegram — Telegram username не будет. В уведомлении придёт:
+```
+📋 #1234
+👤 Иван
+🏨 Комната: 205
+📱 Telegram: не указан ❌
+```
+
+Позвонить в комнату: **+7 (72833) 3-00-02** (ресепшн может соединить).
+
+### Обновить меню бара
+
+Меню хранится в файле `barzakaz.json` на сайте. Для изменения цен или состава:
+1. Отредактировать `barzakaz.json` в репозитории
+2. Задеплоить на сервер — меню обновится автоматически
+
+### Проверить что API работает
+```bash
+curl -s https://apitelegram.parkpelikan-alakol.kz/api/order \
+  -X POST -H "Content-Type: application/json" \
+  -d '{"test":true}'
+# Должен вернуть ответ от сервера (не 502/504)
 ```

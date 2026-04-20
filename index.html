@@ -761,9 +761,12 @@ nav { display: flex; align-items: center; gap: 4px; }
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 0 0 220px;
+  flex: 0 0 260px;
   scroll-snap-align: start;
   transition: transform .25s, box-shadow .25s;
+}
+@media (max-width: 600px) {
+  .act-card { flex: 0 0 calc(100vw - 56px); }
 }
 .act-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .act-icon {
@@ -1978,7 +1981,7 @@ nav { display: flex; align-items: center; gap: 4px; }
     </div>
 
     <div class="gallery-more">
-      <a href="accommodation.html" class="btn-primary" style="display:inline-flex">
+      <a href="#gallery" class="btn-primary" style="display:inline-flex">
         <i class="fas fa-images"></i> Открыть полную галерею
       </a>
     </div>
@@ -2313,7 +2316,7 @@ nav { display: flex; align-items: center; gap: 4px; }
         <span class="section-tag">Номерной фонд</span>
         <h2 class="section-title">Выберите свой номер</h2>
       </div>
-      <a href="accommodation.html" class="btn-primary" style="white-space:nowrap">
+      <a href="#rooms" class="btn-primary" style="white-space:nowrap">
         Все номера <i class="fas fa-arrow-right"></i>
       </a>
     </div>
@@ -2334,7 +2337,7 @@ nav { display: flex; align-items: center; gap: 4px; }
             </div>
             <div class="room-price">
               <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html" class="room-link">Подробнее</a>
+              <a href="accommodation.html?id=бунгало-3х-местный" class="room-link">Подробнее</a>
             </div>
           </div>
         </div>
@@ -2352,7 +2355,7 @@ nav { display: flex; align-items: center; gap: 4px; }
             </div>
             <div class="room-price">
               <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html" class="room-link">Подробнее</a>
+              <a href="accommodation.html?id=люкс-2х-местный" class="room-link">Подробнее</a>
             </div>
           </div>
         </div>
@@ -2370,7 +2373,7 @@ nav { display: flex; align-items: center; gap: 4px; }
             </div>
             <div class="room-price">
               <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html" class="room-link">Подробнее</a>
+              <a href="accommodation.html?id=коттедж-6ти-местный" class="room-link">Подробнее</a>
             </div>
           </div>
         </div>
@@ -2387,7 +2390,7 @@ nav { display: flex; align-items: center; gap: 4px; }
             </div>
             <div class="room-price">
               <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html" class="room-link">Подробнее</a>
+              <a href="accommodation.html?id=стандарт-2х-местный" class="room-link">Подробнее</a>
             </div>
           </div>
         </div>
@@ -2405,7 +2408,7 @@ nav { display: flex; align-items: center; gap: 4px; }
             </div>
             <div class="room-price">
               <div class="price-val">По запросу <span>/ночь</span></div>
-              <a href="accommodation.html" class="room-link">Подробнее</a>
+              <a href="accommodation.html?id=бунгало-семейный-6ти-местный" class="room-link">Подробнее</a>
             </div>
           </div>
         </div>
@@ -2654,48 +2657,6 @@ nav { display: flex; align-items: center; gap: 4px; }
   </div>
 </section>
 
-<!-- ============================================================
-     VARIANTS — сравнение вариантов дизайна
-     ============================================================ -->
-<section class="variants-section" id="variants">
-  <div class="container">
-    <div class="section-head" style="text-align:center; margin-bottom:0">
-      <span class="section-tag">Дизайн-лаборатория</span>
-      <h2 class="section-title">Варианты оформления</h2>
-      <p class="section-sub">Сравниваем подходы — кликни карточку, чтобы открыть</p>
-    </div>
-    <div class="variants-grid">
-
-      <div class="variant-card" onclick="window.open('index.html','_blank')">
-        <div class="variant-thumb">🏨</div>
-        <div class="variant-body">
-          <span class="variant-badge current">Текущий сайт</span>
-          <h3>Оригинальный дизайн</h3>
-          <p>Рабочая версия — тёмная тема, 5 модальных окон, плавающие кнопки, гамбургер-меню</p>
-        </div>
-      </div>
-
-      <div class="variant-card" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-        <div class="variant-thumb">🌊</div>
-        <div class="variant-body">
-          <span class="variant-badge">Новый макет — вы здесь</span>
-          <h3>Rebuild — зелёно-золотой</h3>
-          <p>Playfair Display + Inter, Hero с Ken Burns, горизонтальный скролл номеров, рабочие модалки</p>
-        </div>
-      </div>
-
-      <div class="variant-card disabled">
-        <div class="variant-thumb">✏️</div>
-        <div class="variant-body">
-          <span class="variant-badge placeholder">Скоро</span>
-          <h3>Вариант 3</h3>
-          <p>Здесь появится следующий дизайн-вариант для сравнения</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 <!-- ============================================================
      FOOTER
@@ -2725,7 +2686,7 @@ nav { display: flex; align-items: center; gap: 4px; }
       <div class="footer-col">
         <h4>Отель</h4>
         <a href="#features">Об отеле</a>
-        <a href="accommodation.html">Номера</a>
+        <a href="#rooms">Номера</a>
         <a href="activities.html">Активности</a>
         <a href="index_menu.html">Столовая</a>
         <a href="bar.html">Бар</a>

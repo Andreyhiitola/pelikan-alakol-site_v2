@@ -1,0 +1,253 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<style data-omelette-injected>html,body{background:transparent}</style><script data-omelette-injected>(()=>{var W=["https://claude.ai","https://preview.claude.ai","https://eap-omelette.claude.ai"];var Y=30000;document.addEventListener("DOMContentLoaded",()=>{const D="transform-react-jsx-source";document.querySelectorAll('script[type="text/babel"],script[type="text/jsx"]').forEach((C,F)=>{const Q=C.getAttribute("data-plugins")||"";if(Q.indexOf(D)<0){C.setAttribute("data-plugins",Q?`${Q},${D}`:D)}if(!C.hasAttribute("data-filename")){C.setAttribute("data-filename",C.getAttribute("src")||`inline-${F}`)}})});var K=window.parent;if(K&&K!==window){const D=(k,f)=>{try{K.postMessage({__omelette_log:true,type:k,data:f},"*")}catch{}};["log","warn","error"].forEach((k)=>{const f=console[k];console[k]=(...w)=>{const z=w.map((h)=>{try{return typeof h==="object"?JSON.stringify(h):String(h)}catch{try{return String(h)}catch{return"[unstringifiable]"}}}).join(" ");D(k,z);f.apply(console,w)}});window.addEventListener("error",(k)=>{const f=k.target;if(f&&f!==window&&f.tagName){const w=f.src||f.href||"";D("resource_error",`${f.tagName} failed to load: ${w}`)}else{D("error",`${k.message||"Unknown error"} at ${k.filename||"?"}:${k.lineno||0}:${k.colno||0}`)}},true);window.addEventListener("unhandledrejection",(k)=>{const f=k.reason;const w=f instanceof Error?`${f.message} ${f.stack}`:String(f);D("error",`Unhandled rejection: ${w}`)});const C=()=>{try{K.postMessage({type:"omelette:height",height:document.documentElement.scrollHeight},"*")}catch{}};if(document.readyState==="complete")C();else window.addEventListener("load",C);if(window.ResizeObserver)new ResizeObserver(C).observe(document.documentElement);const F={};let Q=0;window.claude={complete(k){return new Promise((f,w)=>{if(!W.length){w(new Error("claude.complete: no parent origin"));return}const z=`c${++Q}`;const h=()=>setTimeout(()=>{delete F[z];w(new Error(`claude.complete: no data for ${Y/1000}s`))},Y);const J=h();F[z]={resolve:f,reject:w,text:"",t:J,arm:h};try{for(const V of W){K.postMessage({__om_api:true,id:z,body:k},V)}}catch(V){clearTimeout(J);delete F[z];w(V)}})}};const X=(k)=>{try{return JSON.stringify(k)}catch{return JSON.stringify(String(k))}};window.addEventListener("message",(k)=>{if(W.indexOf(k.origin)<0)return;if(k.source!==K)return;const f=k.data;if(!f)return;if(f.__om_api_r){const h=F[f.id];if(!h)return;if(f.error!=null){clearTimeout(h.t);delete F[f.id];h.reject(new Error(f.error));return}if(f.chunk!=null){clearTimeout(h.t);h.t=h.arm();h.text+=f.chunk;return}if(f.done){clearTimeout(h.t);delete F[f.id];h.resolve(f.text!=null?f.text:h.text);return}return}if(!f.__om_eval)return;const w=f;const z=(h)=>{k.source.postMessage({...h,__om_eval_r:1,id:w.id},k.origin)};try{const h=(0,eval)(w.code);if(h&&typeof h.then==="function"){h.then((J)=>z({ok:1,v:X(J)}),(J)=>z({ok:0,e:String(J)}))}else{z({ok:1,v:X(h)})}}catch(h){z({ok:0,e:String(h)})}})}})();
+</script>
+
+<meta charset="utf-8" />
+<title>Bar ordering — UI kit</title>
+<meta name="viewport" content="width=1200">
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  html, body { margin: 0; font-family: var(--pa-font-sans); color: #fff; min-height: 100vh;
+    background: url("../../assets/bg-wood.jpg") center/cover fixed no-repeat, #3a2416;
+  }
+  main { max-width: 1200px; margin: 0 auto; padding: 24px 40px 80px; }
+
+  /* ===== Header ===== */
+  header.bar {
+    background: linear-gradient(135deg, rgba(45,134,89,.95), rgba(76,168,118,.95));
+    color: #fff; padding: 14px 40px; box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    display: flex; align-items: center; gap: 16px;
+  }
+  header.bar .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.15em; }
+  header.bar .brand img { height: 36px; filter: drop-shadow(0 1px 2px rgba(0,0,0,.3)); }
+  header.bar .title { margin-left: 4px; font-size: .95em; opacity: .9; }
+  header.bar .cart-btn {
+    margin-left: auto; background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: #fff; border: none; padding: 10px 18px; border-radius: 25px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255,107,53,.4);
+  }
+  header.bar .cart-btn .badge {
+    background: #fff; color: #ff6b35; border-radius: 50%; padding: 1px 8px; font-size: .85em; font-weight: 700;
+  }
+
+  /* ===== Category tabs ===== */
+  .categories {
+    display: flex; gap: 10px; overflow-x: auto; padding: 24px 0 10px;
+    scrollbar-width: thin;
+  }
+  .cat-pill {
+    padding: 10px 18px; border-radius: 25px; background: rgba(255,255,255,.12);
+    color: #fff; border: 2px solid rgba(255,255,255,.2); cursor: pointer;
+    font-weight: 600; font-size: .85em; white-space: nowrap; letter-spacing: .06em; text-transform: uppercase;
+    backdrop-filter: blur(6px);
+  }
+  .cat-pill.active {
+    background: linear-gradient(135deg, #ff6b35, #f7931e); border-color: rgba(255,255,255,.5);
+    box-shadow: 0 4px 15px rgba(255,107,53,.4);
+  }
+
+  /* ===== Heading ===== */
+  h2.section {
+    color: #fff; border-bottom: 3px solid #ff6b35; padding-bottom: 10px; margin: 30px 0 20px;
+    font-size: 1.5em; font-weight: 600; text-shadow: 0 2px 6px rgba(0,0,0,.5);
+  }
+
+  /* ===== Dish grid ===== */
+  .dishes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .dish {
+    background: rgba(255,255,255,.96); color: var(--fg1);
+    border-radius: 15px; overflow: hidden; display: flex; flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    transition: all .3s ease;
+  }
+  .dish:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+  .dish img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .dish .body { padding: 12px 14px 14px; display: flex; flex-direction: column; flex: 1; }
+  .dish .category { font-size: 10px; letter-spacing: .1em; color: var(--pa-primary-green); font-weight: 700; }
+  .dish h3 { margin: 4px 0 6px; font-size: 1em; color: var(--fg1); }
+  .dish p { margin: 0 0 12px; font-size: .82em; color: var(--fg2); line-height: 1.4; flex: 1; }
+  .dish .foot { display: flex; justify-content: space-between; align-items: center; }
+  .dish .price { font-weight: 700; color: var(--pa-primary-green); font-size: 1.15em; }
+  .dish .add {
+    background: linear-gradient(135deg, #ff6b35, #f7931e); color: #fff; border: none;
+    padding: 9px 16px; border-radius: 20px; font-weight: 700; font-size: .85em; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 2px 8px rgba(255,107,53,.4);
+  }
+  .dish.premium .add { background: linear-gradient(135deg, #FFD700, #FFA500); color: #3a2a00; box-shadow: 0 2px 8px rgba(255,165,0,.4); }
+
+  /* ===== Cart drawer ===== */
+  .cart {
+    position: fixed; right: 24px; bottom: 24px; width: 340px;
+    background: rgba(255,255,255,.98); color: var(--fg1); border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.4);
+    border-top: 4px solid var(--pa-secondary-green);
+    overflow: hidden;
+  }
+  .cart .cart-head {
+    padding: 14px 18px; background: linear-gradient(135deg, #2d8659, #4ca876); color: #fff;
+    display: flex; justify-content: space-between; align-items: center; font-weight: 700;
+  }
+  .cart-items { padding: 10px 18px; max-height: 220px; overflow-y: auto; }
+  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(45,134,89,.1); font-size: .88em; }
+  .cart-item:last-child { border-bottom: none; }
+  .cart-item .qty {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: 8px;
+    background: rgba(45,134,89,.08); border-radius: 20px; padding: 2px;
+  }
+  .cart-item .qty button { width: 24px; height: 24px; border: none; border-radius: 50%; background: var(--pa-secondary-green); color:#fff; font-weight: 700; cursor: pointer; }
+  .cart-item .qty span { min-width: 18px; text-align: center; font-weight: 600; }
+  .cart-total { padding: 12px 18px; background: rgba(45,134,89,.06); display: flex; justify-content: space-between; font-weight: 700; color: var(--pa-primary-green); font-size: 1.05em; }
+  .checkout {
+    width: 100%; padding: 14px; border: none; background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: #fff; font-weight: 700; font-size: 1em; cursor: pointer; letter-spacing: .02em;
+  }
+
+  /* ===== Toast (status) ===== */
+  .toast {
+    position: fixed; top: 90px; right: 30px; background: #fff; color: var(--fg1);
+    padding: 14px 20px; border-radius: 12px; border-left: 4px solid var(--pa-secondary-green);
+    box-shadow: 0 16px 40px rgba(0,0,0,.25); font-size: .92em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast .check { width: 26px; height: 26px; border-radius: 50%; background: var(--pa-secondary-green); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; }
+
+  /* ===== Status bar (order lifecycle) ===== */
+  .status-card {
+    margin-top: 24px; background: rgba(255,255,255,.96); color: var(--fg1);
+    border-radius: 15px; padding: 16px 22px; box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    border-left: 4px solid var(--pa-secondary-green);
+  }
+  .status-card h3 { margin: 0 0 12px; color: var(--pa-primary-green); display: flex; align-items: center; gap: 8px; }
+  .lifecycle { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .step { padding: 10px; text-align: center; border-radius: 8px; background: rgba(45,134,89,.06); color: var(--fg2); font-size: .82em; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .step.done { background: var(--pa-primary-green); color: #fff; }
+  .step.current { background: linear-gradient(135deg, #ff6b35, #f7931e); color: #fff; box-shadow: 0 4px 12px rgba(255,107,53,.35); }
+
+  .legend { margin-top: 60px; padding: 18px 22px; background: rgba(255,255,255,.9); color: var(--fg2);
+    border-left: 4px solid var(--pa-secondary-green); border-radius: 12px; font-size: .85em; }
+  .legend strong { color: var(--pa-primary-green); }
+</style>
+</head>
+<body>
+  <header class="bar">
+    <div class="brand"><img src="../../assets/logo.png" alt=""></div>
+    <div class="title">Бар · заказ с доставкой на номер</div>
+    <button class="cart-btn"><i class="fas fa-shopping-cart"></i> Корзина <span class="badge">2</span></button>
+  </header>
+
+  <main>
+    <div class="categories">
+      <div class="cat-pill active">FAST-FOOD</div>
+      <div class="cat-pill">САЛАТЫ</div>
+      <div class="cat-pill">СУПЫ</div>
+      <div class="cat-pill">ГОРЯЧИЕ БЛЮДА</div>
+      <div class="cat-pill">НА КОМПАНИЮ · ПРЕДЗАКАЗ</div>
+      <div class="cat-pill">НАПИТКИ</div>
+    </div>
+
+    <h2 class="section">FAST-FOOD</h2>
+    <section class="dishes">
+      <article class="dish">
+        <img src="../../assets/food/burger-black.jpg" alt="">
+        <div class="body">
+          <div class="category">FAST-FOOD</div>
+          <h3>Бургер «Черный» (комбо)</h3>
+          <p>Сочный говяжий бургер с черной булочкой, картофель фри и напиток на выбор.</p>
+          <div class="foot"><span class="price">3 900 ₸</span><button class="add"><i class="fas fa-plus"></i> В корзину</button></div>
+        </div>
+      </article>
+      <article class="dish">
+        <img src="../../assets/food/pizza-pepperoni.jpg" alt="">
+        <div class="body">
+          <div class="category">ПИЦЦА</div>
+          <h3>Пицца «Пепперони»</h3>
+          <p>Классическая пицца на тонком тесте с острой колбаской пепперони. 32 см.</p>
+          <div class="foot"><span class="price">4 200 ₸</span><button class="add"><i class="fas fa-plus"></i> В корзину</button></div>
+        </div>
+      </article>
+      <article class="dish">
+        <img src="../../assets/food/greek-salad.jpg" alt="">
+        <div class="body">
+          <div class="category">САЛАТЫ</div>
+          <h3>Салат «Греческий»</h3>
+          <p>Свежие овощи, сыр фета, маслины, заправка из оливкового масла.</p>
+          <div class="foot"><span class="price">1 400 ₸</span><button class="add"><i class="fas fa-plus"></i> В корзину</button></div>
+        </div>
+      </article>
+      <article class="dish">
+        <img src="../../assets/food/hachapuri.jpg" alt="">
+        <div class="body">
+          <div class="category">ГОРЯЧИЕ БЛЮДА</div>
+          <h3>Хачапури по-аджарски</h3>
+          <p>Лодочка из сдобного теста с расплавленным сулугуни и яичным желтком.</p>
+          <div class="foot"><span class="price">2 200 ₸</span><button class="add"><i class="fas fa-plus"></i> В корзину</button></div>
+        </div>
+      </article>
+      <article class="dish premium">
+        <img src="../../assets/food/beshbarmak.jpg" alt="">
+        <div class="body">
+          <div class="category" style="color:#b07a00">НА КОМПАНИЮ · ПРЕДЗАКАЗ</div>
+          <h3>Бельдерим из конины</h3>
+          <p>Традиционное казахское блюдо на 5–6 человек. Предзаказ за 2 часа.</p>
+          <div class="foot"><span class="price">18 000 ₸</span><button class="add"><i class="fas fa-utensils"></i> Заказать</button></div>
+        </div>
+      </article>
+      <article class="dish">
+        <div style="aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(45,134,89,.15), rgba(0,212,255,.15)); display:flex; align-items:center; justify-content:center; font-size:3em; color: var(--pa-primary-green)">🥤</div>
+        <div class="body">
+          <div class="category">НАПИТКИ</div>
+          <h3>Лимонад домашний</h3>
+          <p>Освежающий цитрусовый лимонад с мятой. 0.5 л.</p>
+          <div class="foot"><span class="price">900 ₸</span><button class="add"><i class="fas fa-plus"></i> В корзину</button></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="status-card">
+      <h3><i class="fas fa-receipt"></i> Ваш заказ № 247 — статус</h3>
+      <div class="lifecycle">
+        <div class="step done">Принят</div>
+        <div class="step current">Готовится 👨‍🍳</div>
+        <div class="step">Готов</div>
+        <div class="step">Выдан</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <strong>UI kit — Bar ordering.</strong> Full-bleed wood texture background is a brand signature —
+      used only on this surface. Photos loaded from <code>assets/food/*.jpg</code>. Production counterpart:
+      <code>bar.html</code> + Telegram Mini App (<code>miniapp.html</code>) in the source repo.
+    </div>
+  </main>
+
+  <aside class="cart">
+    <div class="cart-head">
+      <span><i class="fas fa-shopping-cart"></i> Корзина</span>
+      <span>2 позиции</span>
+    </div>
+    <div class="cart-items">
+      <div class="cart-item">
+        <span>Бургер «Черный» (комбо)</span>
+        <div class="qty"><button>−</button><span>1</span><button>+</button></div>
+      </div>
+      <div class="cart-item">
+        <span>Салат «Греческий»</span>
+        <div class="qty"><button>−</button><span>1</span><button>+</button></div>
+      </div>
+    </div>
+    <div class="cart-total"><span>Итого</span><span>5 300 ₸</span></div>
+    <button class="checkout">Оформить заказ →</button>
+  </aside>
+
+  <div class="toast">
+    <div class="check">✓</div>
+    <div>Заказ готов! Можете забрать 🎉</div>
+  </div>
+</body>
+</html>

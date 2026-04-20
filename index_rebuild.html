@@ -726,6 +726,15 @@ nav { display: flex; align-items: center; gap: 4px; }
   .day-grid { grid-template-columns: 1fr; }
   .day-card { min-height: 320px; }
 }
+@media (max-width: 600px) {
+  .atmo-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .atmo-item { height: 220px; }
+  .atmo-item--tall { grid-column: 1; height: 260px; }
+  .day-card { min-height: 260px; }
+}
 
 /* ============================================================
    ACTIVITIES

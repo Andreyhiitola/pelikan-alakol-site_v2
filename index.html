@@ -1819,6 +1819,23 @@ nav { display: flex; align-items: center; gap: 4px; }
 }
 .variant-badge.current { background: var(--gold); color: #1a1a1a; }
 .variant-badge.placeholder { background: #ccc; color: #555; }
+
+/* Lang switcher */
+.lang-switcher { display: flex; gap: 2px; align-items: center; margin: 0 8px; }
+.lang-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,.35);
+  color: rgba(255,255,255,.75); font-size: .7rem; font-weight: 600;
+  padding: 3px 7px; border-radius: 5px; cursor: pointer;
+  transition: all .2s; letter-spacing: .03em;
+}
+.lang-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+.lang-btn--active { background: rgba(255,255,255,.2); color: #fff; border-color: rgba(255,255,255,.7); }
+.site-header.scrolled .lang-btn { border-color: rgba(30,122,74,.4); color: var(--text-muted); }
+.site-header.scrolled .lang-btn:hover,
+.site-header.scrolled .lang-btn--active { background: var(--green-light); color: var(--green); border-color: var(--green); }
+.lang-switcher--mobile { margin: 8px 0 4px; justify-content: center; }
+.lang-switcher--mobile .lang-btn { color: rgba(255,255,255,.8); border-color: rgba(255,255,255,.3); font-size: .8rem; padding: 5px 12px; }
+.lang-switcher--mobile .lang-btn--active { background: rgba(255,255,255,.2); color: #fff; }
 </style>
 </head>
 <body>
@@ -1843,20 +1860,22 @@ nav { display: flex; align-items: center; gap: 4px; }
       </a>
 
       <nav>
-        <a href="#features"       class="nav-link">Об отеле</a>
-        <a href="#gallery"        class="nav-link">Галерея</a>
-        <a href="#rooms"          class="nav-link">Номера</a>
-        <a href="#activities"     class="nav-link">Активности</a>
-        <a href="index_menu.html" class="nav-link">Столовая</a>
-        <a href="bar.html"        class="nav-link">Бар</a>
-        <a href="#offers"         class="nav-link">Акции</a>
-        <a href="#price"          class="nav-link">Прайс</a>
-        <a href="#reviews"        class="nav-link">Отзывы</a>
-        <a href="#contacts"       class="nav-link">Контакты</a>
+        <a href="#features"       class="nav-link" data-i18n="nav.about">Об отеле</a>
+        <a href="#gallery"        class="nav-link" data-i18n="nav.gallery">Галерея</a>
+        <a href="#rooms"          class="nav-link" data-i18n="nav.rooms">Номера</a>
+        <a href="#activities"     class="nav-link" data-i18n="nav.activities">Активности</a>
+        <a href="index_menu.html" class="nav-link" data-i18n="nav.canteen">Столовая</a>
+        <a href="bar.html"        class="nav-link" data-i18n="nav.bar">Бар</a>
+        <a href="#offers"         class="nav-link" data-i18n="nav.offers">Акции</a>
+        <a href="#price"          class="nav-link" data-i18n="nav.price">Прайс</a>
+        <a href="#reviews"        class="nav-link" data-i18n="nav.reviews">Отзывы</a>
+        <a href="#contacts"       class="nav-link" data-i18n="nav.contacts">Контакты</a>
       </nav>
 
+      <div class="lang-switcher"></div>
+
       <a href="#booking" class="header-cta">
-        <i class="fas fa-calendar-check"></i> Забронировать
+        <i class="fas fa-calendar-check"></i> <span data-i18n="nav.book">Забронировать</span>
       </a>
 
       <button class="hamburger" id="hamburger" aria-label="Меню" onclick="toggleMobileNav()">
@@ -1870,17 +1889,18 @@ nav { display: flex; align-items: center; gap: 4px; }
 <!-- Mobile nav overlay -->
 <div class="mobile-nav" id="mobileNav">
   <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
-  <a href="#features" onclick="toggleMobileNav()">Об отеле</a>
-  <a href="#gallery"  onclick="toggleMobileNav()">Галерея</a>
-  <a href="#rooms"    onclick="toggleMobileNav()">Номера</a>
-  <a href="#activities" onclick="toggleMobileNav()">Активности</a>
-  <a href="bar.html">🍔 Бар</a>
-  <a href="index_menu.html">🍽 Меню столовой</a>
-  <a href="#price"    onclick="toggleMobileNav()">💰 Прайс</a>
-  <a href="#reviews"  onclick="toggleMobileNav()">Отзывы</a>
-  <a href="#contacts" onclick="toggleMobileNav()">Контакты</a>
+  <div class="lang-switcher lang-switcher--mobile"></div>
+  <a href="#features" onclick="toggleMobileNav()" data-i18n="nav.about">Об отеле</a>
+  <a href="#gallery"  onclick="toggleMobileNav()" data-i18n="nav.gallery">Галерея</a>
+  <a href="#rooms"    onclick="toggleMobileNav()" data-i18n="nav.rooms">Номера</a>
+  <a href="#activities" onclick="toggleMobileNav()" data-i18n="nav.activities">Активности</a>
+  <a href="bar.html">🍔 <span data-i18n="nav.bar">Бар</span></a>
+  <a href="index_menu.html">🍽 <span data-i18n="nav.canteen">Меню столовой</span></a>
+  <a href="#price"    onclick="toggleMobileNav()">💰 <span data-i18n="nav.price">Прайс</span></a>
+  <a href="#reviews"  onclick="toggleMobileNav()" data-i18n="nav.reviews">Отзывы</a>
+  <a href="#contacts" onclick="toggleMobileNav()" data-i18n="nav.contacts">Контакты</a>
   <a href="#booking"  onclick="toggleMobileNav()" class="mobile-cta">
-    <i class="fas fa-calendar-check"></i> Забронировать
+    <i class="fas fa-calendar-check"></i> <span data-i18n="nav.book">Забронировать</span>
   </a>
 </div>
 
@@ -1898,25 +1918,25 @@ nav { display: flex; align-items: center; gap: 4px; }
     <div class="hero-content">
       <a href="#contacts" class="hero-badge" style="text-decoration:none; cursor:pointer" title="Показать на карте">
         <i class="fas fa-map-marker-alt"></i>
-        Озеро Алаколь, Казахстан · Сезон июнь–сентябрь
+        <span data-i18n="hero.badge">Озеро Алаколь, Казахстан · Сезон июнь–сентябрь</span>
         <i class="fas fa-chevron-right" style="font-size:.7em; opacity:.7; margin-left:4px"></i>
       </a>
 
-      <h1>
+      <h1 data-i18n-html="hero.h1">
         Отдых у <em>целебного озера</em><br>для всей семьи
       </h1>
 
-      <p class="hero-sub">
+      <p class="hero-sub" data-i18n="hero.sub">
         Парк-отель Пеликан — деревянные бунгало среди 5000 деревьев,
         чистый галечный пляж и незабываемая природа Жетысу.
       </p>
 
       <div class="hero-actions">
         <a href="#booking" class="btn-primary">
-          <i class="fas fa-calendar-alt"></i> Забронировать номер
+          <i class="fas fa-calendar-alt"></i> <span data-i18n="hero.btn.book">Забронировать номер</span>
         </a>
         <a href="#gallery" class="btn-outline">
-          <i class="fas fa-images"></i> Смотреть галерею
+          <i class="fas fa-images"></i> <span data-i18n="hero.btn.gallery">Смотреть галерею</span>
         </a>
       </div>
     </div>
@@ -1926,21 +1946,21 @@ nav { display: flex; align-items: center; gap: 4px; }
     <div class="hero-stats">
       <div class="stat-card">
         <span class="stat-num">5000+</span>
-        <span class="stat-label">деревьев<br>на территории</span>
+        <span class="stat-label" data-i18n="hero.stat.trees">деревьев<br>на территории</span>
       </div>
       <div class="stat-card">
         <span class="stat-num">20+</span>
-        <span class="stat-label">типов<br>номеров</span>
+        <span class="stat-label" data-i18n="hero.stat.rooms">типов<br>номеров</span>
       </div>
       <div class="stat-card">
         <span class="stat-num">4.8★</span>
-        <span class="stat-label">рейтинг<br>гостей</span>
+        <span class="stat-label" data-i18n="hero.stat.rating">рейтинг<br>гостей</span>
       </div>
     </div>
   </div>
 
   <div class="scroll-hint">
-    <span>Прокрутите вниз</span>
+    <span data-i18n="hero.scroll">Прокрутите вниз</span>
     <i class="fas fa-chevron-down"></i>
   </div>
 </section>
@@ -1951,42 +1971,42 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="features" id="features">
   <div class="container">
     <div class="section-head">
-      <span class="section-tag">Почему выбирают нас</span>
-      <h2 class="section-title">Центр семейного<br>отдыха Пеликан</h2>
-      <p class="section-sub">Уникальный микроклимат, лечебная вода и полная инфраструктура для отдыха всей семьей</p>
+      <span class="section-tag" data-i18n="feat.tag">Почему выбирают нас</span>
+      <h2 class="section-title" data-i18n="feat.title">Центр семейного<br>отдыха Пеликан</h2>
+      <p class="section-sub" data-i18n="feat.sub">Уникальный микроклимат, лечебная вода и полная инфраструктура для отдыха всей семьей</p>
     </div>
 
     <div class="features-scroll-wrap">
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-tree"></i></div>
-          <h3>Зелёная территория</h3>
-          <p>Более 5000 деревьев и кустарников. Тенистые аллеи и живописные уголки для прогулок.</p>
+          <h3 data-i18n="feat.green.title">Зелёная территория</h3>
+          <p data-i18n="feat.green.desc">Более 5000 деревьев и кустарников. Тенистые аллеи и живописные уголки для прогулок.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-umbrella-beach"></i></div>
-          <h3>Чистейший пляж</h3>
-          <p>Галечный пляж, богатый кремнием. Доступ пешком или на пароме. Целебные свойства воды.</p>
+          <h3 data-i18n="feat.beach.title">Чистейший пляж</h3>
+          <p data-i18n="feat.beach.desc">Галечный пляж, богатый кремнием. Доступ пешком или на пароме. Целебные свойства воды.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-child"></i></div>
-          <h3>Детская анимация</h3>
-          <p>Дневные программы, игровые площадки и вечерний кинотеатр для детей и взрослых.</p>
+          <h3 data-i18n="feat.kids.title">Детская анимация</h3>
+          <p data-i18n="feat.kids.desc">Дневные программы, игровые площадки и вечерний кинотеатр для детей и взрослых.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-utensils"></i></div>
-          <h3>Столовая</h3>
-          <p>Обновлённая столовая с разнообразным меню. Завтрак, обед и ужин для всех гостей.</p>
+          <h3 data-i18n="feat.canteen.title">Столовая</h3>
+          <p data-i18n="feat.canteen.desc">Обновлённая столовая с разнообразным меню. Завтрак, обед и ужин для всех гостей.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-hot-tub"></i></div>
-          <h3>Сауна</h3>
-          <p>Две уютные сауны на 3–5 человек. Идеально для релаксации после дня на пляже.</p>
+          <h3 data-i18n="feat.sauna.title">Сауна</h3>
+          <p data-i18n="feat.sauna.desc">Две уютные сауны на 3–5 человек. Идеально для релаксации после дня на пляже.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><i class="fas fa-swimming-pool"></i></div>
-          <h3>Подогреваемые бассейны</h3>
-          <p>Два бассейна с комфортной температурой воды и шезлонгами вокруг.</p>
+          <h3 data-i18n="feat.pool.title">Подогреваемые бассейны</h3>
+          <p data-i18n="feat.pool.desc">Два бассейна с комфортной температурой воды и шезлонгами вокруг.</p>
         </div>
       </div>
     </div>
@@ -2015,55 +2035,55 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="gallery-section" id="gallery">
   <div class="container">
     <div class="section-head">
-      <span class="section-tag">Фотогалерея</span>
-      <h2 class="section-title">Посмотрите<br>на Пеликан</h2>
+      <span class="section-tag" data-i18n="gal.tag">Фотогалерея</span>
+      <h2 class="section-title" data-i18n="gal.title">Посмотрите<br>на Пеликан</h2>
     </div>
 
     <div class="gallery-tabs">
-      <button class="g-tab active" data-cat="all" onclick="filterGallery(this)">Все фото</button>
-      <button class="g-tab" data-cat="lake" onclick="filterGallery(this)">Озеро и пляж</button>
-      <button class="g-tab" data-cat="pool" onclick="filterGallery(this)">Бассейн</button>
-      <button class="g-tab" data-cat="territory" onclick="filterGallery(this)">Территория</button>
-      <button class="g-tab" data-cat="canteen" onclick="filterGallery(this)">Столовая</button>
-      <button class="g-tab" data-cat="kids" onclick="filterGallery(this)">Для детей</button>
+      <button class="g-tab active" data-cat="all" onclick="filterGallery(this)" data-i18n="gal.tab.all">Все фото</button>
+      <button class="g-tab" data-cat="lake" onclick="filterGallery(this)" data-i18n="gal.tab.lake">Озеро и пляж</button>
+      <button class="g-tab" data-cat="pool" onclick="filterGallery(this)" data-i18n="gal.tab.pool">Бассейн</button>
+      <button class="g-tab" data-cat="territory" onclick="filterGallery(this)" data-i18n="gal.tab.terr">Территория</button>
+      <button class="g-tab" data-cat="canteen" onclick="filterGallery(this)" data-i18n="gal.tab.cant">Столовая</button>
+      <button class="g-tab" data-cat="kids" onclick="filterGallery(this)" data-i18n="gal.tab.kids">Для детей</button>
     </div>
 
     <div class="gallery-grid" id="galleryGrid">
       <div class="g-item" data-cat="lake" onclick="openLightbox(this)">
         <img src="images/gallery/lake-view/01.jpg" alt="Вид на озеро" loading="lazy">
-        <div class="g-overlay">Озеро Алаколь</div>
+        <div class="g-overlay" data-i18n="gal.ov.lake">Озеро Алаколь</div>
       </div>
       <div class="g-item" data-cat="lake" onclick="openLightbox(this)">
         <img src="images/gallery/magic-sunset.jpg" alt="Закат" loading="lazy">
-        <div class="g-overlay">Закат над озером</div>
+        <div class="g-overlay" data-i18n="gal.ov.sunset">Закат над озером</div>
       </div>
       <div class="g-item" data-cat="lake" onclick="openLightbox(this)">
         <img src="images/gallery/beach_parom/01.jpg" alt="Пляж" loading="lazy">
-        <div class="g-overlay">Пляж и паром</div>
+        <div class="g-overlay" data-i18n="gal.ov.beach">Пляж и паром</div>
       </div>
       <div class="g-item" data-cat="pool" onclick="openLightbox(this)">
         <img src="images/gallery/outdoor-pool/01.jpg" alt="Бассейн" loading="lazy">
-        <div class="g-overlay">Открытый бассейн</div>
+        <div class="g-overlay" data-i18n="gal.ov.pool">Открытый бассейн</div>
       </div>
       <div class="g-item" data-cat="territory" onclick="openLightbox(this)">
         <img src="images/gallery/wooden-house.jpg" alt="Бунгало" loading="lazy">
-        <div class="g-overlay">Деревянные бунгало</div>
+        <div class="g-overlay" data-i18n="gal.ov.bungal">Деревянные бунгало</div>
       </div>
       <div class="g-item" data-cat="kids" onclick="openLightbox(this)">
         <img src="images/gallery/animation/01.jpg" alt="Анимация" loading="lazy">
-        <div class="g-overlay">Детская анимация</div>
+        <div class="g-overlay" data-i18n="gal.ov.anim">Детская анимация</div>
       </div>
       <div class="g-item" data-cat="kids" onclick="openLightbox(this)">
         <img src="images/gallery/detskayploshadka/01.jpg" alt="Детская площадка" loading="lazy">
-        <div class="g-overlay">Детская площадка</div>
+        <div class="g-overlay" data-i18n="gal.ov.playground">Детская площадка</div>
       </div>
       <div class="g-item" data-cat="territory" onclick="openLightbox(this)">
         <img src="images/gallery/bonfire-evening.jpg" alt="Вечер" loading="lazy">
-        <div class="g-overlay">Вечер у костра</div>
+        <div class="g-overlay" data-i18n="gal.ov.fire">Вечер у костра</div>
       </div>
       <div class="g-item" data-cat="canteen" onclick="openLightbox(this)">
         <img src="images/gallery/stolovay/01.jpg" alt="Столовая" loading="lazy">
-        <div class="g-overlay">Столовая</div>
+        <div class="g-overlay" data-i18n="gal.ov.cant">Столовая</div>
       </div>
     </div>
 
@@ -2087,20 +2107,20 @@ nav { display: flex; align-items: center; gap: 4px; }
         <div class="about-badge-float">
           <span class="badge-icon">🏖️</span>
           <div class="badge-text">
-            <strong>Сезон открыт</strong>
-            <span>Июнь — Сентябрь</span>
+            <strong data-i18n="about.badge.title">Сезон открыт</strong>
+            <span data-i18n="about.badge.sub">Июнь — Сентябрь</span>
           </div>
         </div>
       </div>
 
       <div class="about-text">
-        <span class="section-tag">О нас</span>
-        <h2 class="section-title">Уникальное место<br>на карте Казахстана</h2>
-        <p>
+        <span class="section-tag" data-i18n="about.tag">О нас</span>
+        <h2 class="section-title" data-i18n="about.title">Уникальное место<br>на карте Казахстана</h2>
+        <p data-i18n="about.p1">
           Парк-отель Пеликан расположен на берегу озера Алаколь — одного из крупнейших
           солёных озёр Центральной Азии с уникальными целебными свойствами воды.
         </p>
-        <p>
+        <p data-i18n="about.p2">
           Деревянные бунгало среди живой природы, свежий воздух степи и гор,
           чистый пляж — всё это создаёт особую атмосферу настоящего отдыха,
           далёкого от городской суеты.
@@ -2110,29 +2130,29 @@ nav { display: flex; align-items: center; gap: 4px; }
           <div class="highlight">
             <div class="highlight-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="highlight-text">
-              <strong>с. Акши, Жетысу</strong>
-              <span>Восточный Казахстан</span>
+              <strong data-i18n="about.hl1.title">с. Акши, Жетысу</strong>
+              <span data-i18n="about.hl1.sub">Восточный Казахстан</span>
             </div>
           </div>
           <div class="highlight">
             <div class="highlight-icon"><i class="fas fa-home"></i></div>
             <div class="highlight-text">
-              <strong>20+ типов номеров</strong>
-              <span>Бунгало, коттеджи, люксы</span>
+              <strong data-i18n="about.hl2.title">20+ типов номеров</strong>
+              <span data-i18n="about.hl2.sub">Бунгало, коттеджи, люксы</span>
             </div>
           </div>
           <div class="highlight">
             <div class="highlight-icon"><i class="fas fa-users"></i></div>
             <div class="highlight-text">
-              <strong>Для всей семьи</strong>
-              <span>Семейные и компании</span>
+              <strong data-i18n="about.hl3.title">Для всей семьи</strong>
+              <span data-i18n="about.hl3.sub">Семейные и компании</span>
             </div>
           </div>
           <div class="highlight">
             <div class="highlight-icon"><i class="fas fa-leaf"></i></div>
             <div class="highlight-text">
-              <strong>Живая природа</strong>
-              <span>5000+ деревьев</span>
+              <strong data-i18n="about.hl4.title">Живая природа</strong>
+              <span data-i18n="about.hl4.sub">5000+ деревьев</span>
             </div>
           </div>
         </div>
@@ -2147,9 +2167,9 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="atmosphere-section" id="atmosphere">
   <div class="atmo-intro">
     <div class="container">
-      <span class="section-tag">Атмосфера</span>
-      <h2 class="section-title">Место, где время замедляется</h2>
-      <p class="section-sub">Утренний туман над озером, запах сосен, звук волн и звёздное небо — то, за чем сюда возвращаются снова</p>
+      <span class="section-tag" data-i18n="atmo.tag">Атмосфера</span>
+      <h2 class="section-title" data-i18n="atmo.title">Место, где время замедляется</h2>
+      <p class="section-sub" data-i18n="atmo.sub">Утренний туман над озером, запах сосен, звук волн и звёздное небо — то, за чем сюда возвращаются снова</p>
     </div>
   </div>
 
@@ -2157,36 +2177,36 @@ nav { display: flex; align-items: center; gap: 4px; }
     <div class="atmo-item atmo-item--tall">
       <img src="images/gallery/magic-sunset.jpg" alt="Закат над Алаколем" loading="lazy">
       <div class="atmo-item__overlay">
-        <div class="atmo-item__tag">Природа</div>
-        <div class="atmo-item__title">Закаты над Алаколем не забываются</div>
+        <div class="atmo-item__tag" data-i18n="atmo.nature.tag">Природа</div>
+        <div class="atmo-item__title" data-i18n="atmo.nature.title">Закаты над Алаколем не забываются</div>
       </div>
     </div>
     <div class="atmo-item">
       <img src="images/gallery/morning-nature.jpg" alt="Утро в парке" loading="lazy">
       <div class="atmo-item__overlay">
-        <div class="atmo-item__tag">Утро</div>
-        <div class="atmo-item__title">Свежий воздух и пение птиц</div>
+        <div class="atmo-item__tag" data-i18n="atmo.morning.tag">Утро</div>
+        <div class="atmo-item__title" data-i18n="atmo.morning.title">Свежий воздух и пение птиц</div>
       </div>
     </div>
     <div class="atmo-item">
       <img src="images/gallery/wooden-house.jpg" alt="Деревянные бунгало" loading="lazy">
       <div class="atmo-item__overlay">
-        <div class="atmo-item__tag">Жильё</div>
-        <div class="atmo-item__title">Деревянные бунгало среди деревьев</div>
+        <div class="atmo-item__tag" data-i18n="atmo.bungal.tag">Жильё</div>
+        <div class="atmo-item__title" data-i18n="atmo.bungal.title">Деревянные бунгало среди деревьев</div>
       </div>
     </div>
     <div class="atmo-item">
       <img src="images/gallery/bonfire-evening.jpg" alt="Вечер у костра" loading="lazy">
       <div class="atmo-item__overlay">
-        <div class="atmo-item__tag">Вечер</div>
-        <div class="atmo-item__title">Вечер у костра с близкими</div>
+        <div class="atmo-item__tag" data-i18n="atmo.fire.tag">Вечер</div>
+        <div class="atmo-item__title" data-i18n="atmo.fire.title">Вечер у костра с близкими</div>
       </div>
     </div>
     <div class="atmo-item">
       <img src="images/gallery/night-sky.jpg" alt="Звёздное небо" loading="lazy">
       <div class="atmo-item__overlay">
-        <div class="atmo-item__tag">Ночь</div>
-        <div class="atmo-item__title">Звёздное небо вдали от города</div>
+        <div class="atmo-item__tag" data-i18n="atmo.night.tag">Ночь</div>
+        <div class="atmo-item__title" data-i18n="atmo.night.title">Звёздное небо вдали от города</div>
       </div>
     </div>
   </div>
@@ -2198,9 +2218,9 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="day-section">
   <div class="container">
     <div class="section-head" style="text-align:center">
-      <span class="section-tag">Типичный день</span>
-      <h2 class="section-title">День в Пеликане</h2>
-      <p class="section-sub">Каждый день здесь проходит по-своему — но вот из чего обычно состоит идеальный отдых</p>
+      <span class="section-tag" data-i18n="day.tag">Типичный день</span>
+      <h2 class="section-title" data-i18n="day.title">День в Пеликане</h2>
+      <p class="section-sub" data-i18n="day.sub">Каждый день здесь проходит по-своему — но вот из чего обычно состоит идеальный отдых</p>
     </div>
 
     <div class="day-grid">
@@ -2208,14 +2228,14 @@ nav { display: flex; align-items: center; gap: 4px; }
         <img src="images/gallery/morning-nature.jpg" alt="Утро" loading="lazy">
         <div class="day-card__overlay"></div>
         <div class="day-card__content">
-          <div class="day-card__time"><i class="fas fa-sun"></i> Утро</div>
+          <div class="day-card__time"><i class="fas fa-sun"></i> <span data-i18n="day.morning.time">Утро</span></div>
           <span class="day-card__emoji">🌅</span>
-          <div class="day-card__title">Пробуждение на природе</div>
-          <div class="day-card__desc">Свежий воздух степи и гор, пение птиц, завтрак в столовой — лучшее начало дня.</div>
+          <div class="day-card__title" data-i18n="day.morning.title">Пробуждение на природе</div>
+          <div class="day-card__desc" data-i18n="day.morning.desc">Свежий воздух степи и гор, пение птиц, завтрак в столовой — лучшее начало дня.</div>
           <div class="day-card__moments">
-            <div class="day-card__moment"><i class="fas fa-check"></i> Завтрак с 8:00 до 10:30</div>
-            <div class="day-card__moment"><i class="fas fa-check"></i> Прогулка по территории</div>
-            <div class="day-card__moment"><i class="fas fa-check"></i> Паром на пляж в 8:00</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.morning.m1">Завтрак с 8:00 до 10:30</span></div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.morning.m2">Прогулка по территории</span></div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.morning.m3">Паром на пляж в 8:00</span></div>
           </div>
         </div>
       </div>
@@ -2224,14 +2244,14 @@ nav { display: flex; align-items: center; gap: 4px; }
         <img src="images/gallery/beach_parom/01.jpg" alt="День на пляже" loading="lazy">
         <div class="day-card__overlay"></div>
         <div class="day-card__content">
-          <div class="day-card__time"><i class="fas fa-umbrella-beach"></i> День</div>
+          <div class="day-card__time"><i class="fas fa-umbrella-beach"></i> <span data-i18n="day.day.time">День</span></div>
           <span class="day-card__emoji">🏖️</span>
-          <div class="day-card__title">Целебная вода Алаколя</div>
-          <div class="day-card__desc">Галечный пляж, минеральная вода озера с уникальными свойствами, бассейн и детская анимация.</div>
+          <div class="day-card__title" data-i18n="day.day.title">Целебная вода Алаколя</div>
+          <div class="day-card__desc" data-i18n="day.day.desc">Галечный пляж, минеральная вода озера с уникальными свойствами, бассейн и детская анимация.</div>
           <div class="day-card__moments">
-            <div class="day-card__moment"><i class="fas fa-check"></i> Пляж до 19:00</div>
-            <div class="day-card__moment"><i class="fas fa-check"></i> Бассейн с 10:00</div>
-            <div class="day-card__moment"><i class="fas fa-check"></i> Обед с 12:00 до 15:30</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.day.m1">Пляж до 19:00</span></div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.day.m2">Бассейн с 10:00</span></div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.day.m3">Обед с 12:00 до 15:30</span></div>
           </div>
         </div>
       </div>
@@ -2240,14 +2260,14 @@ nav { display: flex; align-items: center; gap: 4px; }
         <img src="images/gallery/bonfire-evening.jpg" alt="Вечер у костра" loading="lazy">
         <div class="day-card__overlay"></div>
         <div class="day-card__content">
-          <div class="day-card__time"><i class="fas fa-moon"></i> Вечер</div>
+          <div class="day-card__time"><i class="fas fa-moon"></i> <span data-i18n="day.eve.time">Вечер</span></div>
           <span class="day-card__emoji">🌙</span>
-          <div class="day-card__title">Вечер под открытым небом</div>
-          <div class="day-card__desc">Ужин, живая музыка в амфитеатре, кино для детей и костёр под звёздным небом Жетысу.</div>
+          <div class="day-card__title" data-i18n="day.eve.title">Вечер под открытым небом</div>
+          <div class="day-card__desc" data-i18n="day.eve.desc">Ужин, живая музыка в амфитеатре, кино для детей и костёр под звёздным небом Жетысу.</div>
           <div class="day-card__moments">
-            <div class="day-card__moment"><i class="fas fa-check"></i> Ужин с 17:30</div>
-            <div class="day-card__moment"><i class="fas fa-check"></i> Вечерняя программа с 19:00</div>
-            <div class="day-card__moment"><i class="fas fa-check"></i> Заказ из бара на номер</div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.eve.m1">Ужин с 17:30</span></div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.eve.m2">Вечерняя программа с 19:00</span></div>
+            <div class="day-card__moment"><i class="fas fa-check"></i> <span data-i18n="day.eve.m3">Заказ из бара на номер</span></div>
           </div>
         </div>
       </div>
@@ -2261,9 +2281,9 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="food-section">
   <div class="container">
     <div class="section-head">
-      <span class="section-tag">Питание и бар</span>
-      <h2 class="section-title">Вкусно на территории</h2>
-      <p class="section-sub">Столовая с разнообразным меню и бар с заказом прямо на телефон</p>
+      <span class="section-tag" data-i18n="food.tag">Питание и бар</span>
+      <h2 class="section-title" data-i18n="food.title">Вкусно на территории</h2>
+      <p class="section-sub" data-i18n="food.sub">Столовая с разнообразным меню и бар с заказом прямо на телефон</p>
     </div>
 
     <div class="food-grid">
@@ -2275,15 +2295,15 @@ nav { display: flex; align-items: center; gap: 4px; }
           <div class="food-card__badge"><i class="fas fa-utensils"></i> Столовая</div>
         </div>
         <div class="food-card__body">
-          <h3>Столовая Пеликан</h3>
-          <p>Завтрак, обед и ужин — разнообразное домашнее меню каждый день. Вместительный зал, комфортная обстановка.</p>
+          <h3 data-i18n="food.cant.title">Столовая Пеликан</h3>
+          <p data-i18n="food.cant.desc">Завтрак, обед и ужин — разнообразное домашнее меню каждый день. Вместительный зал, комфортная обстановка.</p>
           <ul class="food-features">
-            <li><i class="fas fa-check"></i> 3-разовое питание</li>
-            <li><i class="fas fa-check"></i> Казахская кухня</li>
-            <li><i class="fas fa-check"></i> Детское меню</li>
+            <li><i class="fas fa-check"></i> <span data-i18n="food.cant.f1">3-разовое питание</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="food.cant.f2">Казахская кухня</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="food.cant.f3">Детское меню</span></li>
           </ul>
           <a href="index_menu.html" class="btn-food">
-            <i class="fas fa-book-open"></i> Посмотреть меню
+            <i class="fas fa-book-open"></i> <span data-i18n="food.cant.btn">Посмотреть меню</span>
           </a>
         </div>
       </div>
@@ -2295,15 +2315,15 @@ nav { display: flex; align-items: center; gap: 4px; }
           <div class="food-card__badge" style="background:rgba(201,162,39,.9)"><i class="fas fa-cocktail"></i> Бар</div>
         </div>
         <div class="food-card__body">
-          <h3>Бар Пеликан</h3>
-          <p>Бургеры, пицца, крылышки, супы и напитки. Заказывайте прямо с телефона через Telegram — доставим к вам.</p>
+          <h3 data-i18n="food.bar.title">Бар Пеликан</h3>
+          <p data-i18n="food.bar.desc">Бургеры, пицца, крылышки, супы и напитки. Заказывайте прямо с телефона через Telegram — доставим к вам.</p>
           <ul class="food-features">
-            <li><i class="fas fa-check"></i> Fast-food и горячие блюда</li>
-            <li><i class="fas fa-check"></i> Заказ через Telegram</li>
-            <li><i class="fas fa-check"></i> Оплата картой или наличными</li>
+            <li><i class="fas fa-check"></i> <span data-i18n="food.bar.f1">Fast-food и горячие блюда</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="food.bar.f2">Заказ через Telegram</span></li>
+            <li><i class="fas fa-check"></i> <span data-i18n="food.bar.f3">Оплата картой или наличными</span></li>
           </ul>
           <a href="bar.html" class="btn-food btn-food--gold">
-            <i class="fab fa-telegram"></i> Заказать в баре
+            <i class="fab fa-telegram"></i> <span data-i18n="food.bar.btn">Заказать в баре</span>
           </a>
         </div>
       </div>
@@ -2319,12 +2339,12 @@ nav { display: flex; align-items: center; gap: 4px; }
   <div class="container">
     <div class="section-head" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
       <div>
-        <span class="section-tag">На территории</span>
-        <h2 class="section-title">Активности и досуг</h2>
-        <p class="section-sub">Расписание работы объектов и развлечений</p>
+        <span class="section-tag" data-i18n="act.tag">На территории</span>
+        <h2 class="section-title" data-i18n="act.title">Активности и досуг</h2>
+        <p class="section-sub" data-i18n="act.sub">Расписание работы объектов и развлечений</p>
       </div>
       <a href="activities.html" class="btn-primary" style="white-space:nowrap">
-        Все активности <i class="fas fa-arrow-right"></i>
+        <span data-i18n="act.more">Все активности</span> <i class="fas fa-arrow-right"></i>
       </a>
     </div>
 
@@ -2333,50 +2353,50 @@ nav { display: flex; align-items: center; gap: 4px; }
 
       <div class="act-card">
         <div class="act-icon">⛴️</div>
-        <div class="act-title">Паром</div>
-        <div class="act-time"><i class="fas fa-clock"></i> 8:00 — 19:00</div>
-        <div class="act-desc">Переправа через озеро каждые 15 минут</div>
-        <div class="act-location"><i class="fas fa-map-marker-alt"></i> Причал</div>
+        <div class="act-title" data-i18n="act.ferry.title">Паром</div>
+        <div class="act-time"><i class="fas fa-clock"></i> <span data-i18n="act.ferry.time">8:00 — 19:00</span></div>
+        <div class="act-desc" data-i18n="act.ferry.desc">Переправа через озеро каждые 15 минут</div>
+        <div class="act-location"><i class="fas fa-map-marker-alt"></i> <span data-i18n="act.ferry.loc">Причал</span></div>
       </div>
 
       <div class="act-card">
         <div class="act-icon">🎭</div>
-        <div class="act-title">Анимация</div>
-        <div class="act-time"><i class="fas fa-clock"></i> По расписанию</div>
-        <div class="act-desc">Конкурсы, игры и развлекательные программы для всей семьи</div>
-        <div class="act-location"><i class="fas fa-map-marker-alt"></i> Территория</div>
+        <div class="act-title" data-i18n="act.anim.title">Анимация</div>
+        <div class="act-time"><i class="fas fa-clock"></i> <span data-i18n="act.anim.time">По расписанию</span></div>
+        <div class="act-desc" data-i18n="act.anim.desc">Конкурсы, игры и развлекательные программы для всей семьи</div>
+        <div class="act-location"><i class="fas fa-map-marker-alt"></i> <span data-i18n="act.anim.loc">Территория</span></div>
       </div>
 
       <div class="act-card">
         <div class="act-icon">🏊</div>
-        <div class="act-title">Бассейн</div>
-        <div class="act-time"><i class="fas fa-clock"></i> 10:00 — 18:00</div>
-        <div class="act-desc">Бассейн с подогревом, детское отделение, аквааэробика</div>
-        <div class="act-location"><i class="fas fa-map-marker-alt"></i> Бассейн</div>
+        <div class="act-title" data-i18n="act.pool.title">Бассейн</div>
+        <div class="act-time"><i class="fas fa-clock"></i> <span data-i18n="act.pool.time">10:00 — 18:00</span></div>
+        <div class="act-desc" data-i18n="act.pool.desc">Бассейн с подогревом, детское отделение, аквааэробика</div>
+        <div class="act-location"><i class="fas fa-map-marker-alt"></i> <span data-i18n="act.pool.loc">Бассейн</span></div>
       </div>
 
       <div class="act-card">
         <div class="act-icon">🛍️</div>
-        <div class="act-title">Магазин</div>
-        <div class="act-time"><i class="fas fa-clock"></i> 10:00 — 20:00</div>
-        <div class="act-desc">Сувениры, пляжные товары, товары первой необходимости</div>
-        <div class="act-location"><i class="fas fa-map-marker-alt"></i> Магазин</div>
+        <div class="act-title" data-i18n="act.shop.title">Магазин</div>
+        <div class="act-time"><i class="fas fa-clock"></i> <span data-i18n="act.shop.time">10:00 — 20:00</span></div>
+        <div class="act-desc" data-i18n="act.shop.desc">Сувениры, пляжные товары, товары первой необходимости</div>
+        <div class="act-location"><i class="fas fa-map-marker-alt"></i> <span data-i18n="act.shop.loc">Магазин</span></div>
       </div>
 
       <div class="act-card">
         <div class="act-icon">🎶</div>
-        <div class="act-title">Вечерний досуг</div>
-        <div class="act-time"><i class="fas fa-clock"></i> 19:00 — 22:00</div>
-        <div class="act-desc">Живая музыка, фольклор, караоке, дискотеки и танцевальные вечера</div>
-        <div class="act-location"><i class="fas fa-map-marker-alt"></i> Амфитеатр</div>
+        <div class="act-title" data-i18n="act.eve.title">Вечерний досуг</div>
+        <div class="act-time"><i class="fas fa-clock"></i> <span data-i18n="act.eve.time">19:00 — 22:00</span></div>
+        <div class="act-desc" data-i18n="act.eve.desc">Живая музыка, фольклор, караоке, дискотеки и танцевальные вечера</div>
+        <div class="act-location"><i class="fas fa-map-marker-alt"></i> <span data-i18n="act.eve.loc">Амфитеатр</span></div>
       </div>
 
       <div class="act-card">
         <div class="act-icon">🎱</div>
-        <div class="act-title">Бильярд, теннис, Бар</div>
-        <div class="act-time"><i class="fas fa-clock"></i> 12:00 — 23:00</div>
-        <div class="act-desc">Бильярд, настольный теннис, напитки и закуски</div>
-        <div class="act-location"><i class="fas fa-map-marker-alt"></i> Развлекательный центр</div>
+        <div class="act-title" data-i18n="act.bill.title">Бильярд, теннис, Бар</div>
+        <div class="act-time"><i class="fas fa-clock"></i> <span data-i18n="act.bill.time">12:00 — 23:00</span></div>
+        <div class="act-desc" data-i18n="act.bill.desc">Бильярд, настольный теннис, напитки и закуски</div>
+        <div class="act-location"><i class="fas fa-map-marker-alt"></i> <span data-i18n="act.bill.loc">Развлекательный центр</span></div>
       </div>
 
     </div>
@@ -2395,11 +2415,11 @@ nav { display: flex; align-items: center; gap: 4px; }
   <div class="container">
     <div class="section-head" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
       <div>
-        <span class="section-tag">Номерной фонд</span>
-        <h2 class="section-title">Выберите свой номер</h2>
+        <span class="section-tag" data-i18n="rooms.tag">Номерной фонд</span>
+        <h2 class="section-title" data-i18n="rooms.title">Выберите свой номер</h2>
       </div>
       <a href="accommodation.html" class="btn-primary" style="white-space:nowrap; display:none" id="roomsMoreBtn">
-        Все номера <i class="fas fa-arrow-right"></i>
+        <span data-i18n="rooms.more">Все номера</span> <i class="fas fa-arrow-right"></i>
       </a>
     </div>
 
@@ -2421,55 +2441,55 @@ nav { display: flex; align-items: center; gap: 4px; }
   <div class="container">
     <div class="booking-inner">
       <div class="booking-text">
-        <h2 class="section-title">Онлайн бронирование<br>24 / 7</h2>
-        <p>Выберите даты, тип номера и количество гостей. Подтверждение получите в течение часа.</p>
+        <h2 class="section-title" data-i18n="book.title">Онлайн бронирование<br>24 / 7</h2>
+        <p data-i18n="book.sub">Выберите даты, тип номера и количество гостей. Подтверждение получите в течение часа.</p>
         <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
           <div style="display:flex; align-items:center; gap:8px; font-size:.88rem; color:rgba(255,255,255,.75)">
-            <i class="fas fa-check-circle" style="color:#7ee8a2"></i> Без предоплаты
+            <i class="fas fa-check-circle" style="color:#7ee8a2"></i> <span data-i18n="book.f1">Без предоплаты</span>
           </div>
           <div style="display:flex; align-items:center; gap:8px; font-size:.88rem; color:rgba(255,255,255,.75)">
-            <i class="fas fa-check-circle" style="color:#7ee8a2"></i> Бесплатная отмена
+            <i class="fas fa-check-circle" style="color:#7ee8a2"></i> <span data-i18n="book.f2">Бесплатная отмена</span>
           </div>
           <div style="display:flex; align-items:center; gap:8px; font-size:.88rem; color:rgba(255,255,255,.75)">
-            <i class="fas fa-check-circle" style="color:#7ee8a2"></i> Лучшая цена
+            <i class="fas fa-check-circle" style="color:#7ee8a2"></i> <span data-i18n="book.f3">Лучшая цена</span>
           </div>
         </div>
       </div>
 
       <div class="booking-widget">
-        <h3><i class="fas fa-calendar-check"></i> Проверить наличие мест</h3>
+        <h3><i class="fas fa-calendar-check"></i> <span data-i18n="book.widget.title">Проверить наличие мест</span></h3>
         <div class="booking-form">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
             <div class="bfield">
-              <label>Заезд</label>
+              <label data-i18n="book.checkin">Заезд</label>
               <input type="date" placeholder="дд.мм.гггг">
             </div>
             <div class="bfield">
-              <label>Выезд</label>
+              <label data-i18n="book.checkout">Выезд</label>
               <input type="date" placeholder="дд.мм.гггг">
             </div>
           </div>
           <div class="bfield">
-            <label>Тип номера</label>
-            <input type="text" placeholder="Бунгало, коттедж, люкс...">
+            <label data-i18n="book.roomtype">Тип номера</label>
+            <input type="text" placeholder="Бунгало, коттедж, люкс..." data-i18n-placeholder="book.roomtype.ph">
           </div>
           <div class="bfield">
-            <label>Кол-во гостей</label>
+            <label data-i18n="book.guests">Кол-во гостей</label>
             <input type="number" placeholder="2" min="1" max="20">
           </div>
           <button class="btn-primary">
-            <i class="fas fa-search"></i> Найти свободные номера
+            <i class="fas fa-search"></i> <span data-i18n="book.search">Найти свободные номера</span>
           </button>
         </div>
 
         <div class="booking-terms" id="bookingTerms">
           <div class="booking-terms-toggle" onclick="toggleBookingTerms()">
-            <span><i class="fas fa-file-alt" style="margin-right:7px"></i>Условия бронирования</span>
+            <span><i class="fas fa-file-alt" style="margin-right:7px"></i><span data-i18n="book.terms.toggle">Условия бронирования</span></span>
             <i class="fas fa-chevron-down booking-terms-arrow"></i>
           </div>
           <div class="booking-terms-body">
             <div class="terms-warning">
-              <div class="warn-head"><i class="fas fa-exclamation-triangle"></i> ВНИМАНИЕ!!!</div>
+              <div class="warn-head"><i class="fas fa-exclamation-triangle"></i> <span data-i18n="book.terms.warn">ВНИМАНИЕ!!!</span></div>
               <p>Все цены указаны <strong>без учёта действующих скидок</strong>. Размер скидок рассчитывается менеджером при подтверждении брони.</p>
               <p>Менеджер свяжется с вами <strong>с 09:00 до 17:00 в рабочие дни</strong>. После подтверждения необходимо произвести оплату в течение <strong>трёх рабочих дней</strong>.</p>
               <p>Если дата заезда близка — оплата должна быть произведена <strong>не позднее чем за 24 часа до заезда</strong>.</p>
@@ -2490,26 +2510,26 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="price-section" id="price">
   <div class="container">
     <div class="section-head">
-      <span class="section-tag">Стоимость проживания</span>
-      <h2 class="section-title">Прайс 2026</h2>
-      <p class="section-sub">Цены в тенге за номер в сутки, без питания</p>
+      <span class="section-tag" data-i18n="price.tag">Стоимость проживания</span>
+      <h2 class="section-title" data-i18n="price.title">Прайс 2026</h2>
+      <p class="section-sub" data-i18n="price.sub">Цены в тенге за номер в сутки, без питания</p>
     </div>
 
     <div class="price-note" id="priceNote">
-      <i class="fas fa-spinner fa-spin"></i> Загрузка…
+      <i class="fas fa-spinner fa-spin"></i> <span data-i18n="price.loading">Загрузка…</span>
     </div>
 
     <div class="price-period-tabs" id="pricePeriodTabs"></div>
 
     <div class="price-table-wrap">
       <table class="price-table" id="priceTable">
-        <thead><tr><th>Тип номера</th><th id="priceColHead"></th></tr></thead>
+        <thead><tr><th data-i18n="price.col.room">Тип номера</th><th id="priceColHead"></th></tr></thead>
         <tbody id="priceTbody"></tbody>
       </table>
     </div>
 
     <a href="price.pdf" class="price-pdf-btn" target="_blank">
-      <i class="fas fa-file-pdf"></i> Скачать прайс PDF
+      <i class="fas fa-file-pdf"></i> <span data-i18n="price.pdf">Скачать прайс PDF</span>
     </a>
   </div>
 </section>
@@ -2520,21 +2540,21 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="offers-section" id="offers">
   <div class="container">
     <div class="section-head" style="margin-bottom:36px">
-      <span class="section-tag">Специальные предложения</span>
-      <h2 class="section-title">Акции</h2>
+      <span class="section-tag" data-i18n="offers.tag">Специальные предложения</span>
+      <h2 class="section-title" data-i18n="offers.title">Акции</h2>
     </div>
     <div class="offers-grid">
       <div class="offer-card">
         <div class="offer-icon">💎</div>
-        <h3>Раннее бронирование</h3>
-        <p>Специальное предложение при 100% оплате проживания</p>
-        <div class="offer-bonus">✨ Максимальная выгода</div>
+        <h3 data-i18n="offers.early.title">Раннее бронирование</h3>
+        <p data-i18n="offers.early.desc">Специальное предложение при 100% оплате проживания</p>
+        <div class="offer-bonus" data-i18n="offers.early.bonus">✨ Максимальная выгода</div>
       </div>
       <div class="offer-card">
         <div class="offer-icon">💳</div>
-        <h3>Гибкая предоплата</h3>
-        <p>Раннее бронирование при внесении предоплаты не менее 40%</p>
-        <div class="offer-bonus">✨ Фиксация цены</div>
+        <h3 data-i18n="offers.flex.title">Гибкая предоплата</h3>
+        <p data-i18n="offers.flex.desc">Раннее бронирование при внесении предоплаты не менее 40%</p>
+        <div class="offer-bonus" data-i18n="offers.flex.bonus">✨ Фиксация цены</div>
       </div>
     </div>
   </div>
@@ -2547,11 +2567,11 @@ nav { display: flex; align-items: center; gap: 4px; }
   <div class="container">
     <div class="section-head" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px; margin-bottom:36px">
       <div>
-        <span class="section-tag">Отзывы гостей</span>
-        <h2 class="section-title">Что говорят<br>наши гости</h2>
+        <span class="section-tag" data-i18n="rev.tag">Отзывы гостей</span>
+        <h2 class="section-title" data-i18n="rev.title">Что говорят<br>наши гости</h2>
       </div>
       <a href="reviews.html" class="btn-primary" style="white-space:nowrap">
-        Все отзывы <i class="fas fa-arrow-right"></i>
+        <span data-i18n="rev.more">Все отзывы</span> <i class="fas fa-arrow-right"></i>
       </a>
     </div>
 
@@ -2601,21 +2621,21 @@ nav { display: flex; align-items: center; gap: 4px; }
 <section class="contacts-section" id="contacts">
   <div class="container">
     <div class="section-head" style="margin-bottom:44px">
-      <span class="section-tag">Контакты</span>
-      <h2 class="section-title">Как нас найти</h2>
+      <span class="section-tag" data-i18n="cont.tag">Контакты</span>
+      <h2 class="section-title" data-i18n="cont.title">Как нас найти</h2>
     </div>
 
     <div class="contacts-inner">
       <div>
         <div class="contact-block">
-          <h3><i class="fas fa-map-marker-alt"></i> Отдел продаж (Алматы)</h3>
+          <h3><i class="fas fa-map-marker-alt"></i> <span data-i18n="cont.sales.title">Отдел продаж (Алматы)</span></h3>
           <div class="contact-item">
             <i class="fas fa-building"></i>
             <span>БЦ «Каспиан», ул. Досмухамедова 89, офис 101/1</span>
           </div>
           <div class="contact-item">
             <i class="fas fa-clock"></i>
-            <span>Пн–Пт 9:00–16:45, выходные — выходной</span>
+            <span data-i18n="cont.sales.schedule">Пн–Пт 9:00–16:45, выходные — выходной</span>
           </div>
           <div class="contact-phones" style="margin-top:14px">
             <a href="tel:+77272927899"><i class="fas fa-phone"></i> +7 (727) 292-78-99</a>
@@ -2627,10 +2647,10 @@ nav { display: flex; align-items: center; gap: 4px; }
         </div>
 
         <div class="contact-block">
-          <h3><i class="fas fa-umbrella-beach"></i> База отдыха (Алаколь)</h3>
+          <h3><i class="fas fa-umbrella-beach"></i> <span data-i18n="cont.resort.title">База отдыха (Алаколь)</span></h3>
           <div class="contact-item">
             <i class="fas fa-map-marker-alt"></i>
-            <span>Жетысу обл., Алакольский р-н, с. Акши</span>
+            <span data-i18n="cont.resort.loc">Жетысу обл., Алакольский р-н, с. Акши</span>
           </div>
           <div class="contact-item">
             <i class="fas fa-compass"></i>
@@ -2638,7 +2658,7 @@ nav { display: flex; align-items: center; gap: 4px; }
           </div>
           <div class="contact-item">
             <i class="fas fa-calendar-alt"></i>
-            <span>Сезон: июнь — сентябрь</span>
+            <span data-i18n="cont.resort.season">Сезон: июнь — сентябрь</span>
           </div>
           <div class="contact-phones" style="margin-top:14px">
             <a href="tel:+77283330002"><i class="fas fa-phone"></i> +7 (72833) 3-00-02</a>
@@ -2649,7 +2669,7 @@ nav { display: flex; align-items: center; gap: 4px; }
         </div>
 
         <div class="contact-block">
-          <h3><i class="fas fa-share-alt"></i> Мы в соцсетях</h3>
+          <h3><i class="fas fa-share-alt"></i> <span data-i18n="cont.social.title">Мы в соцсетях</span></h3>
           <div style="display:flex; gap:12px; margin-top:8px">
             <a href="https://www.instagram.com/pelican_alacol/" target="_blank"
                style="display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:white; padding:10px 18px; border-radius:10px; font-size:.88rem; font-weight:600">
@@ -2683,7 +2703,7 @@ nav { display: flex; align-items: center; gap: 4px; }
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="logo-text" style="font-family:'Playfair Display',serif; font-size:1.15rem">Пеликан Алаколь</span>
-        <p class="footer-desc">
+        <p class="footer-desc" data-i18n="footer.desc">
           Парк-отель на берегу целебного озера Алаколь.
           Деревянные бунгало, чистый пляж и незабываемый отдых для всей семьи.
         </p>
@@ -2701,25 +2721,25 @@ nav { display: flex; align-items: center; gap: 4px; }
       </div>
 
       <div class="footer-col">
-        <h4>Отель</h4>
-        <a href="#features">Об отеле</a>
-        <a href="#rooms">Номера</a>
-        <a href="activities.html">Активности</a>
-        <a href="index_menu.html">Столовая</a>
-        <a href="bar.html">Бар</a>
+        <h4 data-i18n="footer.col1">Отель</h4>
+        <a href="#features" data-i18n="footer.about">Об отеле</a>
+        <a href="#rooms" data-i18n="footer.rooms">Номера</a>
+        <a href="activities.html" data-i18n="footer.act">Активности</a>
+        <a href="index_menu.html" data-i18n="footer.cant">Столовая</a>
+        <a href="bar.html" data-i18n="footer.bar">Бар</a>
       </div>
 
       <div class="footer-col">
-        <h4>Гостям</h4>
-        <a href="booking.html">Бронирование</a>
-        <a href="booking.html#pravila">Правила проживания</a>
-        <a href="booking.html#prices">Прайс-лист</a>
-        <a href="reviews.html">Отзывы</a>
-        <a href="#contacts">FAQ</a>
+        <h4 data-i18n="footer.col2">Гостям</h4>
+        <a href="booking.html" data-i18n="footer.book">Бронирование</a>
+        <a href="booking.html#pravila" data-i18n="footer.rules">Правила проживания</a>
+        <a href="booking.html#prices" data-i18n="footer.prices">Прайс-лист</a>
+        <a href="reviews.html" data-i18n="footer.reviews">Отзывы</a>
+        <a href="#contacts" data-i18n="footer.faq">FAQ</a>
       </div>
 
       <div class="footer-col">
-        <h4>Контакты</h4>
+        <h4 data-i18n="footer.col3">Контакты</h4>
         <a href="tel:+77272927899">+7 (727) 292-78-99</a>
         <a href="tel:+77017714733">+7 (701) 771-47-33</a>
         <a href="tel:+77058067833">+7 (705) 806-78-33</a>
@@ -2732,8 +2752,8 @@ nav { display: flex; align-items: center; gap: 4px; }
     </div>
 
     <div class="footer-bottom">
-      <span>© 2025 Парк-отель Пеликан Алаколь. Все права защищены.</span>
-      <span class="season-tag">🏖️ Сезон: июнь — сентябрь</span>
+      <span data-i18n="footer.copy">© 2025 Парк-отель Пеликан Алаколь. Все права защищены.</span>
+      <span class="season-tag" data-i18n="footer.season">🏖️ Сезон: июнь — сентябрь</span>
     </div>
   </div>
 </footer>
@@ -3437,5 +3457,6 @@ document.addEventListener('keydown', e => {
     .catch(e => console.error('Ошибка загрузки номеров:', e));
 })();
 </script>
+<script src="js/i18n.js"></script>
 </body>
 </html>

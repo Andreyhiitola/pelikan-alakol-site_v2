@@ -112,6 +112,10 @@
       color: var(--green);
       text-decoration: underline;
     }
+  /* Lang switcher */
+  .lang-switcher { display: flex; gap: 2px; align-items: center; }
+  .lang-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-size: .7rem; font-weight: 600; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: all .2s; }
+  .lang-btn:hover, .lang-btn--active { background: var(--green-light); color: var(--green); border-color: var(--green); }
   </style>
 </head>
 <body>
@@ -120,12 +124,15 @@
     <div class="container">
       <div class="top-bar-inner">
         <a href="index.html#booking" class="back-link">
-          <i class="fas fa-arrow-left"></i> На главную
+          <i class="fas fa-arrow-left"></i> <span data-i18n="nav.about">На главную</span>
         </a>
         <span class="site-name">Пеликан Алаколь</span>
-        <a href="tel:+77283330002" style="color:var(--green); font-weight:600; font-size:.9rem;">
-          <i class="fas fa-phone"></i> +7 (72833) 3-00-02
-        </a>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="lang-switcher"></div>
+          <a href="tel:+77283330002" style="color:var(--green); font-weight:600; font-size:.9rem;">
+            <i class="fas fa-phone"></i> +7 (72833) 3-00-02
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -133,14 +140,14 @@
   <main>
     <div class="container">
 
-      <h1 class="page-title">Онлайн-бронирование</h1>
-      <p class="page-subtitle">Выберите тип номера и удобные даты заезда</p>
+      <h1 class="page-title" data-i18n="book.page.title">Онлайн-бронирование</h1>
+      <p class="page-subtitle" data-i18n="book.page.sub">Выберите тип номера и удобные даты заезда</p>
 
       <!-- ПРАВИЛА БРОНИРОВАНИЯ -->
       <div class="warning-block">
         <div class="warning-title">
           <i class="fas fa-exclamation-triangle"></i>
-          Важно перед бронированием
+          <span data-i18n="book.terms.warn">Важно перед бронированием</span>
         </div>
         <ul class="warning-list">
           <li>Все цены указаны без учёта действующих скидок. Итоговая стоимость будет рассчитана менеджером при подтверждении брони.</li>
@@ -165,5 +172,6 @@
   </main>
 
   <script src="https://pelikanalakol.maxi-booking.ru/management/online/api/file/5e1dfd8c67a07d5cbd33ce5a/load-result"></script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>

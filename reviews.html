@@ -299,29 +299,35 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Lang switcher */
+        .lang-switcher { display: flex; gap: 2px; align-items: center; }
+        .lang-btn { background: transparent; border: 1px solid #d0d5dd; color: #5a6e5e; font-size: .7rem; font-weight: 600; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: all .2s; }
+        .lang-btn:hover, .lang-btn--active { background: #e8f5ee; color: #1e7a4a; border-color: #1e7a4a; }
+        header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i> На главную
+                <i class="fas fa-arrow-left"></i> <span data-i18n="nav.about">На главную</span>
             </a>
-            <h1 class="page-title">Отзывы наших гостей</h1>
+            <h1 class="page-title" data-i18n="rev.page.title">Отзывы наших гостей</h1>
+            <div class="lang-switcher"></div>
         </header>
 
         <!-- Статистика -->
         <div class="stats-container" id="stats">
             <div class="stat-card">
-                <div class="stat-label">Всего отзывов</div>
+                <div class="stat-label" data-i18n="rev.stat.total">Всего отзывов</div>
                 <div class="stat-number" id="total-reviews">0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Средняя оценка</div>
+                <div class="stat-label" data-i18n="rev.stat.avg">Средняя оценка</div>
                 <div class="stat-number" id="avg-score">0.0</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Рекомендуют</div>
+                <div class="stat-label" data-i18n="rev.stat.rec">Рекомендуют</div>
                 <div class="stat-number" id="recommend-percent">0%</div>
             </div>
         </div>
@@ -330,10 +336,10 @@
         <div class="controls">
             <div class="sort-buttons">
                 <button class="sort-btn active" data-sort="date">
-                    <i class="fas fa-calendar-alt"></i> По дате
+                    <i class="fas fa-calendar-alt"></i> <span data-i18n="rev.sort.date">По дате</span>
                 </button>
                 <button class="sort-btn" data-sort="rating">
-                    <i class="fas fa-star"></i> По оценке
+                    <i class="fas fa-star"></i> <span data-i18n="rev.sort.rating">По оценке</span>
                 </button>
             </div>
         </div>
@@ -342,11 +348,12 @@
         <div id="reviews-container" class="reviews-grid">
             <div class="loading">
                 <i class="fas fa-spinner"></i>
-                <p>Загрузка отзывов...</p>
+                <p data-i18n="rev.loading">Загрузка отзывов...</p>
             </div>
         </div>
     </div>
 
     <script src="js/reviews.js"></script>
+    <script src="js/i18n.js"></script>
 </body>
 </html>

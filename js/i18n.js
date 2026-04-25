@@ -52,7 +52,13 @@
     document.querySelectorAll('.lang-switcher').forEach(renderSwitcher);
   }
 
-  window.i18n = { setLang };
+  // tr(key, fallback) — for use in JS template strings
+  function tr(key, fallback) {
+    const v = t(key);
+    return v !== null ? v : (fallback ?? key);
+  }
+
+  window.i18n = { setLang, apply, tr };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

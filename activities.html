@@ -111,6 +111,10 @@
 
     /* LOADING */
     .loading { text-align: center; padding: 80px; color: var(--text-muted); }
+  /* Lang switcher */
+  .lang-switcher { display: flex; gap: 2px; align-items: center; }
+  .lang-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-size: .7rem; font-weight: 600; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: all .2s; }
+  .lang-btn:hover, .lang-btn--active { background: var(--green-light); color: var(--green); border-color: var(--green); }
   </style>
 </head>
 <body>
@@ -119,10 +123,10 @@
     <div class="container">
       <div class="top-bar-inner">
         <a href="index.html#activities" class="back-link">
-          <i class="fas fa-arrow-left"></i> На главную
+          <i class="fas fa-arrow-left"></i> <span data-i18n="nav.about">На главную</span>
         </a>
         <span class="site-name">Пеликан Алаколь</span>
-        <div></div>
+        <div class="lang-switcher"></div>
       </div>
     </div>
   </div>
@@ -130,9 +134,9 @@
   <main>
     <div class="container">
       <div class="page-header">
-        <span class="section-tag">На территории</span>
-        <h1 class="page-title">Активности и досуг</h1>
-        <p class="page-subtitle">Расписание работы объектов и развлечений</p>
+        <span class="section-tag" data-i18n="act.page.tag">На территории</span>
+        <h1 class="page-title" data-i18n="act.page.title">Активности и досуг</h1>
+        <p class="page-subtitle" data-i18n="act.page.sub">Расписание работы объектов и развлечений</p>
       </div>
       <div id="actGrid" class="act-grid">
         <div class="loading"><i class="fas fa-spinner fa-spin"></i></div>
@@ -166,8 +170,10 @@
       })
       .catch(() => {
         document.getElementById('actGrid').innerHTML =
-          '<p style="color:#b91c1c">Ошибка загрузки данных</p>';
+          '<p style="color:#b91c1c" data-i18n="acc.error.title">Ошибка загрузки данных</p>';
+        if (window.i18n?.apply) window.i18n.apply();
       });
   </script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>

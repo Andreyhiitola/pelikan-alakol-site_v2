@@ -197,6 +197,10 @@
     .state-box a { color: var(--green); font-weight: 600; text-decoration: underline; }
     .error-box { color: #b91c1c; }
     .error-box i { color: #b91c1c; }
+  /* Lang switcher */
+  .lang-switcher { display: flex; gap: 2px; align-items: center; }
+  .lang-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); font-size: .7rem; font-weight: 600; padding: 3px 7px; border-radius: 5px; cursor: pointer; transition: all .2s; }
+  .lang-btn:hover, .lang-btn--active { background: var(--green-light); color: var(--green); border-color: var(--green); }
   </style>
 </head>
 <body>
@@ -205,12 +209,15 @@
     <div class="container">
       <div class="top-bar-inner">
         <a href="index.html#rooms" class="back-link">
-          <i class="fas fa-arrow-left"></i> К номерам
+          <i class="fas fa-arrow-left"></i> <span data-i18n="acc.back">К номерам</span>
         </a>
         <span class="site-name">Пеликан Алаколь</span>
-        <a href="booking.html" class="book-btn-top">
-          <i class="fas fa-calendar-alt"></i> Забронировать
-        </a>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="lang-switcher"></div>
+          <a href="booking.html" class="book-btn-top">
+            <i class="fas fa-calendar-alt"></i> <span data-i18n="acc.book">Забронировать</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -220,7 +227,7 @@
       <div id="roomContainer">
         <div class="state-box">
           <i class="fas fa-spinner fa-spin"></i>
-          <p>Загрузка...</p>
+          <p data-i18n="acc.loading">Загрузка...</p>
         </div>
       </div>
     </div>
@@ -252,19 +259,24 @@
         const priceEntries = Object.entries(prices);
         const allDash = priceEntries.every(([, v]) => v === '-');
         let priceHtml;
+        const i = window.i18n;
         if (allDash || priceEntries.length === 0) {
-          priceHtml = '<div class="no-price">Цена уточняется — позвоните нам</div>';
+          priceHtml = `<div class="no-price" data-i18n="acc.price.noprice">Цена уточняется — позвоните нам</div>`;
         } else {
           const rows = priceEntries.map(([period, price]) => {
-            const val = price === '-' ? '<span style="color:var(--text-muted)">По запросу</span>' : price + ' ₸';
+            const val = price === '-'
+              ? `<span style="color:var(--text-muted)" data-i18n="acc.price.request">По запросу</span>`
+              : price + ' ₸';
             return `<tr><td>${period}</td><td>${val}</td></tr>`;
           }).join('');
           priceHtml = `
             <table class="price-table">
-              <thead><tr><th>Период</th><th>Цена / сутки</th></tr></thead>
+              <thead><tr><th data-i18n="acc.price.period">Период</th><th data-i18n="acc.price.perday">Цена / сутки</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>`;
         }
+
+        const capVal = i?.tr('acc.spec.capacity.val', 'до {n} чел.').replace('{n}', room.capacity) || `до ${room.capacity} чел.`;
 
         container.innerHTML = `
           <div class="room-hero">
@@ -282,49 +294,52 @@
             <div class="spec-item">
               <div class="spec-icon"><i class="fas fa-expand-arrows-alt"></i></div>
               <div>
-                <div class="spec-label">Площадь</div>
+                <div class="spec-label" data-i18n="acc.spec.area">Площадь</div>
                 <div class="spec-value">${room.area} м²</div>
               </div>
             </div>
             <div class="spec-item">
               <div class="spec-icon"><i class="fas fa-users"></i></div>
               <div>
-                <div class="spec-label">Вместимость</div>
-                <div class="spec-value">до ${room.capacity} чел.</div>
+                <div class="spec-label" data-i18n="acc.spec.capacity">Вместимость</div>
+                <div class="spec-value">${capVal}</div>
               </div>
             </div>
             <div class="spec-item">
               <div class="spec-icon"><i class="fas fa-shower"></i></div>
               <div>
-                <div class="spec-label">Санузел</div>
+                <div class="spec-label" data-i18n="acc.spec.bathroom">Санузел</div>
                 <div class="spec-value">${room.bathroom || '—'}</div>
               </div>
             </div>
           </div>
 
-          <div class="section-label">Стоимость проживания</div>
+          <div class="section-label" data-i18n="acc.price.title">Стоимость проживания</div>
           <div class="price-table-wrap">${priceHtml}</div>
 
           <div class="booking-cta">
-            <h3>Хотите забронировать?</h3>
-            <p>Выберите удобные даты в нашей системе онлайн-бронирования</p>
-            <a href="booking.html"><i class="fas fa-calendar-alt"></i>&nbsp; Забронировать</a>
+            <h3 data-i18n="acc.cta.title">Хотите забронировать?</h3>
+            <p data-i18n="acc.cta.sub">Выберите удобные даты в нашей системе онлайн-бронирования</p>
+            <a href="booking.html"><i class="fas fa-calendar-alt"></i>&nbsp; <span data-i18n="acc.cta.btn">Забронировать</span></a>
           </div>
         `;
+        if (i?.apply) i.apply();
       } catch (err) {
         console.error(err);
         container.innerHTML = `
           <div class="state-box error-box">
             <i class="fas fa-exclamation-triangle"></i>
-            <h2>Ошибка</h2>
+            <h2 data-i18n="acc.error.title">Ошибка</h2>
             <p>${err.message}</p>
             <br>
-            <a href="index.html">Вернуться на главную</a>
+            <a href="index.html" data-i18n="acc.error.home">Вернуться на главную</a>
           </div>`;
+        if (window.i18n?.apply) window.i18n.apply();
       }
     }
 
     document.addEventListener('DOMContentLoaded', loadRoom);
   </script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>

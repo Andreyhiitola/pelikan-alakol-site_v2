@@ -215,7 +215,43 @@
     "footer.faq":     "FAQ",
     "footer.col3":    "Байланыс",
     "footer.copy":    "© 2025 Пеликан Алакөл парк-қонақ үйі. Барлық құқықтар қорғалған.",
-    "footer.season":  "🏖️ Маусым: маусым — қыркүйек"
+    "footer.season":  "🏖️ Маусым: маусым — қыркүйек",
+
+    "acc.back":             "Бөлмелерге",
+    "acc.book":             "Брондау",
+    "acc.loading":          "Жүктелуде...",
+    "acc.spec.area":        "Ауданы",
+    "acc.spec.capacity":    "Сыйымдылық",
+    "acc.spec.capacity.val":"до {n} адамға дейін",
+    "acc.spec.bathroom":    "Санторап",
+    "acc.price.title":      "Тұру құны",
+    "acc.price.noprice":    "Баға нақтыланады — бізге қоңырау шалыңыз",
+    "acc.price.period":     "Кезең",
+    "acc.price.perday":     "Баға / тәулік",
+    "acc.price.request":    "Сұрау бойынша",
+    "acc.cta.title":        "Брондағыңыз келе ме?",
+    "acc.cta.sub":          "Онлайн брондау жүйесінде ыңғайлы күндерді таңдаңыз",
+    "acc.cta.btn":          "Брондау",
+    "acc.error.title":      "Қате",
+    "acc.error.home":       "Басты бетке оралу",
+
+    "act.page.tag":    "Белсенділіктер",
+    "act.page.title":  "Белсенділіктер мен демалыс",
+    "act.page.sub":    "Аумақтағы барлық нысандар мен ойын-сауықтардың жұмыс кестесі",
+
+    "book.page.tag":   "Брондау",
+    "book.page.title": "Онлайн брондау",
+    "book.page.sub":   "Күндерді таңдаңыз — растауды бір сағат ішінде аласыз",
+
+    "rev.page.tag":    "Пікірлер",
+    "rev.page.title":  "Қонақтардың пікірлері",
+    "rev.page.sub":    "Бізде болғандардың шынайы пікірлері",
+    "rev.stat.total":  "Барлық пікірлер",
+    "rev.stat.avg":    "Орташа баға",
+    "rev.stat.rec":    "Ұсынады",
+    "rev.sort.date":   "Күні бойынша",
+    "rev.sort.rating": "Бағасы бойынша",
+    "rev.loading":     "Пікірлер жүктелуде..."
   },
 
   "en": {
@@ -434,6 +470,42 @@
     "footer.faq":     "FAQ",
     "footer.col3":    "Contacts",
     "footer.copy":    "© 2025 Pelikan Alakol Park Hotel. All rights reserved.",
-    "footer.season":  "🏖️ Season: June — September"
+    "footer.season":  "🏖️ Season: June — September",
+
+    "acc.back":             "Back to rooms",
+    "acc.book":             "Book now",
+    "acc.loading":          "Loading...",
+    "acc.spec.area":        "Area",
+    "acc.spec.capacity":    "Capacity",
+    "acc.spec.capacity.val":"up to {n} guests",
+    "acc.spec.bathroom":    "Bathroom",
+    "acc.price.title":      "Accommodation cost",
+    "acc.price.noprice":    "Price on request — call us",
+    "acc.price.period":     "Period",
+    "acc.price.perday":     "Price / day",
+    "acc.price.request":    "On request",
+    "acc.cta.title":        "Want to book?",
+    "acc.cta.sub":          "Choose convenient dates in our online booking system",
+    "acc.cta.btn":          "Book now",
+    "acc.error.title":      "Error",
+    "acc.error.home":       "Back to home",
+
+    "act.page.tag":    "Activities",
+    "act.page.title":  "Activities and leisure",
+    "act.page.sub":    "Schedule of all facilities and entertainment on site",
+
+    "book.page.tag":   "Booking",
+    "book.page.title": "Online booking",
+    "book.page.sub":   "Choose dates — confirmation within one hour",
+
+    "rev.page.tag":    "Reviews",
+    "rev.page.title":  "Guest reviews",
+    "rev.page.sub":    "Real reviews from our guests",
+    "rev.stat.total":  "Total reviews",
+    "rev.stat.avg":    "Average rating",
+    "rev.stat.rec":    "Recommend",
+    "rev.sort.date":   "By date",
+    "rev.sort.rating": "By rating",
+    "rev.loading":     "Loading reviews..."
   }
 }

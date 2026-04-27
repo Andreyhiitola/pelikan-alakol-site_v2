@@ -11,16 +11,19 @@
 
   function apply() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
-      const v = t(el.dataset.i18n);
-      if (v !== null) el.textContent = v;
+      if (!('i18nOrig' in el.dataset)) el.dataset.i18nOrig = el.textContent;
+      const v = lang === 'ru' ? el.dataset.i18nOrig : t(el.dataset.i18n);
+      if (v != null) el.textContent = v;
     });
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
-      const v = t(el.dataset.i18nHtml);
-      if (v !== null) el.innerHTML = v;
+      if (!('i18nOrigHtml' in el.dataset)) el.dataset.i18nOrigHtml = el.innerHTML;
+      const v = lang === 'ru' ? el.dataset.i18nOrigHtml : t(el.dataset.i18nHtml);
+      if (v != null) el.innerHTML = v;
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const v = t(el.dataset.i18nPlaceholder);
-      if (v !== null) el.placeholder = v;
+      if (!('i18nOrigPlaceholder' in el.dataset)) el.dataset.i18nOrigPlaceholder = el.placeholder;
+      const v = lang === 'ru' ? el.dataset.i18nOrigPlaceholder : t(el.dataset.i18nPlaceholder);
+      if (v != null) el.placeholder = v;
     });
     document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
     document.querySelectorAll('.lang-btn').forEach(b =>

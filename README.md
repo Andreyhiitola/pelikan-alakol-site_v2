@@ -172,7 +172,7 @@ npm test
 
 ## 🔗 Ссылки
 
-- 🌐 Сайт: https://pelikan-alakol.kz
+- 🌐 Сайт: https://parkpelikan-alakol.kz
 - 📱 Telegram бот: @pelikan_alakol_bot
 - 📧 Email: info@pelikan-alakol.kz
 - 📞 Телефон: +7 (XXX) XXX-XX-XX
